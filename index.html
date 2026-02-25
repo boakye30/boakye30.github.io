@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>younstersthedeveloper</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0e;
+    --text: #f0ede8;
+    --muted: #6b6b6b;
+    --accent: #c8f535;
+    --border: rgba(240,237,232,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    background: rgba(14,14,14,0.7);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .logo span { color: var(--accent); }
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: blink 2.5s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 3rem 4rem;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 14vw, 13rem);
+    line-height: 0.9;
+    letter-spacing: 0.01em;
+    color: var(--text);
+  }
+  .hero h1 .accent-word {
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-sub {
+    margin-top: 2rem;
+    max-width: 420px;
+    font-size: 0.9rem;
+    line-height: 1.85;
+    color: var(--muted);
+  }
+  .hero-sub strong { color: var(--text); font-weight: 400; }
+
+  .hero-cta {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+  }
+  .btn {
+    padding: 0.8rem 2rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-fill { background: var(--accent); color: var(--bg); }
+  .btn-fill:hover { background: var(--text); }
+  .btn-outline { border: 1px solid var(--border); color: var(--muted); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-number {
+    position: absolute;
+    right: 3rem; bottom: 4rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 9rem;
+    color: rgba(240,237,232,0.03);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* ---- SKILLS ---- */
+  .skills {
+    padding: 5rem 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .label {
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2.5rem;
+  }
+  .skills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .skill-pill {
+    border: 1px solid var(--border);
+    padding: 0.5rem 1.1rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    border-radius: 100px;
+    transition: all 0.2s;
+  }
+  .skill-pill:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ---- WORK ---- */
+  .work {
+    padding: 5rem 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .work-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 3rem;
+    line-height: 1;
+  }
+  .work-title span { color: var(--accent); }
+
+  .projects { display: flex; flex-direction: column; gap: 0; }
+  .project {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    cursor: default;
+    transition: padding-left 0.3s;
+  }
+  .project:first-child { border-top: 1px solid var(--border); }
+  .project:hover { padding-left: 0.75rem; }
+
+  .proj-index {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .proj-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .project:hover .proj-title { color: var(--accent); }
+  .proj-type {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.15rem;
+  }
+  .proj-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+  }
+
+  /* ---- ABOUT ---- */
+  .about {
+    padding: 5rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .about-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  .about-title span { color: var(--accent); }
+  .about-text {
+    font-size: 0.88rem;
+    line-height: 1.95;
+    color: var(--muted);
+  }
+  .about-text strong { color: var(--text); font-weight: 400; }
+
+  .about-stats { display: flex; flex-direction: column; gap: 0; }
+  .stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .stat:first-child { border-top: 1px solid var(--border); }
+  .stat-n {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-l { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+  /* ---- CONTACT ---- */
+  .contact {
+    padding: 5rem 3rem;
+  }
+  .contact-top {
+    margin-bottom: 3.5rem;
+  }
+  .contact-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1;
+    margin-top: 0.75rem;
+  }
+  .contact-heading span { color: var(--accent); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+  .contact-card {
+    padding: 2rem;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: background 0.25s;
+  }
+  .contact-card:last-child { border-right: none; }
+  .contact-card:hover { background: rgba(200,245,53,0.04); }
+  .cc-platform {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .cc-value {
+    font-size: 0.88rem;
+    color: var(--text);
+    font-weight: 400;
+  }
+  .cc-arrow {
+    margin-top: auto;
+    padding-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    transition: color 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .contact-card:hover .cc-arrow { color: var(--accent); transform: translate(3px, -3px); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.75rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+  footer span { color: var(--accent); }
+
+  /* ---- REVEAL ---- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.on { opacity: 1; transform: none; }
+  .d1 { transition-delay: 0.1s; }
+  .d2 { transition-delay: 0.2s; }
+
+  @media(max-width: 700px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .hero, .skills, .work, .contact, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .about { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
+    .hero-number { display: none; }
+    .project { grid-template-columns: 2.5rem 1fr; }
+    .proj-tag { display: none; }
+    .contact-grid { grid-template-columns: 1fr 1fr; }
+    .contact-card:nth-child(2n) { border-right: none; }
+    .contact-card { border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">youngsters<span>.</span>dev</a>
+  <div class="nav-dot"></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Frontend Developer · Available for work</div>
+  <h1>
+    YOUNSTERS
+    <span class="accent-word">THE DEV.</span>
+  </h1>
+  <p class="hero-sub">
+    I build <strong>clean, fast interfaces</strong> that actually work. No fluff, no filler —
+    just code that looks good and runs smooth.
+  </p>
+  <div class="hero-cta">
+    <a href="#work" class="btn btn-fill">My Work</a>
+    <a href="#contact" class="btn btn-outline">Let's Talk</a>
+  </div>
+  <div class="hero-number">01</div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills">
+  <div class="label reveal">What I work with</div>
+  <div class="skills-row reveal d1">
+    <span class="skill-pill">HTML & CSS</span>
+    <span class="skill-pill">JavaScript</span>
+    <span class="skill-pill">React</span>
+    <span class="skill-pill">TypeScript</span>
+    <span class="skill-pill">Next.js</span>
+    <span class="skill-pill">Tailwind CSS</span>
+    <span class="skill-pill">Figma</span>
+    <span class="skill-pill">Git & GitHub</span>
+    <span class="skill-pill">Responsive Design</span>
+    <span class="skill-pill">Animation</span>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="label reveal">Selected Work</div>
+  <h2 class="work-title reveal d1">PROJECTS I'VE<br><span>BUILT.</span></h2>
+  <div class="projects">
+    <div class="project reveal">
+      <div class="proj-index">01</div>
+      <div>
+        <div class="proj-title">E-Commerce Store</div>
+        <div class="proj-type">Frontend · React · Stripe</div>
+      </div>
+      <span class="proj-tag">Web App</span>
+    </div>
+    <div class="project reveal d1">
+      <div class="proj-index">02</div>
+      <div>
+        <div class="proj-title">Portfolio Builder Tool</div>
+        <div class="proj-type">SaaS · Next.js · Tailwind</div>
+      </div>
+      <span class="proj-tag">Tool</span>
+    </div>
+    <div class="project reveal">
+      <div class="proj-index">03</div>
+      <div>
+        <div class="proj-title">Landing Page Collection</div>
+        <div class="proj-type">HTML · CSS · JS</div>
+      </div>
+      <span class="proj-tag">Design</span>
+    </div>
+    <div class="project reveal d1">
+      <div class="proj-index">04</div>
+      <div>
+        <div class="proj-title">Dashboard UI</div>
+        <div class="proj-type">React · Chart.js · TypeScript</div>
+      </div>
+      <span class="proj-tag">UI</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div>
+    <div class="label reveal">About</div>
+    <h2 class="about-title reveal d1">I WRITE CODE<br>THAT <span>HITS.</span></h2>
+    <p class="about-text reveal d2">
+      I'm <strong>younstersthedeveloper</strong> — a frontend developer who cares about the details. 
+      Clean layouts, smooth feel, and code that doesn't break. I take ideas from zero and turn them 
+      into things people actually want to use. <strong>No bloat. Just quality.</strong>
+    </p>
+  </div>
+  <div class="about-stats reveal d1">
+    <div class="stat">
+      <div class="stat-l">Projects done</div>
+      <div class="stat-n">20+</div>
+    </div>
+    <div class="stat">
+      <div class="stat-l">Happy clients</div>
+      <div class="stat-n">15+</div>
+    </div>
+    <div class="stat">
+      <div class="stat-l">Years coding</div>
+      <div class="stat-n">3+</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-top">
+    <div class="label reveal">Contact</div>
+    <h2 class="contact-heading reveal d1">LET'S BUILD<br><span>SOMETHING.</span></h2>
+  </div>
+  <div class="contact-grid reveal d2">
+    <a href="tel:0596213277" class="contact-card">
+      <div class="cc-platform">Phone / WhatsApp</div>
+      <div class="cc-value">0596213277</div>
+      <span class="cc-arrow">↗</span>
+    </a>
+    <a href="https://wa.me/0596213277" target="_blank" class="contact-card">
+      <div class="cc-platform">WhatsApp</div>
+      <div class="cc-value">younstersthedeveloper</div>
+      <span class="cc-arrow">↗</span>
+    </a>
+    <a href="https://instagram.com/younstersthedeveloper" target="_blank" class="contact-card">
+      <div class="cc-platform">Instagram</div>
+      <div class="cc-value">@younstersthedeveloper</div>
+      <span class="cc-arrow">↗</span>
+    </a>
+    <a href="https://tiktok.com/@younstersthedeveloper" target="_blank" class="contact-card">
+      <div class="cc-platform">TikTok</div>
+      <div class="cc-value">@younstersthedeveloper</div>
+      <span class="cc-arrow">↗</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span>younstersthedeveloper</span>
+  <span>© 2025</span>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
