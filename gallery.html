@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — st theresa catholic hospital</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f8f3ec;
+    --warm-white: #fdfaf6;
+    --gold: #b8965a;
+    --gold-light: #d4b483;
+    --gold-dark: #8a6d3b;
+    --deep: #1a1612;
+    --charcoal: #2d2820;
+    --mid: #6b5f52;
+    --border: rgba(184,150,90,0.25);
+    --border-dark: rgba(184,150,90,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--deep);
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  /* ── NAVBAR ── */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    height: 76px;
+    background: rgba(26, 22, 18, 0.97);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    text-decoration: none;
+  }
+
+  .logo-top {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .logo-sub {
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--gold-light); }
+  .nav-links a:hover::after,
+  .nav-links a.active::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--gold) !important;
+    color: #fff !important;
+    padding: 0.5rem 1.3rem;
+    border-radius: 2px;
+  }
+
+  .nav-cta:hover { background: var(--gold-dark) !important; }
+  .nav-cta::after { display: none !important; }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 10px 11px;
+    background: rgba(184,150,90,0.15);
+    border: 1px solid rgba(184,150,90,0.35);
+    border-radius: 4px;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .hamburger:hover { background: rgba(184,150,90,0.28); border-color: var(--gold); }
+  .hamburger.active { background: var(--gold); border-color: var(--gold); }
+
+  .hamburger span {
+    display: block;
+    width: 22px; height: 2px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    padding-top: 76px;
+    min-height: 48vh;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(26,22,18,0.3) 0%, rgba(26,22,18,0.95) 100%),
+      url('event/488256003_1094809086020936_8538395583966283696_n.jpg') center/cover no-repeat;
+  }
+
+  .page-hero-content {
+    position: relative;
+    padding: 3.5rem 8% 4rem;
+    width: 100%;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 1.2rem;
+  }
+
+  .breadcrumb a { color: var(--gold); text-decoration: none; }
+  .breadcrumb span { color: rgba(255,255,255,0.25); }
+
+  .page-hero-content h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 500;
+    line-height: 1.05;
+    margin-bottom: 1rem;
+  }
+
+  .page-hero-content h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .page-hero-content p {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.5);
+    max-width: 480px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ── SECTION NAV ── */
+  .section-nav {
+    position: sticky;
+    top: 76px;
+    z-index: 900;
+    background: rgba(26,22,18,0.98);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8%;
+  }
+
+  .section-tabs {
+    display: flex;
+    gap: 0;
+  }
+
+  .tab-btn {
+    padding: 1.3rem 2.5rem;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s;
+  }
+
+  .tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .tab-btn:hover { color: rgba(255,255,255,0.7); }
+  .tab-btn.active { color: var(--gold-light); }
+  .tab-btn.active::after { transform: scaleX(1); }
+
+  .section-count {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 1px;
+  }
+
+  /* ── GALLERY SECTIONS ── */
+  .gallery-section {
+    padding: 5rem 8%;
+    display: none;
+  }
+
+  .gallery-section.active { display: block; }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-dark);
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--gold);
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 500;
+    line-height: 1.15;
+  }
+
+  .section-title em { font-style: italic; color: var(--gold-light); }
+
+  .section-desc {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 380px;
+    text-align: right;
+  }
+
+  /* ── MASONRY GRID ── */
+  .masonry {
+    columns: 3;
+    column-gap: 3px;
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 3px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: block;
+  }
+
+  .masonry-item img {
+    width: 100%;
+    display: block;
+    transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+    filter: brightness(0.88);
+  }
+
+  .masonry-item:hover img {
+    transform: scale(1.06);
+    filter: brightness(0.7);
+  }
+
+  .masonry-item .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,8,5,0.85) 0%, transparent 55%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+  }
+
+  .masonry-item:hover .overlay { opacity: 1; }
+
+  .overlay-tag {
+    font-size: 0.58rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .overlay-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.25;
+  }
+
+  .overlay-zoom {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    width: 36px; height: 36px;
+    background: rgba(184,150,90,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  .masonry-item:hover .overlay-zoom {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Featured large item */
+  .masonry-item.featured img { aspect-ratio: 4/3; object-fit: cover; }
+  .masonry-item.tall img { aspect-ratio: 3/4; object-fit: cover; }
+  .masonry-item.wide img { aspect-ratio: 16/9; object-fit: cover; }
+  .masonry-item.sq img { aspect-ratio: 1/1; object-fit: cover; }
+
+  /* ── FEATURED STRIP (surgery) ── */
+  .featured-strip {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 3px;
+    margin-bottom: 3px;
+  }
+
+  .featured-strip .main-img {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .featured-strip .main-img img {
+    width: 100%; height: 480px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s ease, filter 0.4s;
+    filter: brightness(0.85);
+  }
+
+  .featured-strip .main-img:hover img { transform: scale(1.04); filter: brightness(0.65); }
+
+  .featured-strip .side-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .featured-strip .side-img {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    flex: 1;
+  }
+
+  .featured-strip .side-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease, filter 0.4s;
+    filter: brightness(0.85);
+    min-height: 155px;
+  }
+
+  .featured-strip .side-img:hover img { transform: scale(1.06); filter: brightness(0.65); }
+
+  .featured-strip .main-img .overlay,
+  .featured-strip .side-img .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,8,5,0.88) 0%, transparent 55%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+  }
+
+  .featured-strip .main-img:hover .overlay,
+  .featured-strip .side-img:hover .overlay { opacity: 1; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    position: fixed; inset: 0;
+    background: rgba(8,6,4,0.96);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox-inner {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: lbIn 0.35s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  @keyframes lbIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .lightbox-img {
+    max-width: 85vw;
+    max-height: 78vh;
+    object-fit: contain;
+    display: block;
+    border: 1px solid var(--border);
+  }
+
+  .lightbox-caption {
+    margin-top: 1.2rem;
+    text-align: center;
+  }
+
+  .lightbox-caption .tag {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .lightbox-caption h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .lightbox-close {
+    position: fixed;
+    top: 1.5rem; right: 1.8rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+    width: 40px; height: 40px;
+    border-radius: 2px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .lightbox-close:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+  .lightbox-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.6);
+    width: 46px; height: 46px;
+    border-radius: 2px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .lightbox-nav:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .lightbox-prev { left: 1.5rem; }
+  .lightbox-next { right: 1.5rem; }
+
+  .lightbox-counter {
+    position: fixed;
+    bottom: 1.5rem; left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border-top: 1px solid var(--border-dark);
+    border-bottom: 1px solid var(--border-dark);
+    margin: 5rem 0 0;
+  }
+
+  .stat-item {
+    flex: 1;
+    padding: 2.2rem 2rem;
+    border-right: 1px solid var(--border-dark);
+    text-align: center;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-lbl {
+    font-size: 0.62rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    background: #0e0c09;
+    border-top: 1px solid var(--border-dark);
+    padding: 2rem 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .page-footer p {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.5px;
+  }
+
+  .page-footer a {
+    font-size: 0.72rem;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: opacity 0.3s;
+  }
+
+  .page-footer a:hover { opacity: 0.7; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 1024px) {
+    .masonry { columns: 2; }
+    .featured-strip { grid-template-columns: 1fr; }
+    .featured-strip .main-img img { height: 320px; }
+  }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+
+    .nav-links {
+      position: fixed;
+      inset: 0 0 0 30%;
+      background: var(--deep);
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 2.5rem;
+      gap: 2rem;
+      transform: translateX(100%);
+      transition: transform 0.4s ease;
+      border-left: 1px solid var(--border);
+    }
+
+    .nav-links.active { transform: translateX(0); }
+    .nav-links a { font-size: 0.9rem; }
+
+    .masonry { columns: 1; }
+    .tab-btn { padding: 1.2rem 1.5rem; font-size: 0.65rem; }
+    .section-count { display: none; }
+    .section-header { flex-direction: column; align-items: flex-start; }
+    .section-desc { text-align: left; }
+    .gallery-section { padding: 3.5rem 5%; }
+    .stats-bar { flex-wrap: wrap; }
+    .stat-item { min-width: 50%; border-right: none; border-bottom: 1px solid var(--border-dark); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <span class="logo-top">st theresa catholic hospital</span>
+    <span class="logo-sub">Nkoranza · Ghana</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="index.html#news">News</a></li>
+    <li><a href="tel:+233504414929" class="nav-cta">Emergency</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="st_theresa_hospital.html">Home</a>
+      <span>›</span>
+      <span>Gallery</span>
+    </div>
+    <h1>Our <em>Visual</em><br>Chronicle</h1>
+    <p>Moments of healing, community, and clinical excellence — captured from the heart of St. Theresa Hospital.</p>
+  </div>
+</div>
+
+<!-- SECTION NAV -->
+<div class="section-nav">
+  <div class="section-tabs">
+    <button class="tab-btn active" data-tab="events">Events</button>
+    <button class="tab-btn" data-tab="surgery">Surgery</button>
+  </div>
+  <span class="section-count" id="sectionCount">16 photos</span>
+</div>
+
+<!-- ══ EVENTS SECTION ══ -->
+<div class="gallery-section active" id="tab-events">
+
+  <div class="section-header">
+    <div>
+      <p class="section-label">Grand Opening · 14th February 2025</p>
+      <h2 class="section-title">Surgical Theatre Complex <em>Commissioning</em></h2>
+    </div>
+    <p class="section-desc">Officially unveiled by Nana Kwame Baffoe IV, Omanhene of Nkoranza Traditional Area, and blessed by Most Rev. Dominic Yeboah Nyarko, Catholic Bishop of Techiman Diocese.</p>
+  </div>
+
+  <!-- Featured strip — top 3 hero images -->
+  <div class="featured-strip">
+    <div class="main-img clickable-img"
+      data-tag="Commissioning · 14 Feb 2025"
+      data-title="Grand Group Photo — Theatre Complex Opening">
+      <img src="event/488256003_1094809086020936_8538395583966283696_n.jpg" alt="Grand Group Photo">
+      <div class="overlay">
+        <p class="overlay-tag">Commissioning · 14 Feb 2025</p>
+        <p class="overlay-title">Grand Group Photo — Theatre Complex Opening</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+    <div class="side-stack">
+      <div class="side-img clickable-img"
+        data-tag="Ribbon Cutting"
+        data-title="Ribbon Cutting Ceremony by Nana Kwame Baffoe IV & Bishop">
+        <img src="event/488063549_1094809379354240_4345776891110868215_n.jpg" alt="Ribbon Cutting">
+        <div class="overlay">
+          <p class="overlay-tag">Ribbon Cutting</p>
+          <p class="overlay-title">Ribbon Cutting Ceremony by Nana Kwame Baffoe IV & Bishop</p>
+        </div>
+        <div class="overlay-zoom">⊕</div>
+      </div>
+      <div class="side-img clickable-img"
+        data-tag="Plaque Unveiling"
+        data-title="Official Plaque Unveiled — Dedicated to Medical Excellence">
+        <img src="event/488614323_1094809132687598_3229981268666501532_n.jpg" alt="Plaque Unveiling">
+        <div class="overlay">
+          <p class="overlay-tag">Plaque Unveiling</p>
+          <p class="overlay-title">Official Plaque Unveiled — Dedicated to Medical Excellence</p>
+        </div>
+        <div class="overlay-zoom">⊕</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Masonry grid — remaining 12 images -->
+  <div class="masonry" id="events-masonry">
+
+    <div class="masonry-item tall clickable-img"
+      data-tag="Dignitaries"
+      data-title="Panel of Dignitaries — Bishop, Dr. Peter Yeboah (CHAG) & Nana Kwame Baffoe IV">
+      <img src="event/488614323_1094809119354266_4478644938445949021_n.jpg" alt="Panel of Dignitaries">
+      <div class="overlay">
+        <p class="overlay-tag">Dignitaries</p>
+        <p class="overlay-title">Panel of Dignitaries — Bishop, Dr. Peter Yeboah & Nana Kwame Baffoe IV</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item wide clickable-img"
+      data-tag="Official Party"
+      data-title="Dignitaries Group Photo at Theatre Complex Entrance">
+      <img src="event/488248574_1094809372687574_7327641283165726882_n.jpg" alt="Dignitaries Group Photo">
+      <div class="overlay">
+        <p class="overlay-tag">Official Party</p>
+        <p class="overlay-title">Dignitaries Group Photo at Theatre Complex Entrance</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item sq clickable-img"
+      data-tag="Blessing"
+      data-title="Bishop Most Rev. Dominic Yeboah Nyarko Blessing the ICU Ward">
+      <img src="event/488213910_1094809092687602_3298039765538579284_n.jpg" alt="Blessing the Ward">
+      <div class="overlay">
+        <p class="overlay-tag">Blessing</p>
+        <p class="overlay-title">Bishop Dominic Yeboah Nyarko Blessing the ICU Ward</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item tall clickable-img"
+      data-tag="Medical Equipment"
+      data-title="Staff Member Presenting the New Mechanical Ventilator">
+      <img src="event/488251967_1094810906020754_1615880785717677837_n.jpg" alt="Ventilator Display">
+      <div class="overlay">
+        <p class="overlay-tag">Medical Equipment</p>
+        <p class="overlay-title">Staff Member Presenting the New Mechanical Ventilator</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item sq clickable-img"
+      data-tag="Religious Community"
+      data-title="Catholic Sisters & Priests at the Opening Ceremony">
+      <img src="event/488252572_1094809089354269_5611873289389317183_n.jpg" alt="Religious Community">
+      <div class="overlay">
+        <p class="overlay-tag">Religious Community</p>
+        <p class="overlay-title">Catholic Sisters & Priests at the Opening Ceremony</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item wide clickable-img"
+      data-tag="Hospital Staff"
+      data-title="Nursing & Medical Staff Seated at the Grand Opening">
+      <img src="event/488253000_1094809042687607_8292955313807500403_n.jpg" alt="Nursing Staff">
+      <div class="overlay">
+        <p class="overlay-tag">Hospital Staff</p>
+        <p class="overlay-title">Nursing & Medical Staff Seated at the Grand Opening</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item sq clickable-img"
+      data-tag="Ceremony"
+      data-title="Priests & Hospital Administration at the Ceremony">
+      <img src="event/488253155_1094809402687571_2408830685761909443_n.jpg" alt="Priests and Administration">
+      <div class="overlay">
+        <p class="overlay-tag">Ceremony</p>
+        <p class="overlay-title">Priests & Hospital Administration at the Ceremony</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item tall clickable-img"
+      data-tag="Hospital Staff"
+      data-title="CHAG Staff Member in Official Attire — Grand Opening">
+      <img src="event/488091908_1094809129354265_1631493238468446050_n.jpg" alt="CHAG Staff">
+      <div class="overlay">
+        <p class="overlay-tag">Hospital Staff</p>
+        <p class="overlay-title">CHAG Staff Member in Official Attire — Grand Opening</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item sq clickable-img"
+      data-tag="Nursing Staff"
+      data-title="Nursing Team Attending the Commissioning Ceremony">
+      <img src="event/488084301_1094809299354248_2321540476452644529_n.jpg" alt="Nursing Team">
+      <div class="overlay">
+        <p class="overlay-tag">Nursing Staff</p>
+        <p class="overlay-title">Nursing Team Attending the Commissioning Ceremony</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item wide clickable-img"
+      data-tag="Traditional Leaders"
+      data-title="Traditional Chiefs of Nkoranza Attending the Grand Opening">
+      <img src="event/488384274_1094809162687595_3504006520149552655_n.jpg" alt="Traditional Chiefs">
+      <div class="overlay">
+        <p class="overlay-tag">Traditional Leaders</p>
+        <p class="overlay-title">Traditional Chiefs of Nkoranza Attending the Grand Opening</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item sq clickable-img"
+      data-tag="Religious Community"
+      data-title="Sister Attending the Commissioning — Joyful Moment">
+      <img src="event/488237705_1094809289354249_5342899435687678703_n.jpg" alt="Catholic Sister">
+      <div class="overlay">
+        <p class="overlay-tag">Religious Community</p>
+        <p class="overlay-title">Sister Attending the Commissioning — Joyful Moment</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item tall clickable-img"
+      data-tag="Clergy"
+      data-title="Priest Seated at the Ceremony — Grand Opening of Surgical Theatre">
+      <img src="event/488255450_1094809039354274_4590904618365110637_n.jpg" alt="Priest at Ceremony">
+      <div class="overlay">
+        <p class="overlay-tag">Clergy</p>
+        <p class="overlay-title">Priest Seated at the Ceremony — Grand Opening of Surgical Theatre</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item wide clickable-img"
+      data-tag="Opening Prayer"
+      data-title="Attendees Bowing in Prayer — Grand Opening Ceremony">
+      <img src="event/488836183_1094809079354270_1757005511872210277_n.jpg" alt="Opening Prayer">
+      <div class="overlay">
+        <p class="overlay-tag">Opening Prayer</p>
+        <p class="overlay-title">Attendees Bowing in Prayer — Grand Opening Ceremony</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num">14 Feb</span>
+      <span class="stat-lbl">Grand Opening Date · 2025</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">3</span>
+      <span class="stat-lbl">Operating Theatres Commissioned</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">15+</span>
+      <span class="stat-lbl">Photos from the Event</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">CHAG</span>
+      <span class="stat-lbl">Supported by Dr. Peter Yeboah</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ SURGERY SECTION ══ -->
+<div class="gallery-section" id="tab-surgery">
+
+  <div class="section-header">
+    <div>
+      <p class="section-label">Inside the Operating Theatre</p>
+      <h2 class="section-title">Surgical <em>Procedures</em></h2>
+    </div>
+    <p class="section-desc">A window into our new Surgical Theatre Complex — where precision, teamwork, and compassion come together to save lives every day.</p>
+  </div>
+
+  <!-- Featured strip -->
+  <div class="featured-strip">
+    <div class="main-img clickable-img"
+      data-tag="General Surgery"
+      data-title="Surgical Team Performing an Operation — New Theatre Complex">
+      <img src="surgery/thearter 1.jpeg" alt="Surgical Team in Theatre">
+      <div class="overlay">
+        <p class="overlay-tag">General Surgery</p>
+        <p class="overlay-title">Surgical Team Performing an Operation — New Theatre Complex</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+    <div class="side-stack">
+      <div class="side-img clickable-img"
+        data-tag="Surgical Team"
+        data-title="Lead Surgeon & Scrub Nurse Managing Surgical Instruments">
+        <img src="surgery/WhatsApp Image 2026-02-25 at 11.15.17 AM.jpeg" alt="Surgeon and Scrub Nurse">
+        <div class="overlay">
+          <p class="overlay-tag">Surgical Team</p>
+          <p class="overlay-title">Lead Surgeon & Scrub Nurse Managing Surgical Instruments</p>
+        </div>
+        <div class="overlay-zoom">⊕</div>
+      </div>
+      <div class="side-img clickable-img"
+        data-tag="Theatre Team"
+        data-title="Full Theatre Team During an Active Surgical Procedure">
+        <img src="surgery/WhatsApp Image 2026-02-25 at 11.15.19 AM.jpeg" alt="Full Theatre Team">
+        <div class="overlay">
+          <p class="overlay-tag">Theatre Team</p>
+          <p class="overlay-title">Full Theatre Team During an Active Surgical Procedure</p>
+        </div>
+        <div class="overlay-zoom">⊕</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Masonry -->
+  <div class="masonry" id="surgery-masonry">
+
+    <div class="masonry-item tall clickable-img"
+      data-tag="General Surgery"
+      data-title="Close-Up: Surgeons at Work Under the Operating Light">
+      <img src="surgery/thearter 2.jpeg" alt="Surgeons at Work">
+      <div class="overlay">
+        <p class="overlay-tag">General Surgery</p>
+        <p class="overlay-title">Close-Up: Surgeons at Work Under the Operating Light</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item wide clickable-img"
+      data-tag="Theatre Observation"
+      data-title="Medical Students Observing a Live Surgical Procedure">
+      <img src="surgery/thearter 3.jpeg" alt="Theatre Observation">
+      <div class="overlay">
+        <p class="overlay-tag">Theatre Observation</p>
+        <p class="overlay-title">Medical Students Observing a Live Surgical Procedure</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+    <div class="masonry-item tall clickable-img"
+      data-tag="Surgical Team"
+      data-title="Anaesthetist & Theatre Staff Coordinating During Surgery">
+      <img src="surgery/WhatsApp Image 2026-02-25 at 11.15.20 AM.jpeg" alt="Anaesthetist and Staff">
+      <div class="overlay">
+        <p class="overlay-tag">Surgical Team</p>
+        <p class="overlay-title">Anaesthetist & Theatre Staff Coordinating During Surgery</p>
+      </div>
+      <div class="overlay-zoom">⊕</div>
+    </div>
+
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num">500+</span>
+      <span class="stat-lbl">Surgeries Performed Annually</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">3</span>
+      <span class="stat-lbl">Operating Theatres</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">24/7</span>
+      <span class="stat-lbl">Emergency Surgery</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">95%</span>
+      <span class="stat-lbl">Surgical Success Rate</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lbClose">✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lbPrev">&#8592;</button>
+  <button class="lightbox-nav lightbox-next" id="lbNext">&#8594;</button>
+  <div class="lightbox-inner">
+    <img class="lightbox-img" id="lbImg" src="" alt="">
+    <div class="lightbox-caption">
+      <p class="tag" id="lbTag"></p>
+      <h3 id="lbTitle"></h3>
+    </div>
+  </div>
+  <div class="lightbox-counter" id="lbCounter"></div>
+</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <p>© 2026 St. Theresa Hospital Nkoranza. All rights reserved.</p>
+  <a href="st_theresa_hospital.html">← Back to Main Site</a>
+</div>
+
+<script>
+  // ── Hamburger ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+  });
+
+  // ── Tab switching ──
+  const tabs = document.querySelectorAll('.tab-btn');
+  const sections = document.querySelectorAll('.gallery-section');
+  const sectionCount = document.getElementById('sectionCount');
+
+  const counts = { events: '16 photos', surgery: '6 photos' };
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      const id = 'tab-' + tab.dataset.tab;
+      document.getElementById(id).classList.add('active');
+      sectionCount.textContent = counts[tab.dataset.tab];
+    });
+  });
+
+  // ── Lightbox ──
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbTag = document.getElementById('lbTag');
+  const lbTitle = document.getElementById('lbTitle');
+  const lbClose = document.getElementById('lbClose');
+  const lbPrev = document.getElementById('lbPrev');
+  const lbNext = document.getElementById('lbNext');
+  const lbCounter = document.getElementById('lbCounter');
+
+  let currentItems = [];
+  let currentIdx = 0;
+
+  function buildLightboxItems() {
+    const activeSection = document.querySelector('.gallery-section.active');
+    currentItems = [...activeSection.querySelectorAll('.clickable-img')];
+  }
+
+  // ── FIX: rebuild items list BEFORE opening so indexOf works correctly ──
+  function openLightbox(item) {
+    currentIdx = currentItems.indexOf(item);
+    if (currentIdx === -1) return; // safety guard
+    showLightboxItem(currentIdx);
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function showLightboxItem(idx) {
+    const item = currentItems[idx];
+    const img = item.querySelector('img');
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lbTag.textContent = item.dataset.tag || '';
+    lbTitle.textContent = item.dataset.title || '';
+    lbCounter.textContent = `${idx + 1} / ${currentItems.length}`;
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ── FIX: build items first, then open ──
+  document.querySelectorAll('.clickable-img').forEach(item => {
+    item.addEventListener('click', () => {
+      buildLightboxItems();
+      openLightbox(item);
+    });
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+  lbPrev.addEventListener('click', (e) => {
+    e.stopPropagation();
+    currentIdx = (currentIdx - 1 + currentItems.length) % currentItems.length;
+    showLightboxItem(currentIdx);
+  });
+
+  lbNext.addEventListener('click', (e) => {
+    e.stopPropagation();
+    currentIdx = (currentIdx + 1) % currentItems.length;
+    showLightboxItem(currentIdx);
+  });
+
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') { currentIdx = (currentIdx - 1 + currentItems.length) % currentItems.length; showLightboxItem(currentIdx); }
+    if (e.key === 'ArrowRight') { currentIdx = (currentIdx + 1) % currentItems.length; showLightboxItem(currentIdx); }
+  });
+
+  // ── Touch swipe support ──
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  lightbox.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  lightbox.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const dy = e.changedTouches[0].screenY - touchStartY;
+
+    // Only trigger if horizontal swipe is dominant and long enough (min 50px)
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
+
+    if (dx < 0) {
+      // Swipe left → next image
+      currentIdx = (currentIdx + 1) % currentItems.length;
+    } else {
+      // Swipe right → previous image
+      currentIdx = (currentIdx - 1 + currentItems.length) % currentItems.length;
+    }
+    showLightboxItem(currentIdx);
+  }, { passive: true });
+
+  // Init
+  buildLightboxItems();
+</script>
+</body>
+</html>
