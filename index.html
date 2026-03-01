@@ -759,46 +759,154 @@
   .footer-bottom a:hover { color:rgba(255,255,255,0.48); }
 
   /* ══ ADDITIONAL RESPONSIVE ══ */
-  @media (max-width: 1280px) { .services-grid { grid-template-columns:repeat(3,1fr); } }
+/* =========================================
+   ≤ 1280px
+========================================= */
+@media (max-width: 1280px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 
-  @media (max-width: 1024px) {
-    .services-grid { grid-template-columns:repeat(2,1fr); }
-    .footer-top { grid-template-columns:1fr 1fr; }
-    .news-grid { grid-template-columns:1fr 1fr; }
-    .news-card:nth-child(3) { display:none; }
-    .hero-stats { display:none; }
-    .about-strip { grid-template-columns:1fr; }
-    .about-image { min-height:380px; }
-    .about-content { padding:3.5rem 3rem; }
-    .about-values { grid-template-columns:1fr 1fr; }
+
+/* =========================================
+   ≤ 1024px
+========================================= */
+@media (max-width: 1024px) {
+
+  /* Grids */
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 480px) {
-    section { padding: 3rem 4.5%; }
-    .hero { min-height: 100svh; }
-    .hero-content { padding: 0 4.5% 7%; }
-    .hero-content h1 { font-size: clamp(2rem, 11vw, 2.8rem); }
-    .hero-actions { flex-direction:column; align-items:stretch; }
-    .btn-primary, .btn-ghost { text-align:center; justify-content:center; }
-    .services-grid { grid-template-columns:1fr; }
-    .service-card .learn-more { opacity:1; transform:translateY(0); }
-    .marquee-inner { font-size: 0.64rem; }
-    .marquee-inner span { margin: 0 1.8rem; }
-    .about-values { grid-template-columns:1fr; }
-    .events-grid { gap:1rem; }
-    .modal-title { font-size:1.5rem; }
-    .svc-modal-title { font-size:1.5rem; }
-    .svc-modal-features { grid-template-columns:1fr; }
-    .modal-footer { flex-direction:column; align-items:stretch; }
-    .modal-footer-btn { text-align:center; justify-content:center; }
-    .emergency-actions { flex-direction:column; align-items:flex-start; }
-    .footer-brand p { max-width:100%; }
+  .footer-top,
+  .news-grid,
+  .about-values {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 768px) {
-    .events-filter { scrollbar-width:none; padding-bottom:6px; }
-    .events-filter::-webkit-scrollbar { display:none; }
+  .about-strip {
+    grid-template-columns: 1fr;
   }
+
+  /* Hidden elements */
+  .news-card:nth-child(3),
+  .hero-stats {
+    display: none;
+  }
+
+  /* About section adjustments */
+  .about-image {
+    min-height: 380px;
+  }
+
+  .about-content {
+    padding: 3.5rem 3rem;
+  }
+}
+
+
+/* =========================================
+   ≤ 768px
+========================================= */
+@media (max-width: 768px) {
+  .events-filter {
+    scrollbar-width: none;
+    padding-bottom: 6px;
+  }
+
+  .events-filter::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+/* =========================================
+   ≤ 480px
+========================================= */
+@media (max-width: 480px) {
+
+  /* Layout spacing */
+  section {
+    padding: 3rem 4.5%;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;   /* fallback */
+    min-height: 100svh;  /* modern */
+  }
+
+  .hero-content {
+    padding: 0 4.5% 7%;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(2rem, 11vw, 2.8rem);
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Buttons */
+  .btn-primary,
+  .btn-ghost,
+  .modal-footer-btn {
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Grids collapse */
+  .services-grid,
+  .about-values,
+  .svc-modal-features {
+    grid-template-columns: 1fr;
+  }
+
+  /* Service card */
+  .service-card .learn-more {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Marquee */
+  .marquee-inner {
+    font-size: 0.64rem;
+  }
+
+  .marquee-inner span {
+    margin: 0 1.8rem;
+  }
+
+  /* Events */
+  .events-grid {
+    gap: 1rem;
+  }
+
+  /* Modal */
+  .modal-title,
+  .svc-modal-title {
+    font-size: 1.5rem;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Emergency */
+  .emergency-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Footer */
+  .footer-brand p {
+    max-width: 100%;
+  }
+}
 </style>
 </head>
 <body>
@@ -1486,6 +1594,7 @@ addSwipeToDismiss(newsModal,()=>{newsModal.classList.remove('open');document.bod
 </body>
 
 </html>
+
 
 
 
