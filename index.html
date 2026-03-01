@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1a1612">
+<title>St Theresa Catholic Hospital — Nkoranza</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f8f3ec;
+    --warm-white: #fdfaf6;
+    --gold: #b8965a;
+    --gold-light: #d4b483;
+    --gold-dark: #8a6d3b;
+    --deep: #1a1612;
+    --charcoal: #2d2820;
+    --mid: #6b5f52;
+    --border: rgba(184,150,90,0.25);
+    --border-dark: rgba(184,150,90,0.12);
+    --nav-h: 68px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--deep);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  button { font-family: inherit; }
+  a { -webkit-tap-highlight-color: transparent; }
+
+  /* ══ NAVBAR ══ */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    height: var(--nav-h);
+    background: rgba(26,22,18,0.97);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    transition: height 0.3s ease;
+  }
+  .navbar.scrolled { height: 58px; }
+
+  .logo { display:flex; flex-direction:column; gap:1px; text-decoration:none; flex-shrink:0; }
+  .logo-top {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--gold-light); letter-spacing: 2px; text-transform: uppercase;
+  }
+  .logo-sub { font-size: 0.58rem; color: rgba(255,255,255,0.4); letter-spacing: 3px; text-transform: uppercase; }
+
+  /* ══════════════════════════════
+     DESKTOP NAV LINKS
+     Visible by default, hidden on mobile
+  ══════════════════════════════ */
+  .nav-links {
+    list-style: none; display: flex; gap: 2.5rem; align-items: center;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.65); text-decoration: none;
+    font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500;
+    transition: color 0.3s; position: relative; white-space: nowrap;
+  }
+  .nav-links a::after {
+    content:''; position:absolute; bottom:-4px; left:0;
+    width:0; height:1px; background:var(--gold); transition: width 0.3s ease;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+  .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+
+  .nav-cta {
+    background: var(--gold) !important; color: #fff !important;
+    padding: 0.5rem 1.3rem; border-radius: 2px;
+  }
+  .nav-cta:hover { background: var(--gold-dark) !important; }
+  .nav-cta::after { display:none !important; }
+
+  /* ── DROPDOWN (desktop) ── */
+  .nav-dropdown { position: relative; }
+
+  .nav-dropdown > a {
+    display: flex; align-items: center; gap: 0.35rem; cursor: pointer;
+  }
+
+  /* Clickable arrow — only toggles dropdown, does NOT navigate */
+  .dropdown-toggle-arrow {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 2px 4px; cursor: pointer; line-height: 1;
+  }
+
+  .nav-dropdown-arrow {
+    display: inline-block; width: 0; height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid rgba(255,255,255,0.5);
+    transition: transform 0.3s ease;
+    pointer-events: none;
+  }
+
+  .nav-dropdown.open .nav-dropdown-arrow { transform: rotate(180deg); }
+
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 18px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    background: rgba(26,22,18,0.98);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    min-width: 220px;
+    padding: 0.5rem 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  }
+
+  .nav-dropdown.open .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .dropdown-item {
+    display: flex !important; align-items: center; gap: 0.7rem;
+    padding: 0.75rem 1.2rem;
+    color: rgba(255,255,255,0.65) !important;
+    font-size: 0.72rem !important; letter-spacing: 1px !important;
+    text-transform: uppercase; font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .dropdown-item:hover { background: rgba(184,150,90,0.12); color: var(--gold-light) !important; }
+  .dropdown-item::after { display: none !important; }
+  .dropdown-item-icon { font-size: 0.9rem; opacity: 0.7; }
+
+  /* ══════════════════════════════
+     HAMBURGER — hidden on desktop
+  ══════════════════════════════ */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    padding: 10px 11px; background: rgba(184,150,90,0.15);
+    border: 1px solid rgba(184,150,90,0.35); border-radius: 4px;
+    transition: background 0.3s, border-color 0.3s;
+    position: relative; z-index: 2000; flex-shrink: 0;
+    min-width: 44px; min-height: 44px;
+    align-items: center; justify-content: center;
+  }
+  .hamburger:hover { background: rgba(184,150,90,0.28); border-color: var(--gold); }
+  .hamburger.active { background: var(--gold); border-color: var(--gold); }
+  .hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: rgba(255,255,255,0.9); border-radius: 2px; transition: all 0.3s ease;
+  }
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+  .hamburger.active span:nth-child(2) { opacity:0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE — MOBILE ≤ 768px
+     Hamburger shows, desktop nav hides
+  ══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    :root { --nav-h: 60px; }
+
+    /* Show the hamburger button */
+    .hamburger { display: flex; }
+
+    /* Hide desktop nav on mobile — JS openMobileNav() injects inline styles to show it */
+    .nav-links {
+      display: none !important;
+      position: fixed !important;
+      top: var(--nav-h) !important;
+      left: 0 !important; right: 0 !important; bottom: 0 !important;
+      width: 100% !important;
+      height: calc(100vh - var(--nav-h)) !important;
+      background: #1a1612 !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      align-items: stretch !important;
+      padding: 1rem 0 !important;
+      gap: 0 !important;
+      overflow-y: auto !important;
+      z-index: 1999 !important;
+      border-top: 1px solid rgba(184,150,90,0.25) !important;
+      list-style: none !important;
+    }
+
+    /* Show nav when hamburger tapped — set by JS */
+    .nav-links.mobile-open { display: flex !important; }
+
+    /* Each top-level item */
+    .nav-links > li { border-bottom: 1px solid var(--border-dark); }
+
+    /* Top-level links fill full width */
+    .nav-links > li > a {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 2rem;
+      font-size: 0.95rem; letter-spacing: 1px;
+      color: rgba(255,255,255,0.75); width: 100%;
+    }
+    .nav-links > li > a:hover { color: var(--gold-light); }
+
+    /* Mobile dropdown */
+    .dropdown-menu {
+      position: static !important;
+      transform: none !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      background: rgba(184,150,90,0.06);
+      border: none; border-top: 1px solid var(--border-dark);
+      box-shadow: none; border-radius: 0;
+      min-width: 0; padding: 0.3rem 0;
+      display: none;
+    }
+    .nav-dropdown.open .dropdown-menu { display: block; }
+
+    .dropdown-item { padding: 0.9rem 2.5rem !important; font-size: 0.75rem !important; }
+    .dropdown-toggle-arrow { display: inline-flex; }
+
+    /* Layout fixes */
+    section { padding: 3.5rem 5%; }
+    .hero-content { padding: 0 5% 6%; }
+    .hero-content h1 { font-size: clamp(2.2rem, 10vw, 3rem); }
+    .hero-content > p { font-size: 0.9rem; }
+    .hero-actions { gap: 0.7rem; }
+    .btn-primary, .btn-ghost { padding: 0.9rem 1.5rem; font-size: 0.75rem; }
+    .events-header { flex-direction:column; align-items:flex-start; }
+    .events-filter { width:100%; overflow-x:auto; padding-bottom:4px; flex-wrap:nowrap; -webkit-overflow-scrolling:touch; }
+    .filter-btn { flex-shrink:0; }
+    .events-grid { grid-template-columns:1fr; gap:1.2rem; }
+    .about-strip { grid-template-columns:1fr; }
+    .about-image { min-height:300px; }
+    .about-content { padding:2.5rem 1.8rem; }
+    .about-values { grid-template-columns:1fr 1fr; }
+    .services-grid { grid-template-columns:1fr 1fr; }
+    .svc-modal-features { grid-template-columns:1fr; }
+    .svc-modal-header { padding:1.8rem 1.6rem 1.4rem; }
+    .svc-modal-body   { padding:1.5rem 1.6rem 1.8rem; }
+    .news-grid { grid-template-columns:1fr; }
+    .news-card:nth-child(3) { display:flex; }
+    .news-card:first-child .news-card-img img { height:230px; }
+    .emergency-banner { flex-direction:column; align-items:flex-start; }
+    .emergency-text h2 { font-size:1.5rem; }
+    .emergency-number { font-size:1.6rem; }
+    .footer-top { grid-template-columns:1fr; gap:2rem; }
+    .modal-meta { grid-template-columns:1fr; }
+  }
+
+  /* ══ HERO ══ */
+  .hero {
+    position: relative; height: 100svh; min-height: 600px;
+    display: flex; align-items: flex-end; overflow: hidden;
+  }
+  .hero-slides { position: absolute; inset:0; }
+  .slide {
+    position: absolute; inset:0;
+    background-size: cover; background-position: center;
+    opacity:0; transition: opacity 2.5s ease-in-out;
+    transform: scale(1.04);
+  }
+  .slide.active { opacity:1; animation: slowZoom 9s ease forwards; }
+  @keyframes slowZoom { from{transform:scale(1.04)} to{transform:scale(1.0)} }
+
+  .hero-overlay {
+    position: absolute; inset:0;
+    background: linear-gradient(to top, rgba(10,8,5,0.93) 0%, rgba(10,8,5,0.5) 50%, rgba(10,8,5,0.15) 100%);
+  }
+
+  .hero-content {
+    position: relative; width:100%;
+    padding: 0 6% 8%;
+    animation: riseUp 1.2s ease 0.3s both;
+  }
+  @keyframes riseUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+  .hero-eyebrow {
+    font-size: 0.68rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.1rem;
+    display: flex; align-items: center; gap: 0.9rem;
+  }
+  .hero-eyebrow::before { content:''; width:36px; height:1px; background:var(--gold); display:block; }
+
+  .hero-content h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.6rem, 8vw, 5rem);
+    font-weight: 500; color:#fff; line-height:1.08;
+    margin-bottom: 1.2rem; max-width: 680px;
+  }
+  .hero-content h1 em { font-style:italic; color:var(--gold-light); }
+
+  .hero-content > p {
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    color: rgba(255,255,255,0.62); max-width:460px;
+    line-height:1.85; margin-bottom: 2.2rem; font-weight:300;
+  }
+
+  .hero-actions { display:flex; gap:0.85rem; flex-wrap:wrap; }
+
+  .btn-primary {
+    display: inline-flex; align-items:center; gap:0.55rem;
+    background: var(--gold); color:#fff;
+    padding: 0.95rem 1.8rem; text-decoration:none;
+    font-size: 0.78rem; font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
+    border-radius: 2px; transition: all 0.3s; white-space: nowrap; min-height: 48px;
+  }
+  .btn-primary:hover { background: var(--gold-dark); transform: translateY(-1px); }
+
+  .btn-ghost {
+    display: inline-flex; align-items:center; gap:0.55rem;
+    color: rgba(255,255,255,0.8); padding: 0.95rem 1.5rem; text-decoration:none;
+    font-size: 0.78rem; font-weight:500; letter-spacing:1px; text-transform:uppercase;
+    border: 1px solid rgba(255,255,255,0.28); border-radius:2px;
+    transition: all 0.3s; white-space:nowrap; min-height:48px;
+  }
+  .btn-ghost:hover { border-color:var(--gold); color:var(--gold-light); }
+
+  .hero-stats {
+    position: absolute; right:6%; bottom:7%;
+    display: flex; flex-direction:column; gap:1.4rem;
+    animation: riseUp 1.2s ease 0.6s both;
+  }
+  .stat-item { text-align:right; border-right:2px solid var(--gold); padding-right:1.1rem; }
+  .stat-number {
+    font-family:'Cormorant Garamond',serif; font-size:2.1rem;
+    font-weight:600; color:var(--gold-light); line-height:1;
+  }
+  .stat-label { font-size:0.62rem; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-top:3px; }
+
+  /* ══ MARQUEE ══ */
+  .marquee-bar {
+    background: var(--gold); color:#fff; padding:0.8rem 0;
+    overflow:hidden; white-space:nowrap;
+  }
+  .marquee-inner {
+    display:inline-block; animation: marquee 30s linear infinite;
+    font-size: 0.7rem; letter-spacing:2.5px; text-transform:uppercase; font-weight:600;
+  }
+  .marquee-inner span { margin:0 2.5rem; opacity:0.65; }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* ══ SECTIONS ══ */
+  section { padding: 5rem 6%; }
+
+  .section-label {
+    font-size: 0.66rem; letter-spacing:4px; text-transform:uppercase;
+    color:var(--gold); margin-bottom:0.85rem;
+    display:flex; align-items:center; gap:0.8rem;
+  }
+  .section-label::before { content:''; width:28px; height:1px; background:var(--gold); display:block; }
+
+  .section-title {
+    font-family:'Cormorant Garamond',serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight:500; line-height:1.15;
+    color:var(--deep); margin-bottom:1.4rem;
+  }
+
+  /* ══ EVENTS ══ */
+  .events-section { background: var(--warm-white); }
+  .events-header {
+    display:flex; align-items:flex-end;
+    justify-content:space-between; margin-bottom:2.5rem;
+    flex-wrap:wrap; gap:1.5rem;
+  }
+  .events-header-text > p:last-child { font-size:0.9rem; color:var(--mid); font-weight:300; margin:0; }
+
+  .events-filter {
+    display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap;
+  }
+  .filter-btn {
+    padding: 0.6rem 1.1rem; border: 1.5px solid var(--border);
+    background:#fff; color:var(--mid); font-size:0.72rem;
+    letter-spacing:1px; text-transform:uppercase; font-weight:600;
+    border-radius:20px; cursor:pointer; transition:all 0.3s;
+    min-height:40px; white-space:nowrap;
+  }
+  .filter-btn:hover { border-color:var(--gold); color:var(--gold); }
+  .filter-btn.active { background:var(--gold); color:#fff; border-color:var(--gold); }
+
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem; margin-top:2.5rem;
+  }
+
+  .event-card {
+    background:#fff; border:1px solid var(--border);
+    border-radius:4px; overflow:hidden;
+    display:flex; flex-direction:column;
+    cursor:pointer; transition:all 0.35s ease;
+  }
+  .event-card:hover { box-shadow:0 16px 40px rgba(0,0,0,0.12); transform:translateY(-6px); border-color:var(--gold-light); }
+  .event-card:active { transform:scale(0.98); }
+
+  .event-image { position:relative; height:220px; overflow:hidden; }
+  .event-image img { width:100%; height:100%; object-fit:cover; transition:transform 0.6s ease; }
+  .event-card:hover .event-image img { transform:scale(1.07); }
+
+  .event-badge {
+    position:absolute; top:1rem; right:1rem;
+    padding:0.45rem 0.9rem; border-radius:2px;
+    font-size:0.62rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    backdrop-filter:blur(8px);
+  }
+  .event-badge.upcoming { background:rgba(46,204,113,0.93); color:#fff; }
+  .event-badge.ongoing  { background:rgba(184,150,90,0.93); color:#fff; }
+  .event-badge.past     { background:rgba(100,100,100,0.93); color:#fff; }
+
+  .event-body { padding:1.6rem; flex:1; display:flex; flex-direction:column; }
+  .event-tag  { font-size:0.63rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:0.7rem; }
+  .event-title { font-family:'Cormorant Garamond',serif; font-size:1.28rem; font-weight:600; color:var(--deep); line-height:1.3; margin-bottom:0.9rem; }
+
+  .event-meta { display:flex; align-items:center; gap:0.8rem; font-size:0.78rem; color:var(--mid); margin-bottom:1rem; flex-wrap:wrap; }
+  .event-meta span { display:flex; align-items:center; gap:0.35rem; }
+
+  .event-desc { font-size:0.88rem; color:var(--mid); line-height:1.72; margin-bottom:1.2rem; flex:1; }
+
+  .event-location {
+    display:flex; align-items:center; gap:0.45rem;
+    font-size:0.78rem; color:var(--mid); margin-bottom:1.1rem;
+    padding:0.85rem; background:var(--cream);
+    border-left:3px solid var(--gold); border-radius:2px;
+  }
+  .event-location strong { color:var(--deep); }
+
+  .event-cta {
+    display:inline-flex; align-items:center; gap:0.45rem;
+    background:var(--gold); color:#fff; padding:0.7rem 1.3rem;
+    font-size:0.72rem; font-weight:600; letter-spacing:1.2px; text-transform:uppercase;
+    border-radius:2px; border:none; cursor:pointer;
+    transition:all 0.3s; align-self:flex-start; min-height: 44px;
+  }
+  .event-cta:hover { background:var(--gold-dark); transform:translateX(3px); }
+
+  .empty-state { text-align:center; padding:4rem 2rem; color:var(--mid); }
+  .empty-state-icon { font-size:3rem; margin-bottom:1rem; }
+  .empty-state h3 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:600; color:var(--deep); margin-bottom:0.5rem; }
+
+  /* ══ EVENT MODAL ══ */
+  .event-modal {
+    position:fixed; inset:0;
+    background:rgba(10,8,5,0.88);
+    display:none; justify-content:center; align-items:flex-end;
+    z-index:9999;
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    padding:0;
+  }
+  .event-modal.open { display:flex; }
+
+  .modal-content {
+    background:#fff; border-radius:12px 12px 0 0;
+    width:100%; max-width:700px; margin:0 auto;
+    max-height:93svh; overflow-y:auto;
+    animation: slideUpModal 0.38s cubic-bezier(0.16,1,0.3,1);
+    position:relative;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  @keyframes slideUpModal { from{transform:translateY(100%)} to{transform:translateY(0)} }
+
+  .modal-handle {
+    width:40px; height:4px; background:rgba(0,0,0,0.15);
+    border-radius:2px; margin:10px auto 0;
+  }
+
+  .modal-image { width:100%; height:260px; object-fit:cover; display:block; }
+  .modal-body { padding:2rem 1.6rem; }
+
+  .modal-badge {
+    display:inline-block; padding:0.45rem 0.9rem; border-radius:2px;
+    font-size:0.62rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:0.8rem;
+  }
+  .modal-badge.upcoming { background:rgba(46,204,113,0.12); color:#2ecc71; }
+  .modal-badge.ongoing  { background:rgba(184,150,90,0.12); color:var(--gold); }
+  .modal-badge.past     { background:rgba(100,100,100,0.12); color:#666; }
+
+  .modal-title { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:600; color:var(--deep); margin-bottom:1rem; line-height:1.2; }
+
+  .modal-meta {
+    display:grid; grid-template-columns:1fr 1fr; gap:1rem;
+    padding:1.2rem; background:var(--cream); border-radius:2px; margin-bottom:1.5rem;
+  }
+  .modal-meta-item { font-size:0.82rem; }
+  .modal-meta-label { color:var(--gold); font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:0.3rem; font-size:0.65rem; }
+  .modal-meta-value { color:var(--deep); font-weight:500; }
+
+  .modal-section { margin-bottom:1.5rem; }
+  .modal-section h4 { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:600; color:var(--deep); margin-bottom:0.7rem; }
+  .modal-section p  { font-size:0.9rem; line-height:1.78; color:var(--mid); }
+
+  .modal-close {
+    position:absolute; top:1.2rem; right:1.2rem;
+    background:rgba(0,0,0,0.1); border:none; color:var(--deep);
+    font-size:1.5rem; cursor:pointer;
+    width:40px; height:40px; display:flex; align-items:center; justify-content:center;
+    border-radius:50%; transition:all 0.3s; line-height:1; z-index:2;
+    min-width:40px; min-height:40px;
+  }
+  .modal-close:hover { background:rgba(0,0,0,0.18); }
+
+  .modal-footer {
+    padding:1.5rem 1.6rem; border-top:1px solid var(--border);
+    display:flex; gap:1rem; align-items:center; flex-wrap:wrap;
+  }
+  .modal-footer-btn {
+    display:inline-flex; align-items:center; gap:0.55rem;
+    background:var(--gold); color:#fff; padding:0.9rem 1.8rem;
+    text-decoration:none; font-size:0.78rem; font-weight:600;
+    letter-spacing:1.5px; text-transform:uppercase; border-radius:2px;
+    border:none; cursor:pointer; transition:all 0.3s; min-height:48px;
+  }
+  .modal-footer-btn:hover { background:var(--gold-dark); }
+  .modal-share { font-size:0.72rem; color:var(--mid); letter-spacing:1px; text-transform:uppercase; font-weight:600; }
+
+  /* ══ ABOUT ══ */
+  .about-strip {
+    background:var(--cream); display:grid;
+    grid-template-columns:1fr 1fr; gap:0; overflow:hidden;
+  }
+  .about-image { position:relative; min-height:480px; overflow:hidden; }
+  .about-image img { width:100%; height:100%; object-fit:cover; transition:transform 6s ease; }
+  .about-image:hover img { transform:scale(1.04); }
+  .about-image-badge {
+    position:absolute; bottom:2rem; right:-1px;
+    background:var(--gold); color:#fff;
+    padding:1.2rem 1.8rem;
+    font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:600;
+    line-height:1.3; text-align:center;
+  }
+  .about-image-badge strong { display:block; font-size:2.2rem; font-weight:700; line-height:1; }
+  .about-content { padding:4rem 3.5rem; display:flex; flex-direction:column; justify-content:center; }
+  .about-content p { color:var(--mid); font-size:0.95rem; line-height:1.9; margin-bottom:1.1rem; font-weight:300; }
+  .about-values { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.8rem; }
+  .value-pill { display:flex; align-items:center; gap:0.65rem; font-size:0.8rem; font-weight:500; color:var(--charcoal); }
+  .value-pill .dot { width:6px; height:6px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+
+  /* ══ SERVICES ══ */
+  .services-section { background:var(--deep); }
+  .services-section .section-title { color:#fff; }
+  .services-grid {
+    display:grid; grid-template-columns:repeat(4,1fr);
+    gap:1px; background:rgba(255,255,255,0.05);
+    margin-top:3rem; border:1px solid rgba(255,255,255,0.05);
+  }
+  .service-card {
+    background:var(--charcoal); padding:2.2rem 1.8rem;
+    cursor:pointer; transition:background 0.3s,transform 0.3s;
+    position:relative; overflow:hidden; user-select:none;
+  }
+  .service-card::before {
+    content:''; position:absolute; bottom:0; left:0;
+    width:0; height:2px; background:var(--gold); transition:width 0.4s ease;
+  }
+  .service-card:hover { background:#322b22; transform:translateY(-2px); }
+  .service-card:hover::before { width:100%; }
+  .service-card:active { transform:scale(0.98); background:#3a3028; }
+  .service-card .learn-more {
+    display:inline-flex; align-items:center; gap:0.4rem;
+    margin-top:1rem; font-size:0.68rem; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--gold); font-weight:600;
+    opacity:0; transform:translateY(5px); transition:opacity 0.3s,transform 0.3s;
+  }
+  .service-card:hover .learn-more { opacity:1; transform:translateY(0); }
+  .service-icon { font-size:1.7rem; margin-bottom:1rem; }
+  .service-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.18rem; font-weight:600; color:#fff; margin-bottom:0.6rem; }
+  .service-card p  { font-size:0.8rem; color:rgba(255,255,255,0.43); line-height:1.65; font-weight:300; }
+
+  /* ══ SERVICE MODAL ══ */
+  .service-modal {
+    position:fixed; inset:0;
+    background:rgba(10,8,5,0.85);
+    display:none; justify-content:center; align-items:flex-end;
+    z-index:9999;
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    padding:0;
+  }
+  .service-modal.open { display:flex; }
+  .service-modal-inner {
+    background:var(--deep); border:1px solid var(--border);
+    border-radius:12px 12px 0 0;
+    width:100%; max-width:620px; margin:0 auto;
+    position:relative;
+    animation: slideUpModal 0.38s cubic-bezier(0.16,1,0.3,1);
+    overflow:hidden; max-height:90svh; overflow-y:auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .svc-modal-header {
+    background:linear-gradient(135deg,#2d2820 0%,#1a1612 100%);
+    border-bottom:1px solid var(--border);
+    padding:2rem 2rem 1.6rem;
+    display:flex; align-items:flex-start; gap:1.3rem;
+  }
+  .svc-modal-icon {
+    font-size:2.4rem; line-height:1; flex-shrink:0;
+    background:rgba(184,150,90,0.1); border:1px solid var(--border);
+    width:62px; height:62px; display:flex; align-items:center; justify-content:center;
+    border-radius:4px;
+  }
+  .svc-modal-title-group { flex:1; }
+  .svc-modal-tag   { font-size:0.6rem; letter-spacing:3px; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:0.4rem; }
+  .svc-modal-title { font-family:'Cormorant Garamond',serif; font-size:1.75rem; font-weight:600; color:#fff; line-height:1.15; }
+  .svc-modal-body  { padding:1.8rem 2rem 2rem; }
+  .svc-modal-desc  { font-size:0.9rem; color:rgba(255,255,255,0.58); line-height:1.85; font-weight:300; margin-bottom:1.5rem; }
+  .svc-modal-features { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin-bottom:1.8rem; }
+  .svc-feature {
+    display:flex; align-items:flex-start; gap:0.6rem;
+    font-size:0.78rem; color:rgba(255,255,255,0.48); font-weight:300; line-height:1.5;
+  }
+  .svc-feature::before { content:'✦'; color:var(--gold); font-size:0.52rem; margin-top:4px; flex-shrink:0; }
+  .svc-modal-footer {
+    display:flex; align-items:center; gap:1rem; flex-wrap:wrap;
+    padding-top:1.3rem; border-top:1px solid rgba(255,255,255,0.07);
+  }
+  .svc-modal-cta {
+    display:inline-flex; align-items:center; gap:0.5rem;
+    background:var(--gold); color:#fff; padding:0.8rem 1.5rem;
+    text-decoration:none; font-size:0.75rem; font-weight:600;
+    letter-spacing:1.5px; text-transform:uppercase; border-radius:2px;
+    border:none; cursor:pointer; transition:background 0.3s; min-height:48px;
+  }
+  .svc-modal-cta:hover { background:var(--gold-dark); }
+  .svc-modal-hours { font-size:0.72rem; color:rgba(255,255,255,0.28); font-weight:300; }
+  .service-modal-close {
+    position:absolute; top:1rem; right:1.2rem;
+    background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+    color:rgba(255,255,255,0.5);
+    width:36px; height:36px; border-radius:2px; font-size:0.95rem;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:all 0.2s; z-index:2; min-width:36px; min-height:36px;
+  }
+  .service-modal-close:hover { background:rgba(255,255,255,0.14); color:#fff; }
+
+  /* Services show-more */
+  .services-extra { display:none; margin-top:1px; opacity:0; transform:translateY(14px); transition:opacity 0.5s ease,transform 0.5s ease; }
+  .services-extra.visible { display:grid; }
+  .services-extra.animated { opacity:1; transform:translateY(0); }
+  .services-more-wrap { position:relative; display:flex; flex-direction:column; align-items:center; padding:2rem 0 0.5rem; }
+  .services-fade {
+    position:absolute; top:-80px; left:0; right:0; height:80px;
+    background:linear-gradient(to bottom,transparent,var(--deep));
+    pointer-events:none; transition:opacity 0.4s ease;
+  }
+  .services-fade.hidden { opacity:0; }
+  .services-more-btn {
+    display:inline-flex; align-items:center; gap:0.7rem;
+    background:transparent; border:1.5px solid var(--gold);
+    color:var(--gold-light); padding:0.85rem 2rem;
+    font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:600;
+    letter-spacing:2px; text-transform:uppercase; border-radius:2px;
+    cursor:pointer; transition:all 0.3s; position:relative; z-index:1; min-height:48px;
+  }
+  .services-more-btn:hover { background:var(--gold); color:#fff; transform:translateY(-2px); }
+  .services-more-count { background:var(--gold); color:#fff; font-size:0.62rem; padding:0.2rem 0.5rem; border-radius:20px; font-weight:700; }
+  .services-more-arrow { transition:transform 0.4s ease; }
+  .services-more-arrow.flipped { transform:rotate(180deg); }
+
+  /* ══ NEWS ══ */
+  .news-section { background:var(--warm-white); }
+  .news-header { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:2.5rem; flex-wrap:wrap; gap:1rem; }
+  .news-header a { font-size:0.72rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); text-decoration:none; font-weight:600; white-space:nowrap; }
+  .news-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:1.5px; background:var(--border); }
+  .news-card { background:var(--warm-white); overflow:hidden; cursor:pointer; display:flex; flex-direction:column; }
+  .news-card-img { overflow:hidden; position:relative; }
+  .news-card-img img { width:100%; height:210px; object-fit:cover; transition:transform 0.6s ease; }
+  .news-card:first-child .news-card-img img { height:280px; }
+  .news-card:hover .news-card-img img { transform:scale(1.05); }
+  .news-card-body { padding:1.6rem; flex:1; display:flex; flex-direction:column; }
+  .news-tag { font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:0.7rem; }
+  .news-card-body h3 { font-family:'Cormorant Garamond',serif; font-size:1.12rem; font-weight:600; color:var(--deep); line-height:1.3; margin-bottom:0.6rem; }
+  .news-card:first-child .news-card-body h3 { font-size:1.4rem; }
+  .news-card-body p { font-size:0.82rem; color:var(--mid); line-height:1.72; font-weight:300; flex:1; }
+  .news-card-footer { display:flex; align-items:center; gap:0.5rem; margin-top:1rem; font-size:0.7rem; color:rgba(107,95,82,0.55); }
+
+  /* ══ NEWS MODAL ══ */
+  .news-modal {
+    position:fixed; inset:0; background:rgba(10,8,5,0.82);
+    display:none; justify-content:center; align-items:flex-end;
+    z-index:9999;
+    backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+  }
+  .news-modal.open { display:flex; }
+  .modal-inner {
+    background:var(--warm-white); width:100%; max-width:560px; margin:0 auto;
+    padding:2.5rem 1.8rem 2rem; position:relative;
+    border-radius:12px 12px 0 0;
+    border-top:3px solid var(--gold);
+    animation: slideUpModal 0.35s ease;
+    max-height:80svh; overflow-y:auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .modal-inner h3 { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:600; color:var(--deep); margin-bottom:1rem; line-height:1.22; }
+  .modal-inner p  { font-size:0.88rem; color:var(--mid); line-height:1.82; font-weight:300; }
+
+  /* ══ EMERGENCY BANNER ══ */
+  .emergency-banner {
+    background:var(--cream); border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+    padding:3rem 6%; display:flex; align-items:center; justify-content:space-between;
+    gap:1.5rem; flex-wrap:wrap;
+  }
+  .emergency-text h2 { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:600; color:var(--deep); }
+  .emergency-text p  { font-size:0.85rem; color:var(--mid); margin-top:0.3rem; font-weight:300; }
+  .emergency-actions { display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
+  .emergency-number {
+    font-family:'Cormorant Garamond',serif; font-size:1.9rem; font-weight:700;
+    color:var(--gold); text-decoration:none; transition:opacity 0.3s;
+  }
+  .emergency-number:hover { opacity:0.75; }
+
+  /* ══ FOOTER ══ */
+  footer { background:var(--deep); color:rgba(255,255,255,0.55); padding:4.5rem 6% 2.5rem; }
+  .footer-top {
+    display:grid; grid-template-columns:1.7fr 1fr 1fr 1fr; gap:2.5rem;
+    padding-bottom:3rem; border-bottom:1px solid rgba(255,255,255,0.07); margin-bottom:1.8rem;
+  }
+  .footer-brand p { font-size:0.8rem; line-height:1.82; margin-top:0.9rem; margin-bottom:1.3rem; font-weight:300; max-width:270px; }
+  .footer-social { display:flex; gap:0.7rem; }
+  .social-btn {
+    width:34px; height:34px; border:1px solid rgba(255,255,255,0.14);
+    display:flex; align-items:center; justify-content:center;
+    color:rgba(255,255,255,0.45); text-decoration:none; font-size:0.72rem;
+    border-radius:2px; transition:all 0.3s; font-weight:600; min-width:34px; min-height:34px;
+  }
+  .social-btn:hover { border-color:var(--gold); color:var(--gold); }
+  .footer-col h4 { font-family:'Cormorant Garamond',serif; font-size:0.95rem; font-weight:600; color:rgba(255,255,255,0.82); margin-bottom:1.1rem; }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:0.55rem; }
+  .footer-col ul li a { color:rgba(255,255,255,0.42); text-decoration:none; font-size:0.8rem; font-weight:300; transition:color 0.3s; }
+  .footer-col ul li a:hover { color:var(--gold-light); }
+  .footer-col ul li:not(:has(a)) { color:rgba(255,255,255,0.42); font-size:0.8rem; font-weight:300; }
+  .contact-line { display:flex; flex-direction:column; gap:0.6rem; font-size:0.8rem; font-weight:300; }
+  .contact-line a { color:rgba(255,255,255,0.42); text-decoration:none; transition:color 0.3s; }
+  .contact-line a:hover { color:var(--gold-light); }
+  .contact-line strong { color:rgba(255,255,255,0.58); font-weight:500; }
+  .footer-bottom { display:flex; align-items:center; justify-content:space-between; font-size:0.7rem; color:rgba(255,255,255,0.22); flex-wrap:wrap; gap:0.5rem; }
+  .footer-bottom a { color:rgba(255,255,255,0.22); text-decoration:none; transition:color 0.3s; }
+  .footer-bottom a:hover { color:rgba(255,255,255,0.48); }
+
+  /* ══ ADDITIONAL RESPONSIVE ══ */
+  @media (max-width: 1280px) { .services-grid { grid-template-columns:repeat(3,1fr); } }
+
+  @media (max-width: 1024px) {
+    .services-grid { grid-template-columns:repeat(2,1fr); }
+    .footer-top { grid-template-columns:1fr 1fr; }
+    .news-grid { grid-template-columns:1fr 1fr; }
+    .news-card:nth-child(3) { display:none; }
+    .hero-stats { display:none; }
+    .about-strip { grid-template-columns:1fr; }
+    .about-image { min-height:380px; }
+    .about-content { padding:3.5rem 3rem; }
+    .about-values { grid-template-columns:1fr 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    section { padding: 3rem 4.5%; }
+    .hero { min-height: 100svh; }
+    .hero-content { padding: 0 4.5% 7%; }
+    .hero-content h1 { font-size: clamp(2rem, 11vw, 2.8rem); }
+    .hero-actions { flex-direction:column; align-items:stretch; }
+    .btn-primary, .btn-ghost { text-align:center; justify-content:center; }
+    .services-grid { grid-template-columns:1fr; }
+    .service-card .learn-more { opacity:1; transform:translateY(0); }
+    .marquee-inner { font-size: 0.64rem; }
+    .marquee-inner span { margin: 0 1.8rem; }
+    .about-values { grid-template-columns:1fr; }
+    .events-grid { gap:1rem; }
+    .modal-title { font-size:1.5rem; }
+    .svc-modal-title { font-size:1.5rem; }
+    .svc-modal-features { grid-template-columns:1fr; }
+    .modal-footer { flex-direction:column; align-items:stretch; }
+    .modal-footer-btn { text-align:center; justify-content:center; }
+    .emergency-actions { flex-direction:column; align-items:flex-start; }
+    .footer-brand p { max-width:100%; }
+  }
+
+  @media (max-width: 768px) {
+    .events-filter { scrollbar-width:none; padding-bottom:6px; }
+    .events-filter::-webkit-scrollbar { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     NAVBAR
+     Logo | Desktop nav links | Hamburger (mobile only)
+══════════════════════════════ -->
+<nav class="navbar" id="navbar">
+
+  <a href="index.html" class="logo">
+    <span class="logo-top">st theresa catholic hospital</span>
+    <span class="logo-sub">Nkoranza · Ghana</span>
+  </a>
+
+  <!-- Desktop + Mobile overlay nav -->
+  <ul class="nav-links" id="navLinks">
+
+    <li><a href="index.html">Home</a></li>
+
+    <!-- About with dropdown -->
+    <li class="nav-dropdown" id="aboutDropdown">
+      <!--
+        On desktop: clicking "About" text navigates to about.html.
+                    clicking the arrow chevron toggles the dropdown.
+        On mobile:  clicking anywhere on this row toggles the dropdown (no navigation).
+      -->
+      <a href="about.html" id="aboutLink">
+        About
+        <span class="dropdown-toggle-arrow" id="aboutArrow">
+          <span class="nav-dropdown-arrow"></span>
+        </span>
+      </a>
+      <div class="dropdown-menu">
+        <a href="board.html" class="dropdown-item">
+          <span class="dropdown-item-icon">🏛️</span>
+          Board of Directors
+        </a>
+        <a href="about.html#Welcomemessage" class="dropdown-item">
+          <span class="dropdown-item-icon">🎤</span>
+          Welcome Message
+        </a>
+        <a href="about.html#ourjourney" class="dropdown-item">
+          <span class="dropdown-item-icon">📜</span>
+          Our History
+        </a>
+        <a href="about.html#ourfacilities" class="dropdown-item">
+          <span class="dropdown-item-icon">🏗</span>
+          Our Facilities
+        </a>
+      </div>
+    </li>
+
+    <li><a href="#services">Services</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="tel:+233504414929" class="nav-cta">Emergency</a></li>
+
+  </ul>
+
+  <!-- Hamburger — only visible on mobile via CSS -->
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-slides">
+    <div class="slide active" style="background-image:url('images/mainhall.png')"></div>
+    <div class="slide" style="background-image:url('images/thearterbuilding.jpeg')"></div>
+    <div class="slide" style="background-image:url('images/swordcutting.jpeg')"></div>
+    <div class="slide" style="background-image:url('images/WhatsApp Image 2026-02-25 at 11.15.18 AM.jpeg')"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">St. Theresa Hospital Nkoranza</p>
+    <h1>Total Care,<br><em>Inside Out</em></h1>
+    <p>Delivering advanced, patient-centered healthcare to the people of Nkoranza and beyond — with integrity, dignity, and devotion.</p>
+    <div class="hero-actions">
+      <a href="tel:+233504414929" class="btn-primary">
+        <span>⚡</span> Emergency: +233 504 414 929
+      </a>
+      <a href="#services" class="btn-ghost">Our Services →</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-number">50+</div>
+      <div class="stat-label">Years of Service</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">24/7</div>
+      <div class="stat-label">Emergency Care</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">15+</div>
+      <div class="stat-label">Departments</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    Emergency &amp; Ambulance <span>✦</span> Blood Transfusion <span>✦</span> Laboratory &amp; Radiology <span>✦</span> Dental Services <span>✦</span> Eye Care <span>✦</span> ENT Services <span>✦</span> Mental Health <span>✦</span> Maternity Care <span>✦</span> HIV/AIDS/TB <span>✦</span> Physiotherapy <span>✦</span> Cancer Screening <span>✦</span> Pharmacy <span>✦</span>
+    Emergency &amp; Ambulance <span>✦</span> Blood Transfusion <span>✦</span> Laboratory &amp; Radiology <span>✦</span> Dental Services <span>✦</span> Eye Care <span>✦</span> ENT Services <span>✦</span> Mental Health <span>✦</span> Maternity Care <span>✦</span> HIV/AIDS/TB <span>✦</span> Physiotherapy <span>✦</span> Cancer Screening <span>✦</span> Pharmacy <span>✦</span>
+  </div>
+</div>
+
+<!-- EVENTS -->
+<section class="events-section" id="events">
+  <div class="events-header">
+    <div class="events-header-text">
+      <p class="section-label">What's Happening</p>
+      <h2 class="section-title">Current Events &amp; Activities</h2>
+      <p>Stay updated with our latest hospital events, medical camps, workshops, and community outreach programs.</p>
+    </div>
+    <div class="events-filter">
+      <button class="filter-btn active" data-filter="all">All Events</button>
+      <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+      <button class="filter-btn" data-filter="ongoing">Ongoing</button>
+      <button class="filter-btn" data-filter="past">Past</button>
+    </div>
+  </div>
+  <div class="events-grid" id="eventsGrid"></div>
+  <div id="emptyState" class="empty-state" style="display:none;">
+    <div class="empty-state-icon">📅</div>
+    <h3>No Events Found</h3>
+    <p>There are currently no events in this category. Please check back soon!</p>
+  </div>
+</section>
+
+<!-- EVENT MODAL -->
+<div class="event-modal" id="eventModal" role="dialog" aria-modal="true">
+  <div class="modal-content">
+    <div class="modal-handle"></div>
+    <button class="modal-close" id="eventModalClose" aria-label="Close">&times;</button>
+    <img id="modalImage" src="" alt="Event" class="modal-image">
+    <div class="modal-body">
+      <span class="modal-badge" id="modalBadge"></span>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <div class="modal-meta">
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">📅 Date</div>
+          <div class="modal-meta-value" id="modalDate"></div>
+        </div>
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">⏰ Time</div>
+          <div class="modal-meta-value" id="modalTime"></div>
+        </div>
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">📍 Location</div>
+          <div class="modal-meta-value" id="modalLocation"></div>
+        </div>
+        <div class="modal-meta-item">
+          <div class="modal-meta-label">👥 Attendees</div>
+          <div class="modal-meta-value" id="modalAttendees"></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <h4>About This Event</h4>
+        <p id="modalDescription"></p>
+      </div>
+      <div class="modal-section" id="highlightsSection" style="display:none;">
+        <h4>Event Highlights</h4>
+        <p id="modalHighlights"></p>
+      </div>
+      <div class="modal-section" id="organizersSection" style="display:none;">
+        <h4>Organized By</h4>
+        <p id="modalOrganizers"></p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="tel:+233504414929" class="modal-footer-btn">📞 Register Now</a>
+      <span class="modal-share">Share this event</span>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="about-strip" id="about">
+  <div class="about-image">
+    <img src="images/Fr. John.jpg" alt="Hospital care">
+    <div class="about-image-badge">
+      <strong>50+</strong>
+      Years Serving<br>Nkoranza
+    </div>
+  </div>
+  <div class="about-content">
+    <p class="section-label">Our Story</p>
+    <h2 class="section-title">A Legacy of Healing,<br>A Future of Innovation</h2>
+    <p>St. Theresa Hospital has been a cornerstone of healthcare in the Bono East Region for over five decades. Founded on the values of the Catholic Church, we combine faith-driven compassion with modern medical excellence.</p>
+    <p>Our mission is simple: to provide accessible, high-quality healthcare to every patient who walks through our doors — regardless of their background or means.</p>
+    <div class="about-values">
+      <div class="value-pill"><div class="dot"></div> Patient-Centered Care</div>
+      <div class="value-pill"><div class="dot"></div> Clinical Excellence</div>
+      <div class="value-pill"><div class="dot"></div> Community Outreach</div>
+      <div class="value-pill"><div class="dot"></div> Ethical Practice</div>
+      <div class="value-pill"><div class="dot"></div> Faith &amp; Compassion</div>
+      <div class="value-pill"><div class="dot"></div> Continuous Learning</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <p class="section-label" style="color:var(--gold-light)">What We Offer</p>
+  <h2 class="section-title">Our Services</h2>
+  <div class="services-grid">
+    <div class="service-card" data-service="emergency"><div class="service-icon">🚑</div><h3>Emergency &amp; Ambulance</h3><p>24-hour emergency care and ambulance services ready to respond at any time, day or night.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="blood-transfusion"><div class="service-icon">🩸</div><h3>Blood Transfusion</h3><p>Safe and reliable blood transfusion services with rigorous screening and compatibility testing.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="diagnostics"><div class="service-icon">🔬</div><h3>Diagnostics</h3><p>Comprehensive diagnostic services including laboratory investigations, radiography, ultrasound, and ECG.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="dental"><div class="service-icon">🦷</div><h3>Dental Services</h3><p>Full oral health care including routine check-ups, extractions, fillings, and dental hygiene education.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="ent"><div class="service-icon">👂</div><h3>Ear, Nose &amp; Throat</h3><p>Specialist ENT care for conditions affecting hearing, nasal passages, and throat health.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="eye-care"><div class="service-icon">👁️</div><h3>Eye Care Services</h3><p>Comprehensive eye examinations, treatment of eye conditions, and vision correction services.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="opd"><div class="service-icon">💕</div><h3>General OPD Consultation</h3><p>Outpatient consultations with experienced physicians for a wide range of medical conditions.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="hiv-tb"><div class="service-icon">🧬</div><h3>HIV / AIDS / TB Services</h3><p>Confidential testing, counselling, treatment, and support for HIV/AIDS and tuberculosis patients.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="mental-health"><div class="service-icon">🧘</div><h3>Mental Health Services</h3><p>Compassionate psychiatric and psychological care in a safe, stigma-free environment.</p><span class="learn-more">Learn more →</span></div>
+  </div>
+
+  <div class="services-more-wrap" id="servicesMoreWrap">
+    <div class="services-fade" id="servicesFade"></div>
+    <button class="services-more-btn" id="servicesMoreBtn">
+      <span id="servicesMoreLabel">View All Services</span>
+      <span class="services-more-count">+9 more</span>
+      <svg class="services-more-arrow" id="servicesMoreArrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="services-grid services-extra" id="servicesExtra">
+    <div class="service-card" data-service="mortuary"><div class="service-icon">🕊️</div><h3>Mortuary Services</h3><p>Dignified mortuary services with respectful handling and storage for bereaved families.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="pastoral"><div class="service-icon">✝️</div><h3>Pastoral Care &amp; Counselling</h3><p>Spiritual support and counselling rooted in Catholic values for patients and their families.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="public-health"><div class="service-icon">🏥</div><h3>Public Health &amp; Primary Care</h3><p>Community health programmes, immunizations, disease prevention, and primary care outreach.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="pharmacy"><div class="service-icon">💊</div><h3>Pharmacy &amp; Dispensary</h3><p>A well-stocked pharmacy providing prescription medications, dispensing advice, and patient education.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="specialist"><div class="service-icon">⚕️</div><h3>Specialist Services</h3><p>Expert specialist care in Surgery, Paediatrics, Obstetrics, and Gynaecology for complex medical needs.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="physiotherapy"><div class="service-icon">🤸</div><h3>Physiotherapy Services</h3><p>Rehabilitative therapy to restore movement, reduce pain, and improve physical function.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="wellness"><div class="service-icon">🌿</div><h3>Wellness Clinic</h3><p>Preventive health assessments, lifestyle counselling, and holistic wellness programmes for all ages.</p><span class="learn-more">Learn more →</span></div>
+    <div class="service-card" data-service="cancer-screening"><div class="service-icon">🎗️</div><h3>Cancer Screening</h3><p>Cervical and breast cancer screening services for early detection, timely intervention, and patient education.</p><span class="learn-more">Learn more →</span></div>
+  </div>
+</section>
+
+<!-- SERVICE MODAL -->
+<div class="service-modal" id="serviceModal" role="dialog" aria-modal="true">
+  <div class="service-modal-inner">
+    <div class="modal-handle"></div>
+    <button class="service-modal-close" id="serviceModalClose" aria-label="Close">✕</button>
+    <div class="svc-modal-header">
+      <div class="svc-modal-icon" id="svcIcon"></div>
+      <div class="svc-modal-title-group">
+        <p class="svc-modal-tag" id="svcTag"></p>
+        <h2 class="svc-modal-title" id="svcTitle"></h2>
+      </div>
+    </div>
+    <div class="svc-modal-body">
+      <p class="svc-modal-desc" id="svcDesc"></p>
+      <div class="svc-modal-features" id="svcFeatures"></div>
+      <div class="svc-modal-footer">
+        <a href="tel:+233504414929" class="svc-modal-cta">⚡ Book / Enquire</a>
+        <span class="svc-modal-hours" id="svcHours">Available Mon–Sat · Emergency 24/7</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWS -->
+<section class="news-section" id="news">
+  <div class="news-header">
+    <div>
+      <p class="section-label">Latest Updates</p>
+      <h2 class="section-title" style="margin-bottom:0">News &amp; Announcements</h2>
+    </div>
+    <a href="#">View all news →</a>
+  </div>
+  <div class="news-grid">
+    <div class="news-card" data-title="New Surgery Theatre Unit Commissioned" data-content="St. Theresa Hospital has officially commissioned a brand-new surgery theatre unit to significantly improve surgical services across the Bono East Region. The facility is equipped with modern machines and trained specialists dedicated to improving patient outcomes and quality of life for those in need of surgical care.">
+      <div class="news-card-img"><img src="images/swordcutting.jpeg" alt="Surgery Theatre Unit"></div>
+      <div class="news-card-body">
+        <p class="news-tag">Infrastructure</p>
+        <h3>New Surgery Theatre Unit Commissioned</h3>
+        <p>Expanding surgical healthcare services for the Bono East Region with state-of-the-art equipment and expert staff.</p>
+        <div class="news-card-footer"><span>📅</span> February 2026</div>
+      </div>
+    </div>
+    <div class="news-card" data-title="Free Medical Surgery" data-content="Free medical screenings and surgeries will be offered at St. Theresa Catholic Hospital, Nkoranza, for conditions like hernias, goitres, lumps, haemorrhoids, cysts, and hydroceles from February to March 2026; bring your NHIS card and call 054 228 2789 or 054 980 1240 for details and appointments at the surgical clinic.">
+      <div class="news-card-img"><img src="images/freesurgery.jpeg" alt="Outreach"></div>
+      <div class="news-card-body">
+        <p class="news-tag">Community</p>
+        <h3>Free Medical Surgery</h3>
+        <p>Bringing healthcare directly to underserved communities.</p>
+        <div class="news-card-footer"><span>📅</span> January 2026</div>
+      </div>
+    </div>
+    <div class="news-card" data-title="New Pediatric Specialist Joins Our Team" data-content="We are proud to welcome a new and highly experienced pediatric specialist who will strengthen child healthcare services at St. Theresa Hospital. Their expertise will enhance our capacity to diagnose and treat a wider range of childhood conditions.">
+      <div class="news-card-img"><img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600" alt="Pediatric"></div>
+      <div class="news-card-body">
+        <p class="news-tag">Team</p>
+        <h3>New Pediatric Specialist Joins Our Team</h3>
+        <p>Strengthening our commitment to child and family health.</p>
+        <div class="news-card-footer"><span>📅</span> December 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS MODAL -->
+<div class="news-modal" id="newsModal" role="dialog" aria-modal="true">
+  <div class="modal-inner">
+    <div class="modal-handle" style="width:40px;height:4px;background:rgba(0,0,0,0.12);border-radius:2px;margin:0 auto 1.2rem;"></div>
+    <button class="modal-close" id="newsModalClose" aria-label="Close">&times;</button>
+    <p class="news-tag" style="margin-bottom:0.6rem">Latest News</p>
+    <h3 id="modal-title"></h3>
+    <p id="modal-text" style="margin-top:1rem;"></p>
+  </div>
+</div>
+
+<!-- EMERGENCY BANNER -->
+<div class="emergency-banner">
+  <div class="emergency-text">
+    <h2>Need Immediate Assistance?</h2>
+    <p>Our emergency team is available 24 hours a day, 7 days a week.</p>
+  </div>
+  <div class="emergency-actions">
+    <a href="tel:+233504414929" class="emergency-number">+233 504 414 929</a>
+    <a href="#" class="btn-primary" style="background:var(--deep);color:#fff;">Book Appointment</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">
+        <span class="logo-top">st theresa catholic hospital</span>
+        <span class="logo-sub" style="color:rgba(255,255,255,0.28)">Nkoranza · Ghana</span>
+      </div>
+      <p>Committed to delivering advanced, compassionate, and affordable healthcare services to the people of Ghana with faith, integrity, and excellence.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/p/St-Theresa-Catholic-Hospital-Nkoranza-61559497660672/" class="social-btn" aria-label="Facebook">f</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="board.html">Board of Directors</a></li>
+        <li><a href="#services">Our Services</a></li>
+        <li><a href="#news">News &amp; Updates</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="#">Book Appointment</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Our Services</h4>
+      <ul>
+        <li>Emergency &amp; Ambulance</li>
+        <li>Diagnostics &amp; Radiology</li>
+        <li>Specialist Surgery</li>
+        <li>Maternity &amp; Paediatrics</li>
+        <li>Mental Health</li>
+        <li>Dental &amp; Eye Care</li>
+        <li>Physiotherapy</li>
+        <li>Cancer Screening</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <div class="contact-line">
+        <span><strong>Address:</strong> BO-0003-5283<br>Nkoranza, Ghana</span>
+        <span><strong>Emergency:</strong> <a href="tel:+233504414929">+233 504 414 929</a></span>
+        <span><strong>Email:</strong> <a href="mailto:info@sttheresa.org">info@sttheresa.org</a></span>
+        <span style="margin-top:0.4rem;color:rgba(255,255,255,0.28);font-size:0.72rem;letter-spacing:1px;">HOURS</span>
+        <span>Mon–Sun: 7:00am – 7:00pm</span>
+        <span>Emergency: 24 / 7</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 St. Theresa Hospital Nkoranza. All rights reserved.</span>
+    <span><a href="#">Developed By</a> &nbsp;·&nbsp; <a href="#">YounsgterTheDev</a></span>
+  </div>
+</footer>
+
+<script>
+
+/* ══════════════════════════════════════════════════
+   HAMBURGER — gallery.html style
+   Uses openMobileNav() / closeMobileNav() with
+   inline style.cssText injection (no class toggle)
+══════════════════════════════════════════════════ */
+const hamburger = document.getElementById('hamburger');
+const navLinks  = document.getElementById('navLinks');
+
+let menuOpen = false;
+
+function isMobile() { return window.innerWidth <= 768; }
+
+function openMobileNav() {
+  menuOpen = true;
+  navLinks.style.cssText = `
+    display: flex !important;
+    position: fixed !important;
+    top: var(--nav-h) !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - var(--nav-h)) !important;
+    background: #1a1612 !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    padding: 1rem 0 !important;
+    gap: 0 !important;
+    overflow-y: auto !important;
+    z-index: 1999 !important;
+    border-top: 1px solid rgba(184,150,90,0.25) !important;
+    list-style: none !important;
+  `;
+  hamburger.classList.add('active');
+  hamburger.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileNav() {
+  menuOpen = false;
+  navLinks.style.cssText = '';   // wipe inline styles — CSS takes back over
+  hamburger.classList.remove('active');
+  hamburger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+
+hamburger.addEventListener('click', () => {
+  menuOpen ? closeMobileNav() : openMobileNav();
+});
+
+// Close when a plain (non-dropdown) link is tapped
+navLinks.querySelectorAll('li:not(.nav-dropdown) a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (isMobile()) closeMobileNav();
+  });
+});
+
+// Close nav on resize to desktop
+window.addEventListener('resize', () => {
+  if (!isMobile()) closeMobileNav();
+});
+
+/* ══════════════════════════════════════════════════
+   ABOUT DROPDOWN — gallery.html style
+   Desktop: "About" text → navigate; arrow → toggle
+   Mobile:  entire row → toggle (no navigation)
+══════════════════════════════════════════════════ */
+const aboutDropdown = document.getElementById('aboutDropdown');
+const aboutLink     = document.getElementById('aboutLink');
+const aboutArrow    = document.getElementById('aboutArrow');
+
+// Arrow click — toggle dropdown (works on both desktop & mobile)
+aboutArrow.addEventListener('click', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  aboutDropdown.classList.toggle('open');
+});
+
+// On MOBILE: clicking the "About" text also just toggles (no navigate)
+aboutLink.addEventListener('click', (e) => {
+  if (isMobile()) {
+    e.preventDefault();
+    aboutDropdown.classList.toggle('open');
+  }
+  // On desktop: the link navigates normally; arrow handles toggle separately
+});
+
+// Close dropdown when clicking a dropdown item (mobile: also close nav)
+aboutDropdown.querySelectorAll('.dropdown-item').forEach(item => {
+  item.addEventListener('click', () => {
+    aboutDropdown.classList.remove('open');
+    if (isMobile()) closeMobileNav();
+  });
+});
+
+// Close dropdown when clicking anywhere outside it (desktop)
+document.addEventListener('click', (e) => {
+  if (!aboutDropdown.contains(e.target)) {
+    aboutDropdown.classList.remove('open');
+  }
+});
+
+/* ══════════════════════════════════════════════════
+   NAVBAR SCROLL SHRINK
+══════════════════════════════════════════════════ */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', scrollY > 60);
+}, { passive: true });
+
+/* ══════════════════════════════════════════════════
+   EVENTS
+══════════════════════════════════════════════════ */
+const eventsData=[{id:1,title:"Free Medical Outreach Program",status:"upcoming",date:"March 16, 2026 To March 27,2026",time:"8:00 AM - 4:00 PM",location:"Nkoranza Community Center",attendees:"500+ Expected",image:"images/freesurgery.jpeg",tag:"Community",description:"Join us for a comprehensive free medical outreach program offering screenings, consultations, and health education to the communities of Nkoranza.",highlights:"Free blood pressure checks, diabetes screening, HIV testing, nutritional counselling, medication distribution, and health awareness talks.",organizers:"St. Theresa Hospital in partnership with the Nkoranza District Health Directorate"}
+                  ,{id:2,title:"Maternal Health Awareness Week",status:"ongoing",date:"March 1-7, 2026",time:"Daily: 9:00 AM - 5:00 PM",location:"Hospital Maternity Wing & Community Centers",attendees:"200+ Participants",image:"https://images.unsplash.com/photo-1631217314831-c6227db76b6e?w=800",tag:"Health Campaign",description:"A week-long campaign dedicated to promoting maternal health, prenatal care, safe delivery practices, and postnatal support services.",highlights:"Free antenatal clinics, labor & delivery demonstrations, breastfeeding workshops, newborn care training, and counselling services.",organizers:"Department of Obstetrics & Maternity Services"}
+                  ,{id:3,title:"Mental Health Wellness Workshop",status:"upcoming",date:"March 20, 2026",time:"2:00 PM - 5:00 PM",location:"Hospital Conference Hall",attendees:"100+ Expected",image:"https://images.unsplash.com/photo-1576091160550-112173f31f5f?w=800",tag:"Workshop",description:"An interactive workshop exploring mental health awareness, stress management techniques, and resources for emotional wellbeing.",highlights:"Expert talks on depression & anxiety, meditation & mindfulness sessions, Q&A with psychiatrists, resource distribution.",organizers:"Mental Health Department & Community Health Team"}];
+
+const eventsGrid=document.getElementById('eventsGrid');
+const filterBtns=document.querySelectorAll('.filter-btn');
+const eventModal=document.getElementById('eventModal');
+const emptyState=document.getElementById('emptyState');
+
+function renderEvents(filter='all'){
+  eventsGrid.innerHTML='';
+  const filtered=filter==='all'?eventsData:eventsData.filter(e=>e.status===filter);
+  if(!filtered.length){eventsGrid.style.display='none';emptyState.style.display='block';return;}
+  eventsGrid.style.display='grid';emptyState.style.display='none';
+  filtered.forEach(event=>{
+    const card=document.createElement('div');
+    card.className='event-card';
+    card.innerHTML=`<div class="event-image"><img src="${event.image}" alt="${event.title}" loading="lazy"><span class="event-badge ${event.status}">${event.status.toUpperCase()}</span></div><div class="event-body"><p class="event-tag">${event.tag}</p><h3 class="event-title">${event.title}</h3><div class="event-meta"><span>📅 ${event.date}</span><span>⏰ ${event.time.split('-')[0].trim()}</span></div><div class="event-location">📍 <strong>${event.location}</strong></div><p class="event-desc">${event.description}</p><button class="event-cta">Learn More →</button></div>`;
+    card.querySelector('.event-cta').addEventListener('click',()=>openEventModal(event.id));
+    eventsGrid.appendChild(card);
+  });
+}
+
+function openEventModal(id){
+  const event=eventsData.find(e=>e.id===id);if(!event)return;
+  document.getElementById('modalImage').src=event.image;
+  document.getElementById('modalTitle').textContent=event.title;
+  document.getElementById('modalDate').textContent=event.date;
+  document.getElementById('modalTime').textContent=event.time;
+  document.getElementById('modalLocation').textContent=event.location;
+  document.getElementById('modalAttendees').textContent=event.attendees;
+  document.getElementById('modalDescription').textContent=event.description;
+  const badge=document.getElementById('modalBadge');
+  badge.className='modal-badge '+event.status;badge.textContent=event.status.toUpperCase();
+  document.getElementById('highlightsSection').style.display=event.highlights?'block':'none';
+  if(event.highlights)document.getElementById('modalHighlights').textContent=event.highlights;
+  document.getElementById('organizersSection').style.display=event.organizers?'block':'none';
+  if(event.organizers)document.getElementById('modalOrganizers').textContent=event.organizers;
+  eventModal.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeEventModal(){eventModal.classList.remove('open');document.body.style.overflow='';}
+
+filterBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    filterBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');renderEvents(btn.dataset.filter);
+  });
+});
+document.getElementById('eventModalClose').addEventListener('click',closeEventModal);
+eventModal.addEventListener('click',e=>{if(e.target===eventModal)closeEventModal();});
+renderEvents();
+
+/* ══════════════════════════════════════════════════
+   HERO SLIDESHOW
+══════════════════════════════════════════════════ */
+const slides=document.querySelectorAll('.slide');
+let sIdx=0;
+setInterval(()=>{slides[sIdx].classList.remove('active');sIdx=(sIdx+1)%slides.length;slides[sIdx].classList.add('active');},7000);
+
+/* ══════════════════════════════════════════════════
+   SERVICE MODAL
+══════════════════════════════════════════════════ */
+const services={'emergency':{icon:'🚑',tag:'Critical Care',title:'24-Hour Emergency & Ambulance',desc:'Our Emergency unit operates around the clock, 365 days a year. Trained emergency response teams are always ready with ambulance services to provide rapid pre-hospital care and safe transport to our facility.',features:['24/7 emergency triage','Ambulance dispatch service','Trauma & accident care','Resuscitation unit','Critical care stabilisation','Inter-facility patient transfer'],hours:'Available 24 hours · 7 days a week'},'blood-transfusion':{icon:'🩸',tag:'Clinical Services',title:'Blood Transfusion Services',desc:'Our Blood Transfusion unit maintains a safe and adequate blood supply through voluntary donation drives and rigorous screening. We ensure all blood products meet the highest safety standards before transfusion.',features:['Blood grouping & cross-matching','Voluntary donation drives','Hepatitis B, C & HIV screening','Safe storage & handling','Emergency blood provision','Compatibility testing'],hours:'Mon–Sat · Emergency: 24/7'},'diagnostics':{icon:'🔬',tag:'Diagnostics',title:'Diagnostics Services',desc:'Our Diagnostics department combines laboratory investigations, radiography, ultrasound scanning, and ECG services under one roof.',features:['Full blood count & chemistry panels','Microbiology & culture tests','Digital X-ray imaging','Abdominal & obstetric ultrasound','Electrocardiogram (ECG)','Rapid malaria & HIV testing'],hours:'Mon–Sat: 8am–6pm · Emergency: 24/7'},'dental':{icon:'🦷',tag:'Dental Health',title:'Dental Services',desc:'Our Dental clinic provides complete oral healthcare for patients of all ages.',features:['Routine dental examination','Tooth extraction & fillings','Scaling & polishing','Oral health education','Paediatric dentistry','Dental pain management'],hours:'Mon–Fri: 8am–5pm · Sat: 9am–1pm'},'ent':{icon:'👂',tag:'Specialist Care',title:'Ear, Nose & Throat (ENT)',desc:'Our ENT department offers specialist assessment and treatment for conditions affecting the ear, nose, throat, head, and neck.',features:['Hearing assessment & ear care','Nasal & sinus treatment','Throat & tonsil management','Voice & swallowing disorders','Head & neck examination','Referral for ENT surgery'],hours:'Mon–Fri · By appointment'},'eye-care':{icon:'👁️',tag:'Vision Health',title:'Eye Care Services',desc:'Our Eye Care unit provides comprehensive vision health services including eye examinations and diagnosis of eye diseases.',features:['Comprehensive eye examination','Visual acuity testing','Cataract assessment & referral','Glaucoma screening','Prescription & vision correction','Diabetic eye review'],hours:'Mon–Fri · By appointment'},'opd':{icon:'💕',tag:'Outpatient',title:'General OPD Consultation',desc:'Our General Outpatient Department (OPD) is the first point of contact for patients seeking non-emergency medical care.',features:['Walk-in & scheduled consultations','Acute illness management','Chronic disease follow-up','Prescription & medication reviews','Specialist referrals','Health education & counselling'],hours:'Mon–Sat: 8am–6pm · Sun: 9am–2pm'},'hiv-tb':{icon:'🧬',tag:'Infectious Disease',title:'HIV / AIDS / TB Services',desc:'Our HIV/AIDS and TB unit provides confidential, non-judgmental testing, treatment, and ongoing support.',features:['Voluntary counselling & testing (VCT)','Antiretroviral therapy (ART)','TB diagnosis & DOTS therapy','Prevention of mother-to-child transmission','Adherence counselling & support','Contact tracing & community outreach'],hours:'Mon–Fri: 8am–5pm'},'mental-health':{icon:'🧘',tag:'Mental Wellness',title:'Mental Health Services',desc:'Our Mental Health unit provides compassionate, confidential psychiatric and psychological care in a safe, stigma-free environment.',features:['Psychiatric assessment & diagnosis','Individual therapy & counselling','Substance use disorder support','Community mental health outreach','Crisis intervention services','Family psychoeducation sessions'],hours:'Mon–Fri: 8am–5pm'},'mortuary':{icon:'🕊️',tag:'Bereavement Services',title:'Mortuary Services',desc:'We provide dignified and respectful mortuary services for bereaved families.',features:['Safe body storage & preservation','Identification & documentation','Family viewing arrangements','Death certificate support','Liaison with funeral services','Grief counselling referral'],hours:'Available daily · Contact administration'},'pastoral':{icon:'✝️',tag:'Spiritual Care',title:'Pastoral Care & Counselling',desc:'Rooted in our Catholic mission, our Pastoral Care team provides spiritual support, prayer, and counselling.',features:['Bedside prayer & spiritual support','Sacramental services (Last Rites etc.)','Interfaith counselling & respect','Bereavement & grief support','Family counselling sessions','Staff chaplaincy & wellness'],hours:'Available daily on request'},'public-health':{icon:'🏥',tag:'Community Health',title:'Public Health & Primary Care',desc:'Our Public Health team leads community-based programmes, immunization campaigns, and disease prevention initiatives.',features:['Child immunization programmes','Malaria prevention & treatment','Maternal & child health outreach','School health programmes','Disease surveillance & reporting','Health promotion campaigns'],hours:'Mon–Fri: 8am–5pm'},'pharmacy':{icon:'💊',tag:'Pharmaceutical',title:'Pharmacy & Dispensary',desc:'Our well-stocked Pharmacy and Dispensary provides prescription medications, over-the-counter drugs, and specialist pharmaceutical advice.',features:['Prescription dispensing','Medication counselling & education','NHIS-covered medications','Drug interaction checks','Chronic disease medication supply','Paediatric formulations available'],hours:'Mon–Sat: 8am–7pm · Sun: 9am–2pm'},'specialist':{icon:'⚕️',tag:'Specialist Medicine',title:'Specialist Services',desc:'Our Specialist Services cover Surgery, Paediatrics, Obstetrics, and Gynaecology, delivered by highly trained specialists.',features:['General & laparoscopic surgery','Neonatal & paediatric care','Antenatal & postnatal management','Gynaecological procedures','Surgical oncology referrals','Post-operative rehabilitation'],hours:'Mon–Fri · By appointment · Emergency: 24/7'},'physiotherapy':{icon:'🤸',tag:'Rehabilitation',title:'Physiotherapy Services',desc:'Our Physiotherapy unit helps patients recover mobility, manage pain, and rebuild strength following injury, surgery, or illness.',features:['Post-surgical rehabilitation','Stroke & neurological recovery','Musculoskeletal physiotherapy','Sports injury management','Paediatric physiotherapy','Home exercise programme design'],hours:'Mon–Fri: 8am–5pm · Sat: 9am–1pm'},'wellness':{icon:'🌿',tag:'Preventive Health',title:'Wellness Clinic',desc:'Our Wellness Clinic focuses on prevention rather than cure with comprehensive health screenings and lifestyle counselling.',features:['Annual health screening packages','Blood pressure & glucose checks','BMI & nutritional assessment','Lifestyle & dietary counselling','Executive health checks','Stress management programmes'],hours:'Mon–Fri: 8am–5pm · By appointment'},'cancer-screening':{icon:'🎗️',tag:'Cancer Prevention',title:'Cervical & Breast Cancer Screening',desc:'Early detection saves lives. Our Cancer Screening programme offers cervical and breast cancer screening services.',features:['Pap smear (cervical screening)','Visual inspection with acetic acid (VIA)','Clinical breast examination','Mammography referral','Patient education & awareness','Follow-up & referral support'],hours:'Mon–Fri: 8am–5pm · Specific clinic days'}};
+
+const serviceModal=document.getElementById('serviceModal');
+
+function openServiceModal(key){
+  const data=services[key];if(!data)return;
+  document.getElementById('svcIcon').textContent=data.icon;
+  document.getElementById('svcTag').textContent=data.tag;
+  document.getElementById('svcTitle').textContent=data.title;
+  document.getElementById('svcDesc').textContent=data.desc;
+  document.getElementById('svcHours').textContent=data.hours||'Available Mon–Sat · Emergency 24/7';
+  document.getElementById('svcFeatures').innerHTML=data.features.map(f=>`<div class="svc-feature">${f}</div>`).join('');
+  serviceModal.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeServiceModal(){serviceModal.classList.remove('open');document.body.style.overflow='';}
+
+document.querySelectorAll('.service-card').forEach(card=>{
+  card.addEventListener('click',()=>openServiceModal(card.dataset.service));
+});
+document.getElementById('serviceModalClose').addEventListener('click',closeServiceModal);
+serviceModal.addEventListener('click',e=>{if(e.target===serviceModal)closeServiceModal();});
+
+/* ══════════════════════════════════════════════════
+   NEWS MODAL
+══════════════════════════════════════════════════ */
+const newsModal=document.getElementById('newsModal');
+document.querySelectorAll('.news-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    document.getElementById('modal-title').textContent=card.dataset.title;
+    document.getElementById('modal-text').textContent=card.dataset.content;
+    newsModal.classList.add('open');document.body.style.overflow='hidden';
+  });
+});
+document.getElementById('newsModalClose').addEventListener('click',()=>{newsModal.classList.remove('open');document.body.style.overflow='';});
+newsModal.addEventListener('click',e=>{if(e.target===newsModal){newsModal.classList.remove('open');document.body.style.overflow='';}});
+
+/* ══════════════════════════════════════════════════
+   ESCAPE KEY — closes all modals + dropdown
+══════════════════════════════════════════════════ */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    closeServiceModal();
+    closeEventModal();
+    newsModal.classList.remove('open');
+    aboutDropdown.classList.remove('open');
+    document.body.style.overflow='';
+  }
+});
+
+/* ══════════════════════════════════════════════════
+   SMOOTH SCROLL
+══════════════════════════════════════════════════ */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const href=a.getAttribute('href');if(href==='#')return;
+    e.preventDefault();const target=document.querySelector(href);
+    if(target)target.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+/* ══════════════════════════════════════════════════
+   SERVICES SHOW MORE
+══════════════════════════════════════════════════ */
+const servicesExtra=document.getElementById('servicesExtra');
+const servicesMoreBtn=document.getElementById('servicesMoreBtn');
+const servicesMoreLabel=document.getElementById('servicesMoreLabel');
+const servicesMoreCount=document.querySelector('.services-more-count');
+const servicesMoreArrow=document.getElementById('servicesMoreArrow');
+const servicesFade=document.getElementById('servicesFade');
+let servicesExpanded=false;
+
+servicesMoreBtn.addEventListener('click',()=>{
+  servicesExpanded=!servicesExpanded;
+  if(servicesExpanded){
+    servicesExtra.classList.add('visible');
+    servicesExtra.querySelectorAll('.service-card').forEach(card=>{
+      card.addEventListener('click',()=>openServiceModal(card.dataset.service));
+    });
+    requestAnimationFrame(()=>requestAnimationFrame(()=>servicesExtra.classList.add('animated')));
+    servicesFade.classList.add('hidden');
+    servicesMoreLabel.textContent='Show Less';
+    servicesMoreCount.textContent='−8';
+    servicesMoreArrow.classList.add('flipped');
+  } else {
+    servicesExtra.classList.remove('animated');
+    servicesFade.classList.remove('hidden');
+    servicesMoreLabel.textContent='View All Services';
+    servicesMoreCount.textContent='+9 more';
+    servicesMoreArrow.classList.remove('flipped');
+    setTimeout(()=>servicesExtra.classList.remove('visible'),500);
+  }
+});
+
+/* ══════════════════════════════════════════════════
+   MODAL DRAG-TO-CLOSE (touch swipe down)
+══════════════════════════════════════════════════ */
+function addSwipeToDismiss(modal,closeFn){
+  let startY=0,currentY=0,dragging=false;
+  const inner=modal.querySelector('.modal-content, .service-modal-inner, .modal-inner');
+  if(!inner)return;
+  inner.addEventListener('touchstart',e=>{startY=e.touches[0].clientY;dragging=true;},{passive:true});
+  inner.addEventListener('touchmove',e=>{
+    if(!dragging)return;
+    currentY=e.touches[0].clientY;
+    const dy=currentY-startY;
+    if(dy>0)inner.style.transform=`translateY(${dy}px)`;
+  },{passive:true});
+  inner.addEventListener('touchend',()=>{
+    if(!dragging)return;dragging=false;
+    const dy=currentY-startY;
+    inner.style.transform='';
+    if(dy>80)closeFn();
+  });
+}
+addSwipeToDismiss(eventModal,closeEventModal);
+addSwipeToDismiss(serviceModal,closeServiceModal);
+addSwipeToDismiss(newsModal,()=>{newsModal.classList.remove('open');document.body.style.overflow='';});
+
+</script>
+</body>
+</html>
