@@ -54,7 +54,7 @@
   }
   .navbar.scrolled { height: 58px; }
 
-  .logo { display:flex; flex-direction:column; gap:1px; text-decoration:none; flex-shrink:0; }
+  .logo { display:flex; flex-direction:column; gap:1px; text-decoration:none; min-width: 0; }
   .logo-top {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(0.85rem, 2.5vw, 1.1rem); /* FIX: fluid logo size */
@@ -1417,4 +1417,5 @@ addSwipeToDismiss(newsModal,()=>{newsModal.classList.remove('open');document.bod
 
 </script>
 </body>
+
 </html>
