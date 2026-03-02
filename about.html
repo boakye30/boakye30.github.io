@@ -70,61 +70,6 @@
   .hamburger.active span:nth-child(2) { opacity: 0; }
   .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
 
-  /* ══ MOBILE ≤ 900px — FIX: unified breakpoint ══ */
-  @media (max-width: 900px) {
-    :root { --nav-h: 60px; }
-    .hamburger { display: flex; }
-    .nav-links { display: none !important; position: fixed !important; top: var(--nav-h) !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100% !important; height: calc(100vh - var(--nav-h)) !important; background: #1a1612 !important; flex-direction: column !important; justify-content: flex-start !important; align-items: stretch !important; padding: 1rem 0 !important; gap: 0 !important; overflow-y: auto !important; z-index: 1999 !important; border-top: 1px solid rgba(184,150,90,0.25) !important; list-style: none !important; }
-    .nav-links > li { border-bottom: 1px solid var(--border-dark); }
-    .nav-links > li > a { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 2rem; font-size: 0.95rem; letter-spacing: 1px; color: rgba(255,255,255,0.75); width: 100%; }
-    .nav-links > li > a:hover { color: var(--gold-light); }
-    .dropdown-menu { position: static !important; transform: none !important; opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; background: rgba(184,150,90,0.06); border: none; border-top: 1px solid var(--border-dark); box-shadow: none; border-radius: 0; min-width: 0; padding: 0.3rem 0; display: none; }
-    .nav-dropdown.open .dropdown-menu { display: block; }
-    .dropdown-item { padding: 0.9rem 2.5rem !important; font-size: 0.75rem !important; }
-    .dropdown-toggle-arrow { display: inline-flex; }
-
-    section { padding: 3.5rem 5%; }
-    .stats-section { padding: 3rem 5%; }
-    .cta-section { padding: 3.5rem 5%; }
-    .landmarks-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 1rem; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
-    .history-content { grid-template-columns: 1fr; gap: 2.5rem; }
-    .welcome-content { grid-template-columns: 1fr; gap: 2.5rem; }
-    .mission-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-    .values-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
-    .welcome-image { height: 300px; }
-    .page-hero { min-height: 38vh; }
-    .page-hero h1 { font-size: clamp(1.8rem, 7vw, 2.8rem); }
-  }
-
-  @media (max-width: 1024px) {
-    .landmarks-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-    .mission-grid { grid-template-columns: 1fr 1fr; }
-    .values-grid { grid-template-columns: 1fr; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .history-content { grid-template-columns: 1fr; gap: 3rem; }
-    .welcome-content { grid-template-columns: 1fr; gap: 3rem; }
-    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
-    .welcome-image { height: 380px; }
-  }
-
-  @media (max-width: 480px) {
-    section { padding: 2.8rem 4.5%; }
-    .stats-section { padding: 2.5rem 4.5%; }
-    .cta-section { padding: 3rem 4.5%; }
-    .landmarks-grid { grid-template-columns: 1fr !important; }
-    .landmark-card { height: 260px; }
-    .stats-grid { grid-template-columns: 1fr 1fr !important; }
-    .mission-grid { grid-template-columns: 1fr; }
-    .values-grid { grid-template-columns: 1fr; }
-    .footer-top { grid-template-columns: 1fr; }
-    .welcome-image { height: 240px; }
-    .cta-section h2 { font-size: clamp(1.6rem, 7vw, 2.2rem); }
-    .history-timeline { padding: 2rem 1.5rem; }
-    .footer-bottom { flex-direction: column; text-align: center; gap: 0.5rem; }
-  }
-
   /* ── PAGE HERO ── */
   .page-hero { position: relative; height: 55vh; min-height: 420px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: linear-gradient(135deg, rgba(26,22,18,0.88) 0%, rgba(26,22,18,0.75) 100%), url('https://images.unsplash.com/photo-1576091160550-112173f31f5f?w=1200') center/cover; margin-top: var(--nav-h); }
   .page-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,8,5,0.5), rgba(10,8,5,0.8)); }
@@ -233,6 +178,148 @@
   .footer-bottom { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; color: rgba(255,255,255,0.25); letter-spacing: 0.5px; flex-wrap: wrap; gap: 0.5rem; }
   .footer-bottom a { color: rgba(255,255,255,0.25); text-decoration: none; transition: color 0.3s; }
   .footer-bottom a:hover { color: rgba(255,255,255,0.5); }
+
+  /* ══════════════════════════════════════
+     TABLET  ≤ 1024px
+  ══════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    .landmarks-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .mission-grid { grid-template-columns: 1fr 1fr; }
+    .values-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .history-content { grid-template-columns: 1fr; gap: 3rem; }
+    .welcome-content { grid-template-columns: 1fr; gap: 3rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .welcome-image { height: 380px; }
+  }
+
+  /* ══════════════════════════════════════
+     MOBILE  ≤ 900px  — unified breakpoint
+  ══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    :root { --nav-h: 60px; }
+
+    /* ── Nav ── */
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none !important;
+      position: fixed !important;
+      top: var(--nav-h) !important;
+      left: 0 !important; right: 0 !important; bottom: 0 !important;
+      width: 100% !important;
+      height: calc(100vh - var(--nav-h)) !important;
+      background: #1a1612 !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      align-items: stretch !important;
+      padding: 1rem 0 !important;
+      gap: 0 !important;
+      overflow-y: auto !important;
+      z-index: 1999 !important;
+      border-top: 1px solid rgba(184,150,90,0.25) !important;
+      list-style: none !important;
+    }
+    .nav-links > li { border-bottom: 1px solid var(--border-dark); }
+    .nav-links > li > a {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 1.5rem;
+      font-size: 0.95rem; letter-spacing: 1px;
+      color: rgba(255,255,255,0.75); width: 100%;
+    }
+    .nav-links > li > a:hover { color: var(--gold-light); }
+    .dropdown-menu {
+      position: static !important; transform: none !important;
+      opacity: 1 !important; visibility: visible !important;
+      pointer-events: auto !important;
+      background: rgba(184,150,90,0.06); border: none;
+      border-top: 1px solid var(--border-dark);
+      box-shadow: none; border-radius: 0; min-width: 0;
+      padding: 0.3rem 0; display: none;
+    }
+    .nav-dropdown.open .dropdown-menu { display: block; }
+    .dropdown-item { padding: 0.9rem 2.5rem !important; font-size: 0.75rem !important; }
+    .dropdown-toggle-arrow { display: inline-flex; }
+
+    /* ── Sections ── */
+    section { padding: 3.5rem 5%; }
+    .stats-section { padding: 3rem 5%; }
+    .cta-section { padding: 3.5rem 5%; }
+
+    /* ── Hero ── */
+    .page-hero { min-height: 38vh; padding: 0 5%; }
+    .page-hero h1 { font-size: clamp(1.8rem, 7vw, 2.8rem); }
+
+    /* ── Welcome ── */
+    .welcome-content { grid-template-columns: 1fr; gap: 2rem; }
+    .welcome-image { height: 260px; order: -1; }
+    .welcome-text p { font-size: 0.92rem; line-height: 1.8; }
+
+    /* ── History ── */
+    .history-content { grid-template-columns: 1fr; gap: 2rem; }
+    .history-text p { font-size: 0.92rem; line-height: 1.8; }
+    .history-timeline { padding: 1.8rem 1.4rem 1.8rem 2.2rem; }
+
+    /* ── Landmarks ── */
+    .landmarks-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .landmark-card { height: 240px; }
+    .landmark-name { font-size: 1.05rem; }
+    .landmark-desc { font-size: 0.75rem; }
+
+    /* ── Mission ── */
+    .mission-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+    .mission-card { padding: 2rem 1.5rem; }
+
+    /* ── Values ── */
+    .values-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .value-card { padding: 1.8rem 1.2rem 1.8rem 1.6rem; }
+
+    /* ── Stats ── */
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-box { padding: 1.5rem 1rem; }
+    .stat-number { font-size: 2.2rem; }
+
+    /* ── CTA ── */
+    .cta-section h2 { font-size: clamp(1.5rem, 6vw, 2rem); }
+    .cta-section p { font-size: 0.95rem; }
+    .cta-button { width: 100%; justify-content: center; }
+
+    /* ── Footer ── */
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    footer { padding: 3.5rem 5% 2rem; }
+    .footer-brand p { max-width: 100%; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  }
+
+  /* ══════════════════════════════════════
+     SMALL PHONES  ≤ 480px
+  ══════════════════════════════════════ */
+  @media (max-width: 480px) {
+    section { padding: 3rem 4.5%; }
+    .stats-section { padding: 2.7rem 4.5%; }
+    .cta-section { padding: 3rem 4.5%; }
+
+    .page-hero { min-height: 36vh; }
+    .page-hero h1 { font-size: clamp(1.6rem, 7vw, 2.1rem); }
+
+    /* Single-column landmarks on very small screens */
+    .landmarks-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .landmark-card { height: 220px; }
+
+    /* Stats single-column */
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stat-box { padding: 1.2rem 0.8rem; }
+    .stat-number { font-size: 2rem; }
+
+    .welcome-image { height: 220px; }
+    .welcome-text p,
+    .history-text p { font-size: 0.88rem; }
+
+    .mission-card { padding: 1.6rem 1.2rem; }
+    .value-card { padding: 1.5rem 1rem 1.5rem 1.4rem; }
+
+    .history-timeline { padding: 1.5rem 1.2rem 1.5rem 2rem; }
+    .timeline-year { font-size: 1.1rem; }
+  }
 </style>
 </head>
 <body>
@@ -250,8 +337,7 @@
         <a href="about.html#Welcomemessage" class="dropdown-item"><span class="dropdown-item-icon">🎤</span>Welcome Message</a>
         <a href="about.html#ourjourney" class="dropdown-item"><span class="dropdown-item-icon">📜</span>Our History</a>
         <a href="about.html#ourfacilities" class="dropdown-item"><span class="dropdown-item-icon">🏗</span>Our Facilities</a>
-       <a href="board.html" class="dropdown-item"><span class="dropdown-item-icon">🏛️</span>Board of Directors</a>
-
+        <a href="board.html" class="dropdown-item"><span class="dropdown-item-icon">🏛️</span>Board of Directors</a>
       </div>
     </li>
     <li><a href="index.html#services">Services</a></li>
@@ -411,7 +497,6 @@
 </footer>
 
 <script>
-/* FIX: Unified 900px breakpoint in JS to match CSS */
 const MOBILE_BP = 900;
 const hamburger = document.getElementById('hamburger');
 const navLinks  = document.getElementById('navLinks');
