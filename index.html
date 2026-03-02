@@ -19,6 +19,8 @@
     --border: rgba(184,150,90,0.25);
     --border-dark: rgba(184,150,90,0.12);
     --nav-h: 68px;
+    /* FIX: Single breakpoint variable used consistently */
+    --mobile-bp: 900px;
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -55,14 +57,14 @@
   .logo { display:flex; flex-direction:column; gap:1px; text-decoration:none; flex-shrink:0; }
   .logo-top {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem; font-weight: 600;
+    font-size: clamp(0.85rem, 2.5vw, 1.1rem); /* FIX: fluid logo size */
+    font-weight: 600;
     color: var(--gold-light); letter-spacing: 2px; text-transform: uppercase;
   }
   .logo-sub { font-size: 0.58rem; color: rgba(255,255,255,0.4); letter-spacing: 3px; text-transform: uppercase; }
 
   /* ══════════════════════════════
      DESKTOP NAV LINKS
-     Visible by default, hidden on mobile
   ══════════════════════════════ */
   .nav-links {
     list-style: none; display: flex; gap: 2.5rem; align-items: center;
@@ -88,17 +90,12 @@
 
   /* ── DROPDOWN (desktop) ── */
   .nav-dropdown { position: relative; }
+  .nav-dropdown > a { display: flex; align-items: center; gap: 0.35rem; cursor: pointer; }
 
-  .nav-dropdown > a {
-    display: flex; align-items: center; gap: 0.35rem; cursor: pointer;
-  }
-
-  /* Clickable arrow — only toggles dropdown, does NOT navigate */
   .dropdown-toggle-arrow {
     display: inline-flex; align-items: center; justify-content: center;
     padding: 2px 4px; cursor: pointer; line-height: 1;
   }
-
   .nav-dropdown-arrow {
     display: inline-block; width: 0; height: 0;
     border-left: 4px solid transparent;
@@ -107,7 +104,6 @@
     transition: transform 0.3s ease;
     pointer-events: none;
   }
-
   .nav-dropdown.open .nav-dropdown-arrow { transform: rotate(180deg); }
 
   .dropdown-menu {
@@ -127,11 +123,8 @@
     backdrop-filter: blur(16px);
     box-shadow: 0 12px 40px rgba(0,0,0,0.5);
   }
-
   .nav-dropdown.open .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+    opacity: 1; visibility: visible; pointer-events: auto;
     transform: translateX(-50%) translateY(0);
   }
 
@@ -172,46 +165,38 @@
   .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
 
   /* ══════════════════════════════════════
-     RESPONSIVE — MOBILE ≤ 768px
-     Hamburger shows, desktop nav hides
+     RESPONSIVE — MOBILE ≤ 900px
+     FIX: Unified breakpoint at 900px for
+     both hamburger show and nav behaviour
   ══════════════════════════════════════ */
-@media (max-width:768px) {
-  :root { --nav-h: 60px; }
+  @media (max-width: 900px) {
+    :root { --nav-h: 60px; }
 
-  .hamburger { display: flex; }
+    .hamburger { display: flex; }
 
-  .nav-links {
-    display: none;
-    position: fixed;
-    top: var(--nav-h);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: calc(100vh - var(--nav-h));
-    background: #1a1612;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    padding: 1rem 0;
-    gap: 0;
-    overflow-y: auto;
-    z-index: 1999;
-    border-top: 1px solid rgba(184,150,90,0.25);
-    list-style: none;
-  }
+    .nav-links {
+      display: none !important;
+      position: fixed !important;
+      top: var(--nav-h) !important;
+      left: 0 !important; right: 0 !important; bottom: 0 !important;
+      width: 100% !important;
+      height: calc(100vh - var(--nav-h)) !important;
+      background: #1a1612 !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      align-items: stretch !important;
+      padding: 1rem 0 !important;
+      gap: 0 !important;
+      overflow-y: auto !important;
+      z-index: 1999 !important;
+      border-top: 1px solid rgba(184,150,90,0.25) !important;
+      list-style: none !important;
+    }
 
-  .nav-links.active {
-    display: flex;
-  }
-  }
-    /* Show nav when hamburger tapped — set by JS */
     .nav-links.mobile-open { display: flex !important; }
 
-    /* Each top-level item */
     .nav-links > li { border-bottom: 1px solid var(--border-dark); }
 
-    /* Top-level links fill full width */
     .nav-links > li > a {
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.2rem 2rem;
@@ -234,7 +219,6 @@
       display: none;
     }
     .nav-dropdown.open .dropdown-menu { display: block; }
-
     .dropdown-item { padding: 0.9rem 2.5rem !important; font-size: 0.75rem !important; }
     .dropdown-toggle-arrow { display: inline-flex; }
 
@@ -249,6 +233,7 @@
     .events-filter { width:100%; overflow-x:auto; padding-bottom:4px; flex-wrap:nowrap; -webkit-overflow-scrolling:touch; }
     .filter-btn { flex-shrink:0; }
     .events-grid { grid-template-columns:1fr; gap:1.2rem; }
+    /* FIX: about-strip — single column on mobile too */
     .about-strip { grid-template-columns:1fr; }
     .about-image { min-height:300px; }
     .about-content { padding:2.5rem 1.8rem; }
@@ -265,6 +250,8 @@
     .emergency-number { font-size:1.6rem; }
     .footer-top { grid-template-columns:1fr; gap:2rem; }
     .modal-meta { grid-template-columns:1fr; }
+    /* FIX: hero stats hidden on mobile */
+    .hero-stats { display:none; }
   }
 
   /* ══ HERO ══ */
@@ -400,7 +387,7 @@
 
   .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* FIX: smaller min for mid screens */
     gap: 1.5rem; margin-top:2.5rem;
   }
 
@@ -759,219 +746,111 @@
   .footer-bottom a:hover { color:rgba(255,255,255,0.48); }
 
   /* ══ ADDITIONAL RESPONSIVE ══ */
-/* =========================================
-   ≤ 1280px
-========================================= */
-@media (max-width: 1280px) {
-  .services-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
 
-
-/* =========================================
-   ≤ 1024px
-========================================= */
-@media (max-width: 1024px) {
-
-  /* Grids */
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
+  /* FIX: Large desktops */
+  @media (max-width: 1280px) {
+    .services-grid { grid-template-columns:repeat(3,1fr); }
   }
 
-  .footer-top,
-  .news-grid,
-  .about-values {
-    grid-template-columns: repeat(2, 1fr);
+  /* FIX: Tablets & mid-range devices (1024px) */
+  @media (max-width: 1024px) {
+    .services-grid { grid-template-columns:repeat(2,1fr); }
+    .footer-top { grid-template-columns:1fr 1fr; }
+    .news-grid { grid-template-columns:1fr 1fr; }
+    .news-card:nth-child(3) { display:none; }
+    .hero-stats { display:none; }
+    .about-strip { grid-template-columns:1fr; } /* FIX: stack about on tablets too */
+    .about-image { min-height:380px; }
+    .about-content { padding:3.5rem 3rem; }
+    .about-values { grid-template-columns:1fr 1fr; }
   }
 
-  .about-strip {
-    grid-template-columns: 1fr;
+  /* FIX: Medium phones (481px–599px) */
+  @media (max-width: 599px) {
+    section { padding: 3rem 5%; }
+    .services-grid { grid-template-columns: 1fr; }
+    .about-values { grid-template-columns: 1fr; }
   }
 
-  /* Hidden elements */
-  .news-card:nth-child(3),
-  .hero-stats {
-    display: none;
+  /* FIX: Small phones (≤480px) */
+  @media (max-width: 480px) {
+    section { padding: 2.8rem 4.5%; }
+    .hero { min-height: 100svh; }
+    .hero-content { padding: 0 4.5% 7%; }
+    .hero-content h1 { font-size: clamp(2rem, 11vw, 2.8rem); }
+    .hero-actions { flex-direction:column; align-items:stretch; }
+    .btn-primary, .btn-ghost { text-align:center; justify-content:center; }
+    .service-card .learn-more { opacity:1; transform:translateY(0); }
+    .marquee-inner { font-size: 0.62rem; }
+    .marquee-inner span { margin: 0 1.5rem; }
+    .about-values { grid-template-columns:1fr; }
+    .events-grid { gap:1rem; }
+    .modal-title { font-size:1.4rem; }
+    .svc-modal-title { font-size:1.4rem; }
+    .svc-modal-features { grid-template-columns:1fr; }
+    .svc-modal-header { flex-direction: column; gap: 0.8rem; } /* FIX: stack modal header on tiny screens */
+    .modal-footer { flex-direction:column; align-items:stretch; }
+    .modal-footer-btn { text-align:center; justify-content:center; }
+    .emergency-actions { flex-direction:column; align-items:flex-start; }
+    .footer-brand p { max-width:100%; }
+    .footer-top { grid-template-columns: 1fr; } /* FIX: force single column footer on small phones */
+    .news-grid { grid-template-columns: 1fr; }
+    .news-card:nth-child(3) { display: flex; }
+    /* FIX: Emergency banner stacks cleanly */
+    .emergency-banner { padding: 2rem 4.5%; }
+    .emergency-number { font-size: 1.4rem; }
   }
 
-  /* About section adjustments */
-  .about-image {
-    min-height: 380px;
+  /* FIX: Very small phones (≤360px) */
+  @media (max-width: 360px) {
+    .logo-top { font-size: 0.8rem; letter-spacing: 1px; }
+    .hero-content h1 { font-size: clamp(1.8rem, 12vw, 2.4rem); }
+    section { padding: 2.4rem 4%; }
+    .hero-content { padding: 0 4% 8%; }
   }
 
-  .about-content {
-    padding: 3.5rem 3rem;
+  @media (max-width: 768px) {
+    .events-filter { scrollbar-width:none; padding-bottom:6px; }
+    .events-filter::-webkit-scrollbar { display:none; }
+    /* FIX: Ensure modal meta is single column on phones */
+    .modal-meta { grid-template-columns: 1fr; }
   }
-}
-
-
-/* =========================================
-   ≤ 768px
-========================================= */
-@media (max-width: 768px) {
-  .events-filter {
-    scrollbar-width: none;
-    padding-bottom: 6px;
-  }
-
-  .events-filter::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-
-/* =========================================
-   ≤ 480px
-========================================= */
-@media (max-width: 480px) {
-
-  /* Layout spacing */
-  section {
-    padding: 3rem 4.5%;
-  }
-
-  /* Hero */
-  .hero {
-    min-height: 100vh;   /* fallback */
-    min-height: 100svh;  /* modern */
-  }
-
-  .hero-content {
-    padding: 0 4.5% 7%;
-  }
-
-  .hero-content h1 {
-    font-size: clamp(2rem, 11vw, 2.8rem);
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  /* Buttons */
-  .btn-primary,
-  .btn-ghost,
-  .modal-footer-btn {
-    text-align: center;
-    justify-content: center;
-  }
-
-  /* Grids collapse */
-  .services-grid,
-  .about-values,
-  .svc-modal-features {
-    grid-template-columns: 1fr;
-  }
-
-  /* Service card */
-  .service-card .learn-more {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Marquee */
-  .marquee-inner {
-    font-size: 0.64rem;
-  }
-
-  .marquee-inner span {
-    margin: 0 1.8rem;
-  }
-
-  /* Events */
-  .events-grid {
-    gap: 1rem;
-  }
-
-  /* Modal */
-  .modal-title,
-  .svc-modal-title {
-    font-size: 1.5rem;
-  }
-
-  .modal-footer {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  /* Emergency */
-  .emergency-actions {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  /* Footer */
-  .footer-brand p {
-    max-width: 100%;
-  }
-}
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════
-     NAVBAR
-     Logo | Desktop nav links | Hamburger (mobile only)
-══════════════════════════════ -->
+<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
-
   <a href="index.html" class="logo">
     <span class="logo-top">st theresa catholic hospital</span>
     <span class="logo-sub">Nkoranza · Ghana</span>
   </a>
 
-  <!-- Desktop + Mobile overlay nav -->
   <ul class="nav-links" id="navLinks">
-
     <li><a href="index.html">Home</a></li>
-
-    <!-- About with dropdown -->
     <li class="nav-dropdown" id="aboutDropdown">
-      <!--
-        On desktop: clicking "About" text navigates to about.html.
-                    clicking the arrow chevron toggles the dropdown.
-        On mobile:  clicking anywhere on this row toggles the dropdown (no navigation).
-      -->
-      <a href="about.html" id="aboutLink">
+      <a href="#" id="aboutLink">
         About
         <span class="dropdown-toggle-arrow" id="aboutArrow">
           <span class="nav-dropdown-arrow"></span>
         </span>
       </a>
       <div class="dropdown-menu">
-        <a href="board.html" class="dropdown-item">
-          <span class="dropdown-item-icon">🏛️</span>
-          Board of Directors
-        </a>
-        <a href="about.html#Welcomemessage" class="dropdown-item">
-          <span class="dropdown-item-icon">🎤</span>
-          Welcome Message
-        </a>
-        <a href="about.html#ourjourney" class="dropdown-item">
-          <span class="dropdown-item-icon">📜</span>
-          Our History
-        </a>
-        <a href="about.html#ourfacilities" class="dropdown-item">
-          <span class="dropdown-item-icon">🏗</span>
-          Our Facilities
-        </a>
+        <a href="board.html" class="dropdown-item"><span class="dropdown-item-icon">🏛️</span>Board of Directors</a>
+        <a href="about.html#Welcomemessage" class="dropdown-item"><span class="dropdown-item-icon">🎤</span>Welcome Message</a>
+        <a href="about.html#ourjourney" class="dropdown-item"><span class="dropdown-item-icon">📜</span>Our History</a>
+        <a href="about.html#ourfacilities" class="dropdown-item"><span class="dropdown-item-icon">🏗</span>Our Facilities</a>
       </div>
     </li>
-
     <li><a href="#services">Services</a></li>
     <li><a href="#news">News</a></li>
     <li><a href="gallery.html">Gallery</a></li>
     <li><a href="tel:+233504414929" class="nav-cta">Emergency</a></li>
-
   </ul>
 
-  <!-- Hamburger — only visible on mobile via CSS -->
   <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
-
 </nav>
 
 <!-- HERO -->
@@ -988,25 +867,14 @@
     <h1>Total Care,<br><em>Inside Out</em></h1>
     <p>Delivering advanced, patient-centered healthcare to the people of Nkoranza and beyond — with integrity, dignity, and devotion.</p>
     <div class="hero-actions">
-      <a href="tel:+233504414929" class="btn-primary">
-        <span>⚡</span> Emergency: +233 504 414 929
-      </a>
+      <a href="tel:+233504414929" class="btn-primary"><span>⚡</span> Emergency: +233 504 414 929</a>
       <a href="#services" class="btn-ghost">Our Services →</a>
     </div>
   </div>
   <div class="hero-stats">
-    <div class="stat-item">
-      <div class="stat-number">50+</div>
-      <div class="stat-label">Years of Service</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">24/7</div>
-      <div class="stat-label">Emergency Care</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">15+</div>
-      <div class="stat-label">Departments</div>
-    </div>
+    <div class="stat-item"><div class="stat-number">50+</div><div class="stat-label">Years of Service</div></div>
+    <div class="stat-item"><div class="stat-number">24/7</div><div class="stat-label">Emergency Care</div></div>
+    <div class="stat-item"><div class="stat-number">15+</div><div class="stat-label">Departments</div></div>
   </div>
 </section>
 
@@ -1051,35 +919,14 @@
       <span class="modal-badge" id="modalBadge"></span>
       <h2 class="modal-title" id="modalTitle"></h2>
       <div class="modal-meta">
-        <div class="modal-meta-item">
-          <div class="modal-meta-label">📅 Date</div>
-          <div class="modal-meta-value" id="modalDate"></div>
-        </div>
-        <div class="modal-meta-item">
-          <div class="modal-meta-label">⏰ Time</div>
-          <div class="modal-meta-value" id="modalTime"></div>
-        </div>
-        <div class="modal-meta-item">
-          <div class="modal-meta-label">📍 Location</div>
-          <div class="modal-meta-value" id="modalLocation"></div>
-        </div>
-        <div class="modal-meta-item">
-          <div class="modal-meta-label">👥 Attendees</div>
-          <div class="modal-meta-value" id="modalAttendees"></div>
-        </div>
+        <div class="modal-meta-item"><div class="modal-meta-label">📅 Date</div><div class="modal-meta-value" id="modalDate"></div></div>
+        <div class="modal-meta-item"><div class="modal-meta-label">⏰ Time</div><div class="modal-meta-value" id="modalTime"></div></div>
+        <div class="modal-meta-item"><div class="modal-meta-label">📍 Location</div><div class="modal-meta-value" id="modalLocation"></div></div>
+        <div class="modal-meta-item"><div class="modal-meta-label">👥 Attendees</div><div class="modal-meta-value" id="modalAttendees"></div></div>
       </div>
-      <div class="modal-section">
-        <h4>About This Event</h4>
-        <p id="modalDescription"></p>
-      </div>
-      <div class="modal-section" id="highlightsSection" style="display:none;">
-        <h4>Event Highlights</h4>
-        <p id="modalHighlights"></p>
-      </div>
-      <div class="modal-section" id="organizersSection" style="display:none;">
-        <h4>Organized By</h4>
-        <p id="modalOrganizers"></p>
-      </div>
+      <div class="modal-section"><h4>About This Event</h4><p id="modalDescription"></p></div>
+      <div class="modal-section" id="highlightsSection" style="display:none;"><h4>Event Highlights</h4><p id="modalHighlights"></p></div>
+      <div class="modal-section" id="organizersSection" style="display:none;"><h4>Organized By</h4><p id="modalOrganizers"></p></div>
     </div>
     <div class="modal-footer">
       <a href="tel:+233504414929" class="modal-footer-btn">📞 Register Now</a>
@@ -1092,10 +939,7 @@
 <div class="about-strip" id="about">
   <div class="about-image">
     <img src="images/Fr. John.jpg" alt="Hospital care">
-    <div class="about-image-badge">
-      <strong>50+</strong>
-      Years Serving<br>Nkoranza
-    </div>
+    <div class="about-image-badge"><strong>50+</strong>Years Serving<br>Nkoranza</div>
   </div>
   <div class="about-content">
     <p class="section-label">Our Story</p>
@@ -1297,16 +1141,17 @@
 <script>
 
 /* ══════════════════════════════════════════════════
-   HAMBURGER — gallery.html style
-   Uses openMobileNav() / closeMobileNav() with
-   inline style.cssText injection (no class toggle)
+   FIX: Unified mobile breakpoint — matches CSS 900px
+   Previously was 768px in JS but 900px in CSS,
+   causing hamburger to show but JS to ignore it
 ══════════════════════════════════════════════════ */
+const MOBILE_BP = 900;
+
 const hamburger = document.getElementById('hamburger');
 const navLinks  = document.getElementById('navLinks');
-
 let menuOpen = false;
 
-function isMobile() { return window.innerWidth <= 768; }
+function isMobile() { return window.innerWidth <= MOBILE_BP; }
 
 function openMobileNav() {
   menuOpen = true;
@@ -1337,7 +1182,7 @@ function openMobileNav() {
 
 function closeMobileNav() {
   menuOpen = false;
-  navLinks.style.cssText = '';   // wipe inline styles — CSS takes back over
+  navLinks.style.cssText = '';
   hamburger.classList.remove('active');
   hamburger.setAttribute('aria-expanded', 'false');
   document.body.style.overflow = '';
@@ -1347,44 +1192,31 @@ hamburger.addEventListener('click', () => {
   menuOpen ? closeMobileNav() : openMobileNav();
 });
 
-// Close when a plain (non-dropdown) link is tapped
 navLinks.querySelectorAll('li:not(.nav-dropdown) a').forEach(link => {
-  link.addEventListener('click', () => {
-    if (isMobile()) closeMobileNav();
-  });
+  link.addEventListener('click', () => { if (isMobile()) closeMobileNav(); });
 });
 
-// Close nav on resize to desktop
+// FIX: Use MOBILE_BP consistently
 window.addEventListener('resize', () => {
   if (!isMobile()) closeMobileNav();
-});
+}, { passive: true });
 
 /* ══════════════════════════════════════════════════
-   ABOUT DROPDOWN — gallery.html style
-   Desktop: "About" text → navigate; arrow → toggle
-   Mobile:  entire row → toggle (no navigation)
+   ABOUT DROPDOWN
 ══════════════════════════════════════════════════ */
 const aboutDropdown = document.getElementById('aboutDropdown');
 const aboutLink     = document.getElementById('aboutLink');
 const aboutArrow    = document.getElementById('aboutArrow');
 
-// Arrow click — toggle dropdown (works on both desktop & mobile)
 aboutArrow.addEventListener('click', (e) => {
-  e.preventDefault();
-  e.stopPropagation();
+  e.preventDefault(); e.stopPropagation();
   aboutDropdown.classList.toggle('open');
 });
 
-// On MOBILE: clicking the "About" text also just toggles (no navigate)
 aboutLink.addEventListener('click', (e) => {
-  if (isMobile()) {
-    e.preventDefault();
-    aboutDropdown.classList.toggle('open');
-  }
-  // On desktop: the link navigates normally; arrow handles toggle separately
+  if (isMobile()) { e.preventDefault(); aboutDropdown.classList.toggle('open'); }
 });
 
-// Close dropdown when clicking a dropdown item (mobile: also close nav)
 aboutDropdown.querySelectorAll('.dropdown-item').forEach(item => {
   item.addEventListener('click', () => {
     aboutDropdown.classList.remove('open');
@@ -1392,11 +1224,8 @@ aboutDropdown.querySelectorAll('.dropdown-item').forEach(item => {
   });
 });
 
-// Close dropdown when clicking anywhere outside it (desktop)
 document.addEventListener('click', (e) => {
-  if (!aboutDropdown.contains(e.target)) {
-    aboutDropdown.classList.remove('open');
-  }
+  if (!aboutDropdown.contains(e.target)) aboutDropdown.classList.remove('open');
 });
 
 /* ══════════════════════════════════════════════════
@@ -1410,9 +1239,11 @@ window.addEventListener('scroll', () => {
 /* ══════════════════════════════════════════════════
    EVENTS
 ══════════════════════════════════════════════════ */
-const eventsData=[{id:1,title:"Free Medical Outreach Program",status:"upcoming",date:"March 16, 2026 To March 27,2026",time:"8:00 AM - 4:00 PM",location:"Nkoranza Community Center",attendees:"500+ Expected",image:"images/freesurgery.jpeg",tag:"Community",description:"Join us for a comprehensive free medical outreach program offering screenings, consultations, and health education to the communities of Nkoranza.",highlights:"Free blood pressure checks, diabetes screening, HIV testing, nutritional counselling, medication distribution, and health awareness talks.",organizers:"St. Theresa Hospital in partnership with the Nkoranza District Health Directorate"}
-                  ,{id:2,title:"Maternal Health Awareness Week",status:"ongoing",date:"March 1-7, 2026",time:"Daily: 9:00 AM - 5:00 PM",location:"Hospital Maternity Wing & Community Centers",attendees:"200+ Participants",image:"https://images.unsplash.com/photo-1631217314831-c6227db76b6e?w=800",tag:"Health Campaign",description:"A week-long campaign dedicated to promoting maternal health, prenatal care, safe delivery practices, and postnatal support services.",highlights:"Free antenatal clinics, labor & delivery demonstrations, breastfeeding workshops, newborn care training, and counselling services.",organizers:"Department of Obstetrics & Maternity Services"}
-                  ,{id:3,title:"Mental Health Wellness Workshop",status:"upcoming",date:"March 20, 2026",time:"2:00 PM - 5:00 PM",location:"Hospital Conference Hall",attendees:"100+ Expected",image:"https://images.unsplash.com/photo-1576091160550-112173f31f5f?w=800",tag:"Workshop",description:"An interactive workshop exploring mental health awareness, stress management techniques, and resources for emotional wellbeing.",highlights:"Expert talks on depression & anxiety, meditation & mindfulness sessions, Q&A with psychiatrists, resource distribution.",organizers:"Mental Health Department & Community Health Team"}];
+const eventsData=[
+  {id:1,title:"Free Medical Outreach Program",status:"upcoming",date:"March 16, 2026 To March 27,2026",time:"8:00 AM - 4:00 PM",location:"Nkoranza Community Center",attendees:"500+ Expected",image:"images/freesurgery.jpeg",tag:"Community",description:"Join us for a comprehensive free medical outreach program offering screenings, consultations, and health education to the communities of Nkoranza.",highlights:"Free blood pressure checks, diabetes screening, HIV testing, nutritional counselling, medication distribution, and health awareness talks.",organizers:"St. Theresa Hospital in partnership with the Nkoranza District Health Directorate"},
+  {id:2,title:"Maternal Health Awareness Week",status:"ongoing",date:"March 1-7, 2026",time:"Daily: 9:00 AM - 5:00 PM",location:"Hospital Maternity Wing & Community Centers",attendees:"200+ Participants",image:"https://images.unsplash.com/photo-1631217314831-c6227db76b6e?w=800",tag:"Health Campaign",description:"A week-long campaign dedicated to promoting maternal health, prenatal care, safe delivery practices, and postnatal support services.",highlights:"Free antenatal clinics, labor & delivery demonstrations, breastfeeding workshops, newborn care training, and counselling services.",organizers:"Department of Obstetrics & Maternity Services"},
+  {id:3,title:"Mental Health Wellness Workshop",status:"upcoming",date:"March 20, 2026",time:"2:00 PM - 5:00 PM",location:"Hospital Conference Hall",attendees:"100+ Expected",image:"https://images.unsplash.com/photo-1576091160550-112173f31f5f?w=800",tag:"Workshop",description:"An interactive workshop exploring mental health awareness, stress management techniques, and resources for emotional wellbeing.",highlights:"Expert talks on depression & anxiety, meditation & mindfulness sessions, Q&A with psychiatrists, resource distribution.",organizers:"Mental Health Department & Community Health Team"}
+];
 
 const eventsGrid=document.getElementById('eventsGrid');
 const filterBtns=document.querySelectorAll('.filter-btn');
@@ -1472,7 +1303,7 @@ setInterval(()=>{slides[sIdx].classList.remove('active');sIdx=(sIdx+1)%slides.le
 /* ══════════════════════════════════════════════════
    SERVICE MODAL
 ══════════════════════════════════════════════════ */
-const services={'emergency':{icon:'🚑',tag:'Critical Care',title:'24-Hour Emergency & Ambulance',desc:'Our Emergency unit operates around the clock, 365 days a year. Trained emergency response teams are always ready with ambulance services to provide rapid pre-hospital care and safe transport to our facility.',features:['24/7 emergency triage','Ambulance dispatch service','Trauma & accident care','Resuscitation unit','Critical care stabilisation','Inter-facility patient transfer'],hours:'Available 24 hours · 7 days a week'},'blood-transfusion':{icon:'🩸',tag:'Clinical Services',title:'Blood Transfusion Services',desc:'Our Blood Transfusion unit maintains a safe and adequate blood supply through voluntary donation drives and rigorous screening. We ensure all blood products meet the highest safety standards before transfusion.',features:['Blood grouping & cross-matching','Voluntary donation drives','Hepatitis B, C & HIV screening','Safe storage & handling','Emergency blood provision','Compatibility testing'],hours:'Mon–Sat · Emergency: 24/7'},'diagnostics':{icon:'🔬',tag:'Diagnostics',title:'Diagnostics Services',desc:'Our Diagnostics department combines laboratory investigations, radiography, ultrasound scanning, and ECG services under one roof.',features:['Full blood count & chemistry panels','Microbiology & culture tests','Digital X-ray imaging','Abdominal & obstetric ultrasound','Electrocardiogram (ECG)','Rapid malaria & HIV testing'],hours:'Mon–Sat: 8am–6pm · Emergency: 24/7'},'dental':{icon:'🦷',tag:'Dental Health',title:'Dental Services',desc:'Our Dental clinic provides complete oral healthcare for patients of all ages.',features:['Routine dental examination','Tooth extraction & fillings','Scaling & polishing','Oral health education','Paediatric dentistry','Dental pain management'],hours:'Mon–Fri: 8am–5pm · Sat: 9am–1pm'},'ent':{icon:'👂',tag:'Specialist Care',title:'Ear, Nose & Throat (ENT)',desc:'Our ENT department offers specialist assessment and treatment for conditions affecting the ear, nose, throat, head, and neck.',features:['Hearing assessment & ear care','Nasal & sinus treatment','Throat & tonsil management','Voice & swallowing disorders','Head & neck examination','Referral for ENT surgery'],hours:'Mon–Fri · By appointment'},'eye-care':{icon:'👁️',tag:'Vision Health',title:'Eye Care Services',desc:'Our Eye Care unit provides comprehensive vision health services including eye examinations and diagnosis of eye diseases.',features:['Comprehensive eye examination','Visual acuity testing','Cataract assessment & referral','Glaucoma screening','Prescription & vision correction','Diabetic eye review'],hours:'Mon–Fri · By appointment'},'opd':{icon:'💕',tag:'Outpatient',title:'General OPD Consultation',desc:'Our General Outpatient Department (OPD) is the first point of contact for patients seeking non-emergency medical care.',features:['Walk-in & scheduled consultations','Acute illness management','Chronic disease follow-up','Prescription & medication reviews','Specialist referrals','Health education & counselling'],hours:'Mon–Sat: 8am–6pm · Sun: 9am–2pm'},'hiv-tb':{icon:'🧬',tag:'Infectious Disease',title:'HIV / AIDS / TB Services',desc:'Our HIV/AIDS and TB unit provides confidential, non-judgmental testing, treatment, and ongoing support.',features:['Voluntary counselling & testing (VCT)','Antiretroviral therapy (ART)','TB diagnosis & DOTS therapy','Prevention of mother-to-child transmission','Adherence counselling & support','Contact tracing & community outreach'],hours:'Mon–Fri: 8am–5pm'},'mental-health':{icon:'🧘',tag:'Mental Wellness',title:'Mental Health Services',desc:'Our Mental Health unit provides compassionate, confidential psychiatric and psychological care in a safe, stigma-free environment.',features:['Psychiatric assessment & diagnosis','Individual therapy & counselling','Substance use disorder support','Community mental health outreach','Crisis intervention services','Family psychoeducation sessions'],hours:'Mon–Fri: 8am–5pm'},'mortuary':{icon:'🕊️',tag:'Bereavement Services',title:'Mortuary Services',desc:'We provide dignified and respectful mortuary services for bereaved families.',features:['Safe body storage & preservation','Identification & documentation','Family viewing arrangements','Death certificate support','Liaison with funeral services','Grief counselling referral'],hours:'Available daily · Contact administration'},'pastoral':{icon:'✝️',tag:'Spiritual Care',title:'Pastoral Care & Counselling',desc:'Rooted in our Catholic mission, our Pastoral Care team provides spiritual support, prayer, and counselling.',features:['Bedside prayer & spiritual support','Sacramental services (Last Rites etc.)','Interfaith counselling & respect','Bereavement & grief support','Family counselling sessions','Staff chaplaincy & wellness'],hours:'Available daily on request'},'public-health':{icon:'🏥',tag:'Community Health',title:'Public Health & Primary Care',desc:'Our Public Health team leads community-based programmes, immunization campaigns, and disease prevention initiatives.',features:['Child immunization programmes','Malaria prevention & treatment','Maternal & child health outreach','School health programmes','Disease surveillance & reporting','Health promotion campaigns'],hours:'Mon–Fri: 8am–5pm'},'pharmacy':{icon:'💊',tag:'Pharmaceutical',title:'Pharmacy & Dispensary',desc:'Our well-stocked Pharmacy and Dispensary provides prescription medications, over-the-counter drugs, and specialist pharmaceutical advice.',features:['Prescription dispensing','Medication counselling & education','NHIS-covered medications','Drug interaction checks','Chronic disease medication supply','Paediatric formulations available'],hours:'Mon–Sat: 8am–7pm · Sun: 9am–2pm'},'specialist':{icon:'⚕️',tag:'Specialist Medicine',title:'Specialist Services',desc:'Our Specialist Services cover Surgery, Paediatrics, Obstetrics, and Gynaecology, delivered by highly trained specialists.',features:['General & laparoscopic surgery','Neonatal & paediatric care','Antenatal & postnatal management','Gynaecological procedures','Surgical oncology referrals','Post-operative rehabilitation'],hours:'Mon–Fri · By appointment · Emergency: 24/7'},'physiotherapy':{icon:'🤸',tag:'Rehabilitation',title:'Physiotherapy Services',desc:'Our Physiotherapy unit helps patients recover mobility, manage pain, and rebuild strength following injury, surgery, or illness.',features:['Post-surgical rehabilitation','Stroke & neurological recovery','Musculoskeletal physiotherapy','Sports injury management','Paediatric physiotherapy','Home exercise programme design'],hours:'Mon–Fri: 8am–5pm · Sat: 9am–1pm'},'wellness':{icon:'🌿',tag:'Preventive Health',title:'Wellness Clinic',desc:'Our Wellness Clinic focuses on prevention rather than cure with comprehensive health screenings and lifestyle counselling.',features:['Annual health screening packages','Blood pressure & glucose checks','BMI & nutritional assessment','Lifestyle & dietary counselling','Executive health checks','Stress management programmes'],hours:'Mon–Fri: 8am–5pm · By appointment'},'cancer-screening':{icon:'🎗️',tag:'Cancer Prevention',title:'Cervical & Breast Cancer Screening',desc:'Early detection saves lives. Our Cancer Screening programme offers cervical and breast cancer screening services.',features:['Pap smear (cervical screening)','Visual inspection with acetic acid (VIA)','Clinical breast examination','Mammography referral','Patient education & awareness','Follow-up & referral support'],hours:'Mon–Fri: 8am–5pm · Specific clinic days'}};
+const services={'emergency':{icon:'🚑',tag:'Critical Care',title:'24-Hour Emergency & Ambulance',desc:'Our Emergency unit operates around the clock, 365 days a year. Trained emergency response teams are always ready with ambulance services to provide rapid pre-hospital care and safe transport to our facility.',features:['24/7 emergency triage','Ambulance dispatch service','Trauma & accident care','Resuscitation unit','Critical care stabilisation','Inter-facility patient transfer'],hours:'Available 24 hours · 7 days a week'},'blood-transfusion':{icon:'🩸',tag:'Clinical Services',title:'Blood Transfusion Services',desc:'Our Blood Transfusion unit maintains a safe and adequate blood supply through voluntary donation drives and rigorous screening.',features:['Blood grouping & cross-matching','Voluntary donation drives','Hepatitis B, C & HIV screening','Safe storage & handling','Emergency blood provision','Compatibility testing'],hours:'Mon–Sat · Emergency: 24/7'},'diagnostics':{icon:'🔬',tag:'Diagnostics',title:'Diagnostics Services',desc:'Our Diagnostics department combines laboratory investigations, radiography, ultrasound scanning, and ECG services under one roof.',features:['Full blood count & chemistry panels','Microbiology & culture tests','Digital X-ray imaging','Abdominal & obstetric ultrasound','Electrocardiogram (ECG)','Rapid malaria & HIV testing'],hours:'Mon–Sat: 8am–6pm · Emergency: 24/7'},'dental':{icon:'🦷',tag:'Dental Health',title:'Dental Services',desc:'Our Dental clinic provides complete oral healthcare for patients of all ages.',features:['Routine dental examination','Tooth extraction & fillings','Scaling & polishing','Oral health education','Paediatric dentistry','Dental pain management'],hours:'Mon–Fri: 8am–5pm · Sat: 9am–1pm'},'ent':{icon:'👂',tag:'Specialist Care',title:'Ear, Nose & Throat (ENT)',desc:'Our ENT department offers specialist assessment and treatment for conditions affecting the ear, nose, throat, head, and neck.',features:['Hearing assessment & ear care','Nasal & sinus treatment','Throat & tonsil management','Voice & swallowing disorders','Head & neck examination','Referral for ENT surgery'],hours:'Mon–Fri · By appointment'},'eye-care':{icon:'👁️',tag:'Vision Health',title:'Eye Care Services',desc:'Our Eye Care unit provides comprehensive vision health services including eye examinations and diagnosis of eye diseases.',features:['Comprehensive eye examination','Visual acuity testing','Cataract assessment & referral','Glaucoma screening','Prescription & vision correction','Diabetic eye review'],hours:'Mon–Fri · By appointment'},'opd':{icon:'💕',tag:'Outpatient',title:'General OPD Consultation',desc:'Our General Outpatient Department (OPD) is the first point of contact for patients seeking non-emergency medical care.',features:['Walk-in & scheduled consultations','Acute illness management','Chronic disease follow-up','Prescription & medication reviews','Specialist referrals','Health education & counselling'],hours:'Mon–Sat: 8am–6pm · Sun: 9am–2pm'},'hiv-tb':{icon:'🧬',tag:'Infectious Disease',title:'HIV / AIDS / TB Services',desc:'Our HIV/AIDS and TB unit provides confidential, non-judgmental testing, treatment, and ongoing support.',features:['Voluntary counselling & testing (VCT)','Antiretroviral therapy (ART)','TB diagnosis & DOTS therapy','Prevention of mother-to-child transmission','Adherence counselling & support','Contact tracing & community outreach'],hours:'Mon–Fri: 8am–5pm'},'mental-health':{icon:'🧘',tag:'Mental Wellness',title:'Mental Health Services',desc:'Our Mental Health unit provides compassionate, confidential psychiatric and psychological care in a safe, stigma-free environment.',features:['Psychiatric assessment & diagnosis','Individual therapy & counselling','Substance use disorder support','Community mental health outreach','Crisis intervention services','Family psychoeducation sessions'],hours:'Mon–Fri: 8am–5pm'},'mortuary':{icon:'🕊️',tag:'Bereavement Services',title:'Mortuary Services',desc:'We provide dignified and respectful mortuary services for bereaved families.',features:['Safe body storage & preservation','Identification & documentation','Family viewing arrangements','Death certificate support','Liaison with funeral services','Grief counselling referral'],hours:'Available daily · Contact administration'},'pastoral':{icon:'✝️',tag:'Spiritual Care',title:'Pastoral Care & Counselling',desc:'Rooted in our Catholic mission, our Pastoral Care team provides spiritual support, prayer, and counselling.',features:['Bedside prayer & spiritual support','Sacramental services (Last Rites etc.)','Interfaith counselling & respect','Bereavement & grief support','Family counselling sessions','Staff chaplaincy & wellness'],hours:'Available daily on request'},'public-health':{icon:'🏥',tag:'Community Health',title:'Public Health & Primary Care',desc:'Our Public Health team leads community-based programmes, immunization campaigns, and disease prevention initiatives.',features:['Child immunization programmes','Malaria prevention & treatment','Maternal & child health outreach','School health programmes','Disease surveillance & reporting','Health promotion campaigns'],hours:'Mon–Fri: 8am–5pm'},'pharmacy':{icon:'💊',tag:'Pharmaceutical',title:'Pharmacy & Dispensary',desc:'Our well-stocked Pharmacy and Dispensary provides prescription medications, over-the-counter drugs, and specialist pharmaceutical advice.',features:['Prescription dispensing','Medication counselling & education','NHIS-covered medications','Drug interaction checks','Chronic disease medication supply','Paediatric formulations available'],hours:'Mon–Sat: 8am–7pm · Sun: 9am–2pm'},'specialist':{icon:'⚕️',tag:'Specialist Medicine',title:'Specialist Services',desc:'Our Specialist Services cover Surgery, Paediatrics, Obstetrics, and Gynaecology, delivered by highly trained specialists.',features:['General & laparoscopic surgery','Neonatal & paediatric care','Antenatal & postnatal management','Gynaecological procedures','Surgical oncology referrals','Post-operative rehabilitation'],hours:'Mon–Fri · By appointment · Emergency: 24/7'},'physiotherapy':{icon:'🤸',tag:'Rehabilitation',title:'Physiotherapy Services',desc:'Our Physiotherapy unit helps patients recover mobility, manage pain, and rebuild strength following injury, surgery, or illness.',features:['Post-surgical rehabilitation','Stroke & neurological recovery','Musculoskeletal physiotherapy','Sports injury management','Paediatric physiotherapy','Home exercise programme design'],hours:'Mon–Fri: 8am–5pm · Sat: 9am–1pm'},'wellness':{icon:'🌿',tag:'Preventive Health',title:'Wellness Clinic',desc:'Our Wellness Clinic focuses on prevention rather than cure with comprehensive health screenings and lifestyle counselling.',features:['Annual health screening packages','Blood pressure & glucose checks','BMI & nutritional assessment','Lifestyle & dietary counselling','Executive health checks','Stress management programmes'],hours:'Mon–Fri: 8am–5pm · By appointment'},'cancer-screening':{icon:'🎗️',tag:'Cancer Prevention',title:'Cervical & Breast Cancer Screening',desc:'Early detection saves lives. Our Cancer Screening programme offers cervical and breast cancer screening services.',features:['Pap smear (cervical screening)','Visual inspection with acetic acid (VIA)','Clinical breast examination','Mammography referral','Patient education & awareness','Follow-up & referral support'],hours:'Mon–Fri: 8am–5pm · Specific clinic days'}};
 
 const serviceModal=document.getElementById('serviceModal');
 
@@ -1509,12 +1340,11 @@ document.getElementById('newsModalClose').addEventListener('click',()=>{newsModa
 newsModal.addEventListener('click',e=>{if(e.target===newsModal){newsModal.classList.remove('open');document.body.style.overflow='';}});
 
 /* ══════════════════════════════════════════════════
-   ESCAPE KEY — closes all modals + dropdown
+   ESCAPE KEY
 ══════════════════════════════════════════════════ */
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
-    closeServiceModal();
-    closeEventModal();
+    closeServiceModal();closeEventModal();
     newsModal.classList.remove('open');
     aboutDropdown.classList.remove('open');
     document.body.style.overflow='';
@@ -1566,7 +1396,7 @@ servicesMoreBtn.addEventListener('click',()=>{
 });
 
 /* ══════════════════════════════════════════════════
-   MODAL DRAG-TO-CLOSE (touch swipe down)
+   MODAL DRAG-TO-CLOSE (swipe down on touch)
 ══════════════════════════════════════════════════ */
 function addSwipeToDismiss(modal,closeFn){
   let startY=0,currentY=0,dragging=false;
@@ -1592,10 +1422,4 @@ addSwipeToDismiss(newsModal,()=>{newsModal.classList.remove('open');document.bod
 
 </script>
 </body>
-
 </html>
-
-
-
-
-
