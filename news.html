@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1a1612">
+<title>News &amp; Announcements — St Theresa Catholic Hospital Nkoranza</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f8f3ec;
+    --warm-white: #fdfaf6;
+    --gold: #b8965a;
+    --gold-light: #d4b483;
+    --gold-dark: #8a6d3b;
+    --deep: #1a1612;
+    --charcoal: #2d2820;
+    --mid: #6b5f52;
+    --border: rgba(184,150,90,0.25);
+    --border-dark: rgba(184,150,90,0.12);
+    --nav-h: 68px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--deep);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  a { -webkit-tap-highlight-color: transparent; }
+
+  /* ══ NAVBAR ══ */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: var(--nav-h);
+    background: rgba(26,22,18,0.97);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    transition: height 0.3s ease;
+  }
+  .navbar.scrolled { height: 58px; }
+
+  .logo { display:flex; flex-direction:column; gap:1px; text-decoration:none; flex-shrink:0; }
+  .logo-top { font-family:'Cormorant Garamond',serif; font-size:clamp(0.85rem,2.5vw,1.1rem); font-weight:600; color:var(--gold-light); letter-spacing:2px; text-transform:uppercase; }
+  .logo-sub { font-size:0.58rem; color:rgba(255,255,255,0.4); letter-spacing:3px; text-transform:uppercase; }
+
+  .nav-links { list-style:none; display:flex; gap:2.5rem; align-items:center; }
+  .nav-links a { color:rgba(255,255,255,0.65); text-decoration:none; font-size:0.75rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:500; transition:color 0.3s; position:relative; white-space:nowrap; }
+  .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1px; background:var(--gold); transition:width 0.3s ease; }
+  .nav-links a:hover, .nav-links a.active { color:var(--gold-light); }
+  .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+
+  .nav-cta { background:var(--gold) !important; color:#fff !important; padding:0.5rem 1.3rem; border-radius:2px; }
+  .nav-cta:hover { background:var(--gold-dark) !important; }
+  .nav-cta::after { display:none !important; }
+
+  .nav-dropdown { position:relative; }
+  .nav-dropdown > a { display:flex; align-items:center; gap:0.35rem; cursor:pointer; }
+  .dropdown-toggle-arrow { display:inline-flex; align-items:center; justify-content:center; padding:2px 4px; cursor:pointer; line-height:1; }
+  .nav-dropdown-arrow { display:inline-block; width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent; border-top:4px solid rgba(255,255,255,0.5); transition:transform 0.3s ease; pointer-events:none; }
+  .nav-dropdown.open .nav-dropdown-arrow { transform:rotate(180deg); }
+  .dropdown-menu { position:absolute; top:calc(100% + 18px); left:50%; transform:translateX(-50%) translateY(-6px); background:rgba(26,22,18,0.98); border:1px solid var(--border); border-radius:4px; min-width:220px; padding:0.5rem 0; opacity:0; visibility:hidden; pointer-events:none; transition:opacity 0.25s ease,transform 0.25s ease,visibility 0.25s; backdrop-filter:blur(16px); box-shadow:0 12px 40px rgba(0,0,0,0.5); }
+  .nav-dropdown.open .dropdown-menu { opacity:1; visibility:visible; pointer-events:auto; transform:translateX(-50%) translateY(0); }
+  .dropdown-item { display:flex !important; align-items:center; gap:0.7rem; padding:0.75rem 1.2rem; color:rgba(255,255,255,0.65) !important; font-size:0.72rem !important; letter-spacing:1px !important; text-transform:uppercase; font-weight:500; text-decoration:none; transition:background 0.2s,color 0.2s; white-space:nowrap; }
+  .dropdown-item:hover { background:rgba(184,150,90,0.12); color:var(--gold-light) !important; }
+  .dropdown-item::after { display:none !important; }
+  .dropdown-item-icon { font-size:0.9rem; opacity:0.7; }
+
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:10px 11px; background:rgba(184,150,90,0.15); border:1px solid rgba(184,150,90,0.35); border-radius:4px; transition:background 0.3s,border-color 0.3s; position:relative; z-index:2000; flex-shrink:0; min-width:44px; min-height:44px; align-items:center; justify-content:center; }
+  .hamburger:hover { background:rgba(184,150,90,0.28); border-color:var(--gold); }
+  .hamburger.active { background:var(--gold); border-color:var(--gold); }
+  .hamburger span { display:block; width:20px; height:3px; background:rgba(255,255,255,0.9); border-radius:2px; transition:all 0.3s ease; }
+  .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+  .hamburger.active span:nth-child(2) { opacity:0; }
+  .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+
+  @media (max-width: 900px) {
+    :root { --nav-h: 60px; }
+    .hamburger { display:flex; }
+    .nav-links { display:none !important; position:fixed !important; top:var(--nav-h) !important; left:0 !important; right:0 !important; bottom:0 !important; width:100% !important; height:calc(100vh - var(--nav-h)) !important; background:#1a1612 !important; flex-direction:column !important; justify-content:flex-start !important; align-items:stretch !important; padding:1rem 0 !important; gap:0 !important; overflow-y:auto !important; z-index:1999 !important; border-top:1px solid rgba(184,150,90,0.25) !important; list-style:none !important; }
+    .nav-links.mobile-open { display:flex !important; }
+    .nav-links > li { border-bottom:1px solid var(--border-dark); }
+    .nav-links > li > a { display:flex; align-items:center; justify-content:space-between; padding:1.2rem 2rem; font-size:0.95rem; letter-spacing:1px; color:rgba(255,255,255,0.75); width:100%; }
+    .nav-links > li > a:hover { color:var(--gold-light); }
+    .dropdown-menu { position:static !important; transform:none !important; opacity:1 !important; visibility:visible !important; pointer-events:auto !important; background:rgba(184,150,90,0.06); border:none; border-top:1px solid var(--border-dark); box-shadow:none; border-radius:0; min-width:0; padding:0.3rem 0; display:none; }
+    .nav-dropdown.open .dropdown-menu { display:block; }
+    .dropdown-item { padding:0.9rem 2.5rem !important; font-size:0.75rem !important; }
+  }
+
+  /* ══ PAGE HERO ══ */
+  .page-hero {
+    padding-top: var(--nav-h);
+    background: var(--deep);
+    padding-bottom: 3.5rem;
+    padding-left: 6%; padding-right: 6%;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(184,150,90,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .breadcrumb {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); margin-bottom: 1.5rem;
+    padding-top: 2.5rem;
+  }
+  .breadcrumb a { color: var(--gold); text-decoration: none; transition: opacity 0.3s; }
+  .breadcrumb a:hover { opacity: 0.7; }
+  .page-hero-label { font-size:0.66rem; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:0.8rem; display:flex; align-items:center; gap:0.8rem; }
+  .page-hero-label::before { content:''; width:28px; height:1px; background:var(--gold); display:block; }
+  .page-hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,6vw,3.5rem); font-weight:500; color:#fff; line-height:1.1; margin-bottom:0.8rem; }
+  .page-hero p { font-size:0.95rem; color:rgba(255,255,255,0.5); font-weight:300; max-width:520px; line-height:1.8; }
+
+  /* ══ SECTION LABELS ══ */
+  .section-label { font-size:0.66rem; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:0.85rem; display:flex; align-items:center; gap:0.8rem; }
+  .section-label::before { content:''; width:28px; height:1px; background:var(--gold); display:block; }
+  .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,5vw,2.6rem); font-weight:500; line-height:1.15; color:var(--deep); margin-bottom:1.4rem; }
+
+  /* ══ NEWS FILTER BAR ══ */
+  .news-controls {
+    background: var(--cream); border-bottom: 1px solid var(--border);
+    padding: 1.2rem 6%; display: flex; align-items: center;
+    justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    position: sticky; top: var(--nav-h); z-index: 100;
+  }
+  .news-filter { display:flex; gap:0.5rem; flex-wrap:wrap; }
+  .filter-btn { padding:0.55rem 1.1rem; border:1.5px solid var(--border); background:#fff; color:var(--mid); font-size:0.7rem; letter-spacing:1px; text-transform:uppercase; font-weight:600; border-radius:20px; cursor:pointer; transition:all 0.3s; white-space:nowrap; min-height:38px; font-family:inherit; }
+  .filter-btn:hover { border-color:var(--gold); color:var(--gold); }
+  .filter-btn.active { background:var(--gold); color:#fff; border-color:var(--gold); }
+  .news-count { font-size:0.72rem; color:var(--mid); letter-spacing:1px; white-space:nowrap; }
+  .news-count span { color:var(--gold); font-weight:600; }
+
+  /* ══ MAIN NEWS GRID ══ */
+  .news-main { padding: 4rem 6%; }
+
+  /* Featured article */
+  .news-featured {
+    display: grid; grid-template-columns: 1.1fr 1fr;
+    gap: 0; background: #fff; border: 1px solid var(--border);
+    border-radius: 4px; overflow: hidden; margin-bottom: 3rem;
+    cursor: pointer; transition: box-shadow 0.35s, border-color 0.35s;
+  }
+  .news-featured:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.1); border-color: var(--gold-light); }
+  .news-featured-img { overflow: hidden; position: relative; min-height: 380px; }
+  .news-featured-img img { width:100%; height:100%; object-fit:cover; transition:transform 0.6s ease; }
+  .news-featured:hover .news-featured-img img { transform:scale(1.04); }
+  .news-featured-badge { position:absolute; top:1.2rem; left:1.2rem; background:var(--gold); color:#fff; padding:0.4rem 0.9rem; font-size:0.6rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; border-radius:2px; }
+  .news-featured-body { padding: 3rem 2.8rem; display:flex; flex-direction:column; justify-content:center; }
+  .news-tag { font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:0.8rem; }
+  .news-featured-body h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(1.5rem,3vw,2.1rem); font-weight:600; color:var(--deep); line-height:1.25; margin-bottom:1rem; }
+  .news-featured-body p { font-size:0.9rem; color:var(--mid); line-height:1.8; font-weight:300; flex:1; margin-bottom:1.5rem; }
+  .news-date { font-size:0.7rem; color:rgba(107,95,82,0.55); display:flex; align-items:center; gap:0.4rem; margin-bottom:1.2rem; }
+  .news-read-more { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.72rem; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); text-decoration:none; transition:gap 0.3s; cursor:pointer; background:none; border:none; padding:0; font-family:inherit; }
+  .news-read-more:hover { gap:0.9rem; }
+
+  /* Standard grid */
+  .news-grid-title { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:600; color:var(--deep); margin-bottom:1.8rem; padding-bottom:0.8rem; border-bottom:1px solid var(--border); }
+  .news-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-bottom:3rem; }
+  .news-card { background:#fff; border:1px solid var(--border); border-radius:4px; overflow:hidden; cursor:pointer; transition:all 0.35s; display:flex; flex-direction:column; }
+  .news-card:hover { box-shadow:0 16px 40px rgba(0,0,0,0.1); transform:translateY(-5px); border-color:var(--gold-light); }
+  .news-card-img { overflow:hidden; }
+  .news-card-img img { width:100%; height:200px; object-fit:cover; transition:transform 0.6s ease; }
+  .news-card:hover .news-card-img img { transform:scale(1.06); }
+  .news-card-body { padding:1.5rem; flex:1; display:flex; flex-direction:column; }
+  .news-card-body h3 { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:600; color:var(--deep); line-height:1.3; margin-bottom:0.6rem; }
+  .news-card-body p { font-size:0.82rem; color:var(--mid); line-height:1.72; font-weight:300; flex:1; margin-bottom:1rem; }
+  .news-card-footer { display:flex; align-items:center; justify-content:space-between; margin-top:auto; }
+  .news-card-date { font-size:0.68rem; color:rgba(107,95,82,0.5); display:flex; align-items:center; gap:0.35rem; }
+  .news-card-link { font-size:0.68rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--gold); }
+
+  /* Announcement strip */
+  .announcements { background:var(--deep); padding:3rem 6%; margin-bottom:0; }
+  .announcements .section-label { color:var(--gold-light); }
+  .announcements .section-title { color:#fff; margin-bottom:2rem; }
+  .announce-list { display:flex; flex-direction:column; gap:0; }
+  .announce-item { display:flex; align-items:flex-start; gap:1.5rem; padding:1.4rem 0; border-bottom:1px solid rgba(255,255,255,0.07); cursor:pointer; transition:background 0.2s; }
+  .announce-item:last-child { border-bottom:none; }
+  .announce-item:hover .announce-title { color:var(--gold-light); }
+  .announce-date-block { flex-shrink:0; text-align:center; background:rgba(184,150,90,0.12); border:1px solid var(--border); border-radius:4px; padding:0.6rem 0.9rem; min-width:56px; }
+  .announce-date-day { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:700; color:var(--gold-light); line-height:1; }
+  .announce-date-mon { font-size:0.58rem; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-top:2px; }
+  .announce-body { flex:1; }
+  .announce-tag { font-size:0.58rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:0.35rem; }
+  .announce-title { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:600; color:#fff; line-height:1.3; margin-bottom:0.35rem; transition:color 0.3s; }
+  .announce-desc { font-size:0.8rem; color:rgba(255,255,255,0.38); font-weight:300; line-height:1.6; }
+  .announce-arrow { flex-shrink:0; color:rgba(184,150,90,0.4); font-size:1.1rem; padding-top:0.2rem; transition:color 0.3s, transform 0.3s; }
+  .announce-item:hover .announce-arrow { color:var(--gold-light); transform:translateX(4px); }
+
+  /* ══ NEWS MODAL ══ */
+  .news-modal { position:fixed; inset:0; background:rgba(10,8,5,0.85); display:none; justify-content:center; align-items:flex-end; z-index:9999; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
+  .news-modal.open { display:flex; }
+  .modal-inner { background:var(--warm-white); width:100%; max-width:620px; margin:0 auto; padding:0; position:relative; border-radius:12px 12px 0 0; border-top:3px solid var(--gold); animation:slideUpModal 0.35s cubic-bezier(0.16,1,0.3,1); max-height:88svh; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; }
+  @keyframes slideUpModal { from{transform:translateY(100%)} to{transform:translateY(0)} }
+  .modal-handle { width:40px; height:4px; background:rgba(0,0,0,0.12); border-radius:2px; margin:12px auto 0; }
+  .modal-close { position:absolute; top:1rem; right:1.2rem; background:rgba(0,0,0,0.08); border:none; color:var(--deep); font-size:1.5rem; cursor:pointer; width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:50%; transition:all 0.3s; z-index:2; }
+  .modal-close:hover { background:rgba(0,0,0,0.16); }
+  .modal-img { width:100%; height:260px; object-fit:cover; display:block; }
+  .modal-body { padding:1.8rem 2rem 2.2rem; }
+  .modal-body .news-tag { margin-bottom:0.6rem; }
+  .modal-body h3 { font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-weight:600; color:var(--deep); line-height:1.22; margin-bottom:0.6rem; }
+  .modal-body .news-date { margin-bottom:1.2rem; }
+  .modal-body p { font-size:0.9rem; color:var(--mid); line-height:1.85; font-weight:300; }
+
+  /* ══ EMERGENCY STRIP ══ */
+  .emergency-banner { background:var(--cream); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:3rem 6%; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; }
+  .emergency-text h2 { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:600; color:var(--deep); }
+  .emergency-text p { font-size:0.85rem; color:var(--mid); margin-top:0.3rem; font-weight:300; }
+  .emergency-actions { display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
+  .emergency-number { font-family:'Cormorant Garamond',serif; font-size:1.9rem; font-weight:700; color:var(--gold); text-decoration:none; transition:opacity 0.3s; }
+  .emergency-number:hover { opacity:0.75; }
+  .btn-primary { display:inline-flex; align-items:center; gap:0.55rem; background:var(--gold); color:#fff; padding:0.95rem 1.8rem; text-decoration:none; font-size:0.78rem; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; border-radius:2px; transition:all 0.3s; white-space:nowrap; min-height:48px; }
+  .btn-primary:hover { background:var(--gold-dark); transform:translateY(-1px); }
+
+  /* ══ FOOTER ══ */
+  footer { background:var(--deep); color:rgba(255,255,255,0.55); padding:4.5rem 6% 2.5rem; }
+  .footer-top { display:grid; grid-template-columns:1.7fr 1fr 1fr 1fr; gap:2.5rem; padding-bottom:3rem; border-bottom:1px solid rgba(255,255,255,0.07); margin-bottom:1.8rem; }
+  .footer-brand p { font-size:0.8rem; line-height:1.82; margin-top:0.9rem; margin-bottom:1.3rem; font-weight:300; max-width:270px; }
+  .footer-social { display:flex; gap:0.7rem; }
+  .social-btn { width:34px; height:34px; border:1px solid rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.45); text-decoration:none; font-size:0.72rem; border-radius:2px; transition:all 0.3s; font-weight:600; }
+  .social-btn:hover { border-color:var(--gold); color:var(--gold); }
+  .footer-col h4 { font-family:'Cormorant Garamond',serif; font-size:0.95rem; font-weight:600; color:rgba(255,255,255,0.82); margin-bottom:1.1rem; }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:0.55rem; }
+  .footer-col ul li a { color:rgba(255,255,255,0.42); text-decoration:none; font-size:0.8rem; font-weight:300; transition:color 0.3s; }
+  .footer-col ul li a:hover { color:var(--gold-light); }
+  .footer-col ul li:not(:has(a)) { color:rgba(255,255,255,0.42); font-size:0.8rem; font-weight:300; }
+  .contact-line { display:flex; flex-direction:column; gap:0.6rem; font-size:0.8rem; font-weight:300; }
+  .contact-line a { color:rgba(255,255,255,0.42); text-decoration:none; transition:color 0.3s; }
+  .contact-line a:hover { color:var(--gold-light); }
+  .contact-line strong { color:rgba(255,255,255,0.58); font-weight:500; }
+  .footer-bottom { display:flex; align-items:center; justify-content:space-between; font-size:0.7rem; color:rgba(255,255,255,0.22); flex-wrap:wrap; gap:0.5rem; }
+  .footer-bottom a { color:rgba(255,255,255,0.22); text-decoration:none; transition:color 0.3s; }
+  .footer-bottom a:hover { color:rgba(255,255,255,0.48); }
+
+  /* ══ RESPONSIVE ══ */
+  @media (max-width: 1024px) {
+    .news-grid { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .news-featured { grid-template-columns: 1fr; }
+    .news-featured-img { min-height: 280px; }
+  }
+  @media (max-width: 768px) {
+    .news-grid { grid-template-columns: 1fr; }
+    .news-main { padding: 3rem 5%; }
+    .news-controls { padding: 1rem 5%; }
+    .announcements { padding: 3rem 5%; }
+    .page-hero { padding-left: 5%; padding-right: 5%; }
+    .emergency-banner { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 480px) {
+    .news-featured-body { padding: 2rem 1.5rem; }
+    .modal-body { padding: 1.4rem 1.5rem 2rem; }
+    .footer-top { grid-template-columns: 1fr; }
+    .announce-item { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="logo">
+    <span class="logo-top">st theresa catholic hospital</span>
+    <span class="logo-sub">Nkoranza · Ghana</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li class="nav-dropdown" id="aboutDropdown">
+      <a href="#" id="aboutLink">
+        About
+        <span class="dropdown-toggle-arrow" id="aboutArrow">
+          <span class="nav-dropdown-arrow"></span>
+        </span>
+      </a>
+      <div class="dropdown-menu">
+        <a href="board.html" class="dropdown-item"><span class="dropdown-item-icon">🏛️</span>Board of Directors</a>
+        <a href="about.html#Welcomemessage" class="dropdown-item"><span class="dropdown-item-icon">🎤</span>Welcome Message</a>
+        <a href="about.html#ourjourney" class="dropdown-item"><span class="dropdown-item-icon">📜</span>Our History</a>
+        <a href="about.html#ourfacilities" class="dropdown-item"><span class="dropdown-item-icon">🏗</span>Our Facilities</a>
+      </div>
+    </li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="news.html" class="active">News</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="tel:+233504414929" class="nav-cta">Emergency</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span>›</span>
+    <span>News &amp; Announcements</span>
+  </div>
+  <p class="page-hero-label">Latest from the Hospital</p>
+  <h1>News &amp;<br>Announcements</h1>
+  <p>Stay informed with the latest updates, community programmes, achievements, and health information from St. Theresa Catholic Hospital.</p>
+</div>
+
+<!-- FILTER BAR -->
+<div class="news-controls" id="newsControls">
+  <div class="news-filter">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="infrastructure">Infrastructure</button>
+    <button class="filter-btn" data-filter="community">Community</button>
+    <button class="filter-btn" data-filter="team">Team</button>
+    <button class="filter-btn" data-filter="health">Health</button>
+  </div>
+  <div class="news-count">Showing <span id="visibleCount">6</span> articles</div>
+</div>
+
+<!-- MAIN NEWS CONTENT -->
+<div class="news-main" id="newsMain">
+
+  <!-- FEATURED STORY -->
+  <div class="news-featured" id="featuredCard" data-category="infrastructure"
+       data-title="New Surgery Theatre Unit Commissioned"
+       data-tag="Infrastructure"
+       data-date="February 2026"
+       data-img="images/swordcutting.jpeg"
+       data-content="St. Theresa Catholic Hospital has officially commissioned a brand-new surgery theatre unit, marking a significant milestone in the delivery of surgical services across the Bono East Region. The state-of-the-art facility is equipped with modern machines and instruments designed to handle a broad range of surgical procedures. The commissioning ceremony was attended by hospital management, staff, community leaders, and well-wishers who gathered to celebrate this achievement. The new theatre is expected to dramatically reduce patient wait times and improve outcomes for those requiring surgical care, bringing relief to families who previously had to travel long distances for similar services.">
+    <div class="news-featured-img">
+      <img src="images/swordcutting.jpeg" alt="New Surgery Theatre Unit">
+      <span class="news-featured-badge">Featured</span>
+    </div>
+    <div class="news-featured-body">
+      <p class="news-tag">Infrastructure</p>
+      <h2>New Surgery Theatre Unit Commissioned</h2>
+      <div class="news-date"><span>📅</span> February 2026</div>
+      <p>St. Theresa Hospital has officially commissioned a brand-new surgery theatre unit to significantly improve surgical services across the Bono East Region. The facility is equipped with modern machines and trained specialists dedicated to improving patient outcomes and quality of life.</p>
+      <button class="news-read-more">Read Full Story →</button>
+    </div>
+  </div>
+
+  <!-- SECONDARY ARTICLES GRID -->
+  <h3 class="news-grid-title">Recent Stories</h3>
+  <div class="news-grid" id="newsGrid">
+
+    <div class="news-card" data-category="community"
+         data-title="Free Medical Surgery Programme"
+         data-tag="Community"
+         data-date="January 2026"
+         data-img="images/freesurgery.jpeg"
+         data-content="Free medical screenings and surgeries are being offered at St. Theresa Catholic Hospital, Nkoranza, for conditions including hernias, goitres, lumps, haemorrhoids, cysts, and hydroceles from February to March 2026. Patients are encouraged to bring their NHIS card. For details and appointments at the surgical clinic, please call 054 228 2789 or 054 980 1240. This initiative reflects the hospital's commitment to making quality healthcare accessible to all members of the community regardless of their financial circumstances.">
+      <div class="news-card-img"><img src="images/freesurgery.jpeg" alt="Free Medical Surgery"></div>
+      <div class="news-card-body">
+        <p class="news-tag">Community</p>
+        <h3>Free Medical Surgery Programme</h3>
+        <p>Bringing essential surgical care directly to underserved communities in the Nkoranza area at no cost.</p>
+        <div class="news-card-footer">
+          <span class="news-card-date"><span>📅</span> January 2026</span>
+          <span class="news-card-link">Read →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" data-category="team"
+         data-title="Citation of Recognition from Ghana Health Service"
+         data-tag="Team"
+         data-date="February 2026"
+         data-img="images/WhatsApp Image 2026-03-02 at 3.43.33 PM.jpeg"
+         data-content="It is with great pride and joy that we share the recent honours bestowed upon our hospital and dedicated staff by the Ghana Health Service. These citations recognise the tireless commitment, compassion, and professionalism that continue to make our institution a beacon of healthcare in Nkoranza South Municipal. The awards celebrate individuals and teams who have gone above and beyond in serving patients and their families, and reflect the collective dedication of everyone at St. Theresa Hospital to excellence in healthcare delivery.">
+      <div class="news-card-img"><img src="images/WhatsApp Image 2026-03-02 at 3.43.33 PM.jpeg" alt="Citation of Recognition"></div>
+      <div class="news-card-body">
+        <p class="news-tag">Team</p>
+        <h3>Citation of Recognition from Ghana Health Service</h3>
+        <p>Our staff receive formal honours for their outstanding dedication to healthcare in Nkoranza South Municipal.</p>
+        <div class="news-card-footer">
+          <span class="news-card-date"><span>📅</span> February 2026</span>
+          <span class="news-card-link">Read →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" data-category="health"
+         data-title="Maternal Health Awareness Campaign"
+         data-tag="Health Campaign"
+         data-date="March 2026"
+         data-img="https://images.unsplash.com/photo-1631217314831-c6227db76b6e?w=800"
+         data-content="A dedicated week-long campaign promoting maternal health, prenatal care, safe delivery practices, and postnatal support services is underway at the hospital and across community centres in Nkoranza. Activities include free antenatal clinics, labour and delivery demonstrations, breastfeeding workshops, newborn care training, and counselling services. The campaign is organised by the Department of Obstetrics and Maternity Services in collaboration with the Nkoranza District Health Directorate and aims to reduce maternal and infant mortality rates in the region.">
+      <div class="news-card-img"><img src="https://images.unsplash.com/photo-1631217314831-c6227db76b6e?w=800" alt="Maternal Health Campaign" loading="lazy"></div>
+      <div class="news-card-body">
+        <p class="news-tag">Health Campaign</p>
+        <h3>Maternal Health Awareness Campaign</h3>
+        <p>A week-long initiative promoting safe pregnancy, delivery, and postnatal care for mothers in Nkoranza.</p>
+        <div class="news-card-footer">
+          <span class="news-card-date"><span>📅</span> March 2026</span>
+          <span class="news-card-link">Read →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" data-category="community"
+         data-title="Mental Health Wellness Workshop"
+         data-tag="Community"
+         data-date="March 2026"
+         data-img="https://images.unsplash.com/photo-1576091160550-112173f31f5f?w=800"
+         data-content="An interactive workshop exploring mental health awareness, stress management techniques, and resources for emotional wellbeing is open to the public at the Hospital Conference Hall. The programme features expert talks on depression and anxiety, guided meditation and mindfulness sessions, a live Q&amp;A with our psychiatrists, and distribution of mental health resources. The event is free to attend and is being organised by the hospital's Mental Health Department in partnership with the Community Health Team. All are welcome, and there is no stigma attached to attending.">
+      <div class="news-card-img"><img src="https://images.unsplash.com/photo-1576091160550-112173f31f5f?w=800" alt="Mental Health Workshop" loading="lazy"></div>
+      <div class="news-card-body">
+        <p class="news-tag">Community</p>
+        <h3>Mental Health Wellness Workshop</h3>
+        <p>A free, open community event on mental wellbeing, stress management, and available psychiatric support.</p>
+        <div class="news-card-footer">
+          <span class="news-card-date"><span>📅</span> March 2026</span>
+          <span class="news-card-link">Read →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" data-category="health"
+         data-title="Cancer Screening Drive: Early Detection Saves Lives"
+         data-tag="Health"
+         data-date="February 2026"
+         data-img="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800"
+         data-content="St. Theresa Hospital is conducting a cancer screening drive focused on cervical and breast cancer. Early detection significantly increases the chances of successful treatment and survival. Services available include Pap smear testing, visual inspection with acetic acid (VIA), clinical breast examination, and referral for mammography where needed. Women aged 25 and above are especially encouraged to attend. All screenings are being offered free of charge during the campaign period. Please contact the hospital's outpatient department or call our helpline for appointment scheduling.">
+      <div class="news-card-img"><img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800" alt="Cancer Screening" loading="lazy"></div>
+      <div class="news-card-body">
+        <p class="news-tag">Health</p>
+        <h3>Cancer Screening Drive</h3>
+        <p>Free cervical and breast cancer screenings available to women aged 25 and above during the campaign period.</p>
+        <div class="news-card-footer">
+          <span class="news-card-date"><span>📅</span> February 2026</span>
+          <span class="news-card-link">Read →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" data-category="infrastructure"
+         data-title="Hospital Expansion: New Maternity Wing Opens"
+         data-tag="Infrastructure"
+         data-date="January 2026"
+         data-img="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=800"
+         data-content="A newly expanded maternity wing has been opened at St. Theresa Catholic Hospital, significantly increasing the hospital's capacity to support mothers during pregnancy, labour, and postnatal recovery. The expanded wing features private and semi-private rooms, a dedicated neonatal care unit, improved monitoring equipment, and enhanced infection control measures. This expansion is part of the hospital's long-term development plan to ensure that every mother and newborn in the Bono East Region has access to safe, dignified, and high-quality maternity care.">
+      <div class="news-card-img"><img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=800" alt="Maternity Wing" loading="lazy"></div>
+      <div class="news-card-body">
+        <p class="news-tag">Infrastructure</p>
+        <h3>New Maternity Wing Opens</h3>
+        <p>An expanded, modern maternity unit now provides improved facilities for mothers and newborns across the region.</p>
+        <div class="news-card-footer">
+          <span class="news-card-date"><span>📅</span> January 2026</span>
+          <span class="news-card-link">Read →</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /news-grid -->
+</div><!-- /news-main -->
+
+<!-- ANNOUNCEMENTS SECTION -->
+<div class="announcements" id="announcements">
+  <p class="section-label">Notices &amp; Bulletins</p>
+  <h2 class="section-title">Official Announcements</h2>
+  <div class="announce-list">
+    <div class="announce-item"
+         data-title="NHIS Accreditation Renewal — April 2026"
+         data-tag="Administration"
+         data-content="St. Theresa Catholic Hospital's National Health Insurance Scheme (NHIS) accreditation has been successfully renewed for 2026. All eligible NHIS cardholders can continue to access a full range of services at the hospital without out-of-pocket payments. Patients are reminded to carry a valid NHIS card and to update their membership if expired. For enquiries, please contact the records office during working hours.">
+      <div class="announce-date-block">
+        <div class="announce-date-day">14</div>
+        <div class="announce-date-mon">Apr</div>
+      </div>
+      <div class="announce-body">
+        <p class="announce-tag">Administration</p>
+        <p class="announce-title">NHIS Accreditation Renewal — April 2026</p>
+        <p class="announce-desc">Our NHIS accreditation has been successfully renewed. All eligible cardholders can access full services without out-of-pocket payments.</p>
+      </div>
+      <div class="announce-arrow">→</div>
+    </div>
+
+    <div class="announce-item"
+         data-title="Updated Visiting Hours — Effective March 2026"
+         data-tag="Policy Update"
+         data-content="In response to patient feedback and in the interest of patient rest and recovery, St. Theresa Hospital has updated its visiting hours effective March 2026. General wards: 10:00am–12:00pm and 4:00pm–6:00pm daily. ICU and maternity: by arrangement with nursing staff only. A maximum of two visitors per patient at any one time is permitted. Children under 12 are not permitted in ward areas unless in exceptional circumstances approved by the nurse in charge. These measures are designed to protect patient wellbeing and maintain a calm healing environment.">
+      <div class="announce-date-block">
+        <div class="announce-date-day">01</div>
+        <div class="announce-date-mon">Mar</div>
+      </div>
+      <div class="announce-body">
+        <p class="announce-tag">Policy Update</p>
+        <p class="announce-title">Updated Visiting Hours — Effective March 2026</p>
+        <p class="announce-desc">New ward visiting times are now in effect. General wards: 10am–12pm and 4pm–6pm daily. ICU by arrangement only.</p>
+      </div>
+      <div class="announce-arrow">→</div>
+    </div>
+
+    <div class="announce-item"
+         data-title="Staff Recruitment: Nurses &amp; Lab Technicians"
+         data-tag="Careers"
+         data-content="St. Theresa Catholic Hospital is currently recruiting qualified Registered Nurses and Laboratory Technicians to join our growing team. Applicants must hold a valid professional licence and have a minimum of two years' post-qualification experience. Applications should include a cover letter, curriculum vitae, and copies of relevant certificates. Shortlisted candidates will be contacted for interview. Applications close on 30 April 2026. Please submit to the Human Resources Office or via email. We are an equal-opportunity employer committed to excellence in healthcare.">
+      <div class="announce-date-block">
+        <div class="announce-date-day">20</div>
+        <div class="announce-date-mon">Feb</div>
+      </div>
+      <div class="announce-body">
+        <p class="announce-tag">Careers</p>
+        <p class="announce-title">Staff Recruitment: Nurses &amp; Lab Technicians</p>
+        <p class="announce-desc">We are hiring qualified Registered Nurses and Laboratory Technicians. Applications close 30 April 2026.</p>
+      </div>
+      <div class="announce-arrow">→</div>
+    </div>
+
+    <div class="announce-item"
+         data-title="Planned Maintenance: Laboratory Services — 22 March"
+         data-tag="Service Notice"
+         data-content="Routine maintenance and equipment calibration will be carried out in the Laboratory Department on 22 March 2026. During this period, non-urgent laboratory services will be suspended from 8:00am to 1:00pm. Emergency diagnostic services will remain fully operational throughout. Patients with non-urgent test requests are advised to attend before 8:00am or after 1:00pm on that date. We apologise for any inconvenience this may cause and thank you for your understanding and cooperation.">
+      <div class="announce-date-block">
+        <div class="announce-date-day">22</div>
+        <div class="announce-date-mon">Mar</div>
+      </div>
+      <div class="announce-body">
+        <p class="announce-tag">Service Notice</p>
+        <p class="announce-title">Planned Maintenance: Laboratory Services — 22 March</p>
+        <p class="announce-desc">Non-urgent lab services suspended 8am–1pm on 22 March for scheduled maintenance. Emergency services unaffected.</p>
+      </div>
+      <div class="announce-arrow">→</div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWS MODAL -->
+<div class="news-modal" id="newsModal" role="dialog" aria-modal="true">
+  <div class="modal-inner">
+    <div class="modal-handle"></div>
+    <button class="modal-close" id="newsModalClose" aria-label="Close">&times;</button>
+    <img id="modalImg" src="" alt="" class="modal-img" style="display:none">
+    <div class="modal-body">
+      <p class="news-tag" id="modalTag"></p>
+      <h3 id="modalTitle"></h3>
+      <div class="news-date"><span>📅</span> <span id="modalDate"></span></div>
+      <p id="modalContent"></p>
+    </div>
+  </div>
+</div>
+
+<!-- EMERGENCY BANNER -->
+<div class="emergency-banner">
+  <div class="emergency-text">
+    <h2>Need Immediate Assistance?</h2>
+    <p>Our emergency team is available 24 hours a day, 7 days a week.</p>
+  </div>
+  <div class="emergency-actions">
+    <a href="tel:+233504414929" class="emergency-number">+233 504 414 929</a>
+    <a href="tel:+233504414929" class="btn-primary" style="background:var(--deep);color:#fff;">Book Appointment</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">
+        <span class="logo-top">st theresa catholic hospital</span>
+        <span class="logo-sub" style="color:rgba(255,255,255,0.28)">Nkoranza · Ghana</span>
+      </div>
+      <p>Committed to delivering advanced, compassionate, and affordable healthcare services to the people of Ghana with faith, integrity, and excellence.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/p/St-Theresa-Catholic-Hospital-Nkoranza-61559497660672/" class="social-btn" aria-label="Facebook">f</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="board.html">Board of Directors</a></li>
+        <li><a href="index.html#services">Our Services</a></li>
+        <li><a href="news.html">News &amp; Updates</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Our Services</h4>
+      <ul>
+        <li>Emergency &amp; Ambulance</li>
+        <li>Diagnostics &amp; Radiology</li>
+        <li>Specialist Surgery</li>
+        <li>Maternity &amp; Paediatrics</li>
+        <li>Mental Health</li>
+        <li>Dental &amp; Eye Care</li>
+        <li>Physiotherapy</li>
+        <li>Cancer Screening</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <div class="contact-line">
+        <span><strong>Address:</strong> BO-0003-5283<br>Nkoranza, Ghana</span>
+        <span><strong>Emergency:</strong> <a href="tel:+233504414929">+233 504 414 929</a></span>
+        <span><strong>Surgical Clinic:</strong> <a href="tel:+233542282789">+233 542 282 789</a></span>
+        <span style="margin-top:0.4rem;color:rgba(255,255,255,0.28);font-size:0.72rem;letter-spacing:1px;">HOURS</span>
+        <span>Mon–Sun: 7:00am – 7:00pm</span>
+        <span>Emergency: 24 / 7</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 St. Theresa Hospital Nkoranza. All rights reserved.</span>
+    <span><a href="#">Developed By</a> &nbsp;·&nbsp; <a href="#">YounsgterTheDev</a></span>
+  </div>
+</footer>
+
+<script>
+/* ── NAVBAR ── */
+const hamburger = document.getElementById('hamburger');
+const navLinks  = document.getElementById('navLinks');
+const navbar    = document.getElementById('navbar');
+const MOBILE_BP = 900;
+let menuOpen = false;
+
+function isMobile() { return window.innerWidth <= MOBILE_BP; }
+
+function openMobileNav() {
+  menuOpen = true;
+  navLinks.style.cssText = `display:flex !important;position:fixed !important;top:var(--nav-h) !important;left:0 !important;right:0 !important;bottom:0 !important;width:100% !important;height:calc(100vh - var(--nav-h)) !important;background:#1a1612 !important;flex-direction:column !important;justify-content:flex-start !important;align-items:stretch !important;padding:1rem 0 !important;gap:0 !important;overflow-y:auto !important;z-index:1999 !important;border-top:1px solid rgba(184,150,90,0.25) !important;list-style:none !important;`;
+  hamburger.classList.add('active');
+  hamburger.setAttribute('aria-expanded','true');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobileNav() {
+  menuOpen = false;
+  navLinks.style.cssText = '';
+  hamburger.classList.remove('active');
+  hamburger.setAttribute('aria-expanded','false');
+  document.body.style.overflow = '';
+}
+
+hamburger.addEventListener('click', () => { menuOpen ? closeMobileNav() : openMobileNav(); });
+navLinks.querySelectorAll('li:not(.nav-dropdown) a').forEach(link => {
+  link.addEventListener('click', () => { if (isMobile()) closeMobileNav(); });
+});
+window.addEventListener('resize', () => { if (!isMobile()) closeMobileNav(); }, { passive: true });
+
+/* About dropdown */
+const aboutDropdown = document.getElementById('aboutDropdown');
+const aboutLink     = document.getElementById('aboutLink');
+const aboutArrow    = document.getElementById('aboutArrow');
+
+aboutArrow.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); aboutDropdown.classList.toggle('open'); });
+aboutLink.addEventListener('click', (e) => { if (isMobile()) { e.preventDefault(); aboutDropdown.classList.toggle('open'); } });
+aboutDropdown.querySelectorAll('.dropdown-item').forEach(item => {
+  item.addEventListener('click', () => { aboutDropdown.classList.remove('open'); if (isMobile()) closeMobileNav(); });
+});
+document.addEventListener('click', (e) => { if (!aboutDropdown.contains(e.target)) aboutDropdown.classList.remove('open'); });
+
+/* Navbar scroll shrink */
+window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', scrollY > 60); }, { passive: true });
+
+/* ── FILTER ── */
+const filterBtns = document.querySelectorAll('.filter-btn');
+const allCards   = document.querySelectorAll('.news-card');
+const featuredCard = document.getElementById('featuredCard');
+const countEl    = document.getElementById('visibleCount');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    let visible = 0;
+
+    // Featured card
+    if (filter === 'all' || featuredCard.dataset.category === filter) {
+      featuredCard.style.display = '';
+      visible++;
+    } else {
+      featuredCard.style.display = 'none';
+    }
+
+    // Grid cards
+    allCards.forEach(card => {
+      if (filter === 'all' || card.dataset.category === filter) {
+        card.style.display = '';
+        visible++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    countEl.textContent = visible;
+  });
+});
+
+/* ── MODAL ── */
+const newsModal = document.getElementById('newsModal');
+const modalTitle   = document.getElementById('modalTitle');
+const modalTag     = document.getElementById('modalTag');
+const modalDate    = document.getElementById('modalDate');
+const modalContent = document.getElementById('modalContent');
+const modalImg     = document.getElementById('modalImg');
+
+function openModal(data) {
+  modalTag.textContent     = data.tag || '';
+  modalTitle.textContent   = data.title || '';
+  modalDate.textContent    = data.date || '';
+  modalContent.textContent = data.content || '';
+  if (data.img) {
+    modalImg.src = data.img;
+    modalImg.alt = data.title;
+    modalImg.style.display = 'block';
+  } else {
+    modalImg.style.display = 'none';
+  }
+  newsModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  newsModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Featured card click
+featuredCard.addEventListener('click', () => {
+  openModal({
+    title:   featuredCard.dataset.title,
+    tag:     featuredCard.dataset.tag,
+    date:    featuredCard.dataset.date,
+    img:     featuredCard.dataset.img,
+    content: featuredCard.dataset.content
+  });
+});
+featuredCard.querySelector('.news-read-more').addEventListener('click', (e) => {
+  e.stopPropagation();
+  openModal({
+    title:   featuredCard.dataset.title,
+    tag:     featuredCard.dataset.tag,
+    date:    featuredCard.dataset.date,
+    img:     featuredCard.dataset.img,
+    content: featuredCard.dataset.content
+  });
+});
+
+// News grid cards
+allCards.forEach(card => {
+  card.addEventListener('click', () => {
+    openModal({
+      title:   card.dataset.title,
+      tag:     card.dataset.tag,
+      date:    card.dataset.date,
+      img:     card.dataset.img,
+      content: card.dataset.content
+    });
+  });
+});
+
+// Announcement items
+document.querySelectorAll('.announce-item').forEach(item => {
+  item.addEventListener('click', () => {
+    openModal({
+      title:   item.dataset.title,
+      tag:     item.dataset.tag,
+      date:    '',
+      img:     null,
+      content: item.dataset.content
+    });
+  });
+});
+
+document.getElementById('newsModalClose').addEventListener('click', closeModal);
+newsModal.addEventListener('click', e => { if (e.target === newsModal) closeModal(); });
+
+/* Swipe-to-dismiss */
+const modalInner = newsModal.querySelector('.modal-inner');
+let startY = 0, dragging = false, currentY = 0;
+modalInner.addEventListener('touchstart', e => { startY = e.touches[0].clientY; dragging = true; }, { passive: true });
+modalInner.addEventListener('touchmove', e => {
+  if (!dragging) return;
+  currentY = e.touches[0].clientY;
+  const dy = currentY - startY;
+  if (dy > 0) modalInner.style.transform = `translateY(${dy}px)`;
+}, { passive: true });
+modalInner.addEventListener('touchend', () => {
+  if (!dragging) return; dragging = false;
+  const dy = currentY - startY;
+  modalInner.style.transform = '';
+  if (dy > 80) closeModal();
+});
+
+/* Escape key */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); aboutDropdown.classList.remove('open'); }
+});
+</script>
+</body>
+</html>

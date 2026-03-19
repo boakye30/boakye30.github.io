@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Governing Board | St. Theresa Hospital Nkoranza</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f8f3ec;
+    --warm-white: #fdfaf6;
+    --gold: #b8965a;
+    --gold-light: #d4b483;
+    --gold-dark: #8a6d3b;
+    --deep: #1a1612;
+    --charcoal: #2d2820;
+    --mid: #6b5f52;
+    --border: rgba(184,150,90,0.25);
+    --border-dark: rgba(184,150,90,0.12);
+    --nav-h: 76px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--deep);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  a { -webkit-tap-highlight-color: transparent; }
+
+  /* ══ NAVBAR ══ */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: var(--nav-h);
+    background: rgba(26,22,18,0.97);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    transition: height 0.3s ease;
+  }
+  .navbar.scrolled { height: 62px; }
+
+  .logo { display: flex; flex-direction: column; gap: 1px; text-decoration: none;min-width: 0; }
+  .logo-top {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.85rem, 2.5vw, 1.1rem); /* FIX: fluid so it doesn't overflow on mid screens */
+    font-weight: 600; color: var(--gold-light); letter-spacing: 2px; text-transform: uppercase;
+  }
+  .logo-sub { font-size: 0.6rem; color: rgba(255,255,255,0.4); letter-spacing: 3px; text-transform: uppercase; }
+
+  /* ══════════════════════════════
+     DESKTOP NAV LINKS
+  ══════════════════════════════ */
+  .nav-links { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+  .nav-links a {
+    color: rgba(255,255,255,0.65); text-decoration: none;
+    font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 500; transition: color 0.3s; position: relative; white-space: nowrap;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--gold); transition: width 0.3s ease;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+  .nav-cta { background: var(--gold) !important; color: #fff !important; padding: 0.5rem 1.3rem; border-radius: 2px; }
+  .nav-cta:hover { background: var(--gold-dark) !important; }
+  .nav-cta::after { display: none !important; }
+
+  /* ── DROPDOWN ── */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown > a { display: flex; align-items: center; gap: 0.35rem; cursor: pointer; }
+
+  .dropdown-toggle-arrow {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 2px 4px; cursor: pointer; line-height: 1;
+  }
+  .nav-dropdown-arrow {
+    display: inline-block; width: 0; height: 0;
+    border-left: 4px solid transparent; border-right: 4px solid transparent;
+    border-top: 4px solid rgba(255,255,255,0.5);
+    transition: transform 0.3s ease; pointer-events: none;
+  }
+  .nav-dropdown.open .nav-dropdown-arrow { transform: rotate(180deg); }
+
+  .dropdown-menu {
+    position: absolute; top: calc(100% + 18px); left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    background: rgba(26,22,18,0.98);
+    border: 1px solid var(--border); border-radius: 4px;
+    min-width: 220px; padding: 0.5rem 0;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  }
+  .nav-dropdown.open .dropdown-menu {
+    opacity: 1; visibility: visible; pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .dropdown-item {
+    display: flex !important; align-items: center; gap: 0.7rem;
+    padding: 0.75rem 1.2rem;
+    color: rgba(255,255,255,0.65) !important;
+    font-size: 0.72rem !important; letter-spacing: 1px !important;
+    text-transform: uppercase; font-weight: 500;
+    text-decoration: none; transition: background 0.2s, color 0.2s; white-space: nowrap;
+  }
+  .dropdown-item:hover { background: rgba(184,150,90,0.12); color: var(--gold-light) !important; }
+  .dropdown-item::after { display: none !important; }
+  .dropdown-item-icon { font-size: 0.9rem; opacity: 0.7; }
+
+  /* ══════════════════════════════
+     HAMBURGER — hidden on desktop
+  ══════════════════════════════ */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    padding: 10px 11px; background: rgba(184,150,90,0.15);
+    border: 1px solid rgba(184,150,90,0.35); border-radius: 4px;
+    transition: background 0.3s, border-color 0.3s;
+    position: relative; z-index: 2000; flex-shrink: 0;
+    min-width: 15%; min-height: 44%; align-items: center; justify-content: center;
+  }
+  .hamburger:hover { background: rgba(184,150,90,0.28); border-color: var(--gold); }
+  .hamburger.active { background: var(--gold); border-color: var(--gold); }
+  .hamburger span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,0.9); border-radius: 2px; transition: all 0.3s ease; }
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE — MOBILE ≤ 900px
+     FIX: Unified breakpoint (was mixed 768/900px)
+  ══════════════════════════════════════ */
+  @media (max-width: 900px) {
+    :root { --nav-h: 60px; }
+
+    .hamburger { display: flex; }
+
+    .nav-links {
+      display: none !important;
+      position: fixed !important;
+      top: var(--nav-h) !important;
+      left: 0 !important; right: 0 !important; bottom: 0 !important;
+      width: 100% !important; height: calc(100vh - var(--nav-h)) !important;
+      background: #1a1612 !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important; align-items: stretch !important;
+      padding: 1rem 0 !important; gap: 0 !important;
+      overflow-y: auto !important; z-index: 1999 !important;
+      border-top: 1px solid rgba(184,150,90,0.25) !important;
+      list-style: none !important;
+    }
+
+    .nav-links > li { border-bottom: 1px solid var(--border-dark); }
+    .nav-links > li > a {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 2rem; font-size: 0.95rem; letter-spacing: 1px;
+      color: rgba(255,255,255,0.75); width: 100%;
+    }
+    .nav-links > li > a:hover { color: var(--gold-light); }
+
+    /* Mobile dropdown */
+    .dropdown-menu {
+      position: static !important; transform: none !important;
+      opacity: 1 !important; visibility: visible !important; pointer-events: auto !important;
+      background: rgba(184,150,90,0.06); border: none;
+      border-top: 1px solid var(--border-dark);
+      box-shadow: none; border-radius: 0; min-width: 0;
+      padding: 0.3rem 0; display: none;
+    }
+    .nav-dropdown.open .dropdown-menu { display: block; }
+    .dropdown-item { padding: 0.9rem 2.5rem !important; font-size: 0.75rem !important; }
+    .dropdown-toggle-arrow { display: inline-flex; }
+
+    /* Page layout responsive */
+    .members-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .chairman-card { grid-template-columns: 1fr !important; }
+    .chairman-photo { min-height: 340px; }
+    .chairman-content { padding: 2rem; border-left: none; border-top: 1px solid var(--border-dark); }
+    .intro-strip { flex-direction: column; gap: 2rem; }
+    .intro-stats { flex-wrap: wrap; gap: 1.5rem; justify-content: flex-start; }
+    .intro-stat { border-right: none; padding: 0; }
+    .board-section { padding: 3.5rem 5%; }
+    .collective-section { padding: 3.5rem 5%; }
+    .page-hero-content { padding: 2.5rem 5% 4rem; }
+    .intro-strip { padding: 2.5rem 5%; }
+    /* FIX: profile drawer full width on mobile */
+    .profile-drawer { width: 100vw !important; }
+  }
+
+  /* FIX: Tablets */
+  @media (max-width: 1024px) {
+    .members-grid { grid-template-columns: repeat(3, 1fr); }
+    .chairman-card { grid-template-columns: 320px 1fr; }
+    .intro-stats { gap: 1.5rem; }
+    .board-section { padding: 4.5rem 6%; }
+    .collective-section { padding: 4.5rem 6%; }
+  }
+
+  /* FIX: Small phones — single column members */
+  @media (max-width: 480px) {
+    .members-grid { grid-template-columns: 1fr !important; }
+    .member-photo { height: 280px; }
+    .chairman-photo { min-height: 260px; }
+    .chairman-content { padding: 1.8rem 1.4rem; }
+    .member-name { font-size: clamp(1.6rem, 8vw, 2.2rem); }
+    .page-hero-content h1 { font-size: clamp(2.4rem, 10vw, 4rem); }
+    .intro-strip { padding: 2rem 4.5%; }
+    .board-section { padding: 3rem 4.5%; }
+    .collective-section { padding: 3rem 4.5%; }
+    .contact-pill { font-size: 0.68rem; padding: 0.45rem 0.85rem; }
+    /* FIX: member contact pills stack on tiny screens */
+    .member-contact { flex-direction: column; align-items: flex-start; }
+    .collective-inner blockquote { font-size: 1.2rem; }
+    .page-footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    padding-top: var(--nav-h); min-height: 52vh;
+    display: flex; align-items: flex-end;
+    position: relative; overflow: hidden; background: var(--deep);
+  }
+  .hero-pattern {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(184,150,90,0.03) 60px, rgba(184,150,90,0.03) 61px),
+      repeating-linear-gradient(-45deg, transparent, transparent 60px, rgba(184,150,90,0.03) 60px, rgba(184,150,90,0.03) 61px);
+  }
+  .hero-glow {
+    position: absolute; top: 30%; left: 50%;
+    transform: translate(-50%, -50%); width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(184,150,90,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .page-hero-content {
+    position: relative; padding: 3.5rem 8% 5rem; width: 100%;
+    animation: riseUp 1s ease 0.2s both;
+  }
+  @keyframes riseUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  .breadcrumb {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); margin-bottom: 1.4rem;
+  }
+  .breadcrumb a { color: var(--gold); text-decoration: none; transition: opacity 0.2s; }
+  .breadcrumb a:hover { opacity: 0.7; }
+  .breadcrumb span { color: rgba(255,255,255,0.2); }
+
+  .page-hero-content h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 400; line-height: 1.0; color: #fff; margin-bottom: 1.2rem;
+  }
+  .page-hero-content h1 em { font-style: italic; color: var(--gold-light); }
+  .page-hero-content .hero-sub {
+    font-size: 0.9rem; color: rgba(255,255,255,0.45);
+    max-width: 500px; line-height: 1.8; font-weight: 300;
+  }
+  .hero-rule { position: absolute; bottom: 0; left: 8%; right: 8%; height: 1px; background: linear-gradient(to right, var(--gold), transparent); }
+
+  /* ── INTRO STRIP ── */
+  .intro-strip {
+    background: var(--cream); padding: 3.5rem 8%;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 3rem; border-bottom: 1px solid var(--border); flex-wrap: wrap;
+  }
+  .intro-strip p { font-size: 0.95rem; color: var(--mid); line-height: 1.9; font-weight: 300; max-width: 620px; }
+  .intro-stats { display: flex; gap: 3rem; flex-shrink: 0; }
+  .intro-stat { text-align: center; padding: 0 2rem; border-right: 1px solid var(--border); }
+  .intro-stat:last-child { border-right: none; padding-right: 0; }
+  .intro-stat .num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 600; color: var(--gold); line-height: 1; display: block; }
+  .intro-stat .lbl { font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase; color: var(--mid); margin-top: 5px; display: block; }
+
+  /* ── BOARD SECTION ── */
+  .board-section { padding: 6rem 8%; background: var(--warm-white); }
+  .section-label {
+    font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-label::before { content: ''; width: 28px; height: 1px; background: var(--gold); display: block; }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 500;
+    line-height: 1.15; color: var(--deep); margin-bottom: 4rem;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  /* ── FEATURED CARD ── */
+  .chairman-card {
+    display: grid; grid-template-columns: 380px 1fr;
+    gap: 0; background: var(--deep); margin-bottom: 3px;
+    overflow: hidden; position: relative;
+    animation: fadeUp 0.7s ease both;
+  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  .chairman-photo { position: relative; overflow: hidden; min-height: 480px; }
+  .chairman-photo img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: grayscale(20%) brightness(0.85);
+    transition: filter 0.6s ease, transform 0.8s ease;
+  }
+  .chairman-card:hover .chairman-photo img { filter: grayscale(0%) brightness(0.9); transform: scale(1.04); }
+  .chairman-photo-overlay { position: absolute; inset: 0; background: linear-gradient(to right, transparent 60%, rgba(26,22,18,0.6) 100%); }
+  .chairman-badge {
+    position: absolute; top: 2rem; left: 2rem;
+    background: var(--gold); color: #fff; padding: 0.4rem 1rem;
+    font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; border-radius: 1px;
+  }
+  .chairman-content {
+    padding: 3.5rem 3.5rem 3rem;
+    display: flex; flex-direction: column; justify-content: center;
+    border-left: 1px solid var(--border-dark);
+  }
+  .member-role { font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 0.7rem; }
+  .member-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 500; color: #fff; line-height: 1.1; margin-bottom: 1.6rem; }
+  .member-message {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic;
+    color: rgba(255,255,255,0.6); line-height: 1.85;
+    border-left: 2px solid var(--gold); padding-left: 1.4rem; margin-bottom: 2rem;
+  }
+  .member-bio { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.8; font-weight: 300; margin-bottom: 2rem; }
+  .member-contact { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+  .contact-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.5rem 1rem; border: 1px solid var(--border);
+    color: rgba(255,255,255,0.5); text-decoration: none;
+    font-size: 0.72rem; font-weight: 400; letter-spacing: 0.5px;
+    border-radius: 2px; transition: all 0.3s; min-height: 40px;
+  }
+  .contact-pill:hover { border-color: var(--gold); color: var(--gold-light); background: rgba(184,150,90,0.07); }
+  .contact-pill .icon { font-size: 0.8rem; }
+
+  /* ── MEMBERS GRID ── */
+  .members-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; }
+  .member-card { background: var(--deep); overflow: hidden; position: relative; cursor: pointer; animation: fadeUp 0.7s ease both; }
+  .member-card:nth-child(1) { animation-delay: 0.1s; }
+  .member-card:nth-child(2) { animation-delay: 0.2s; }
+  .member-card:nth-child(3) { animation-delay: 0.3s; }
+  .member-card:nth-child(4) { animation-delay: 0.4s; }
+  .member-card:nth-child(5) { animation-delay: 0.5s; }
+  .member-photo { position: relative; overflow: hidden; height: 340px; }
+  .member-photo img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;
+    filter: grayscale(25%) brightness(0.82);
+    transition: filter 0.6s ease, transform 0.8s ease;
+  }
+  .member-card:hover .member-photo img { filter: grayscale(0%) brightness(0.7); transform: scale(1.05); }
+  .member-photo-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(26,22,18,1) 0%, rgba(26,22,18,0.3) 50%, transparent 100%);
+  }
+  .member-card:hover .member-photo-overlay { background: linear-gradient(to top, rgba(26,22,18,1) 0%, rgba(26,22,18,0.5) 60%, rgba(26,22,18,0.1) 100%); }
+  .member-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.8rem 1.5rem; }
+  .member-info .role { font-size: 0.57rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 0.35rem; display: block; }
+  .member-info .name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: #fff; line-height: 1.2; display: block; margin-bottom: 1rem; }
+  .view-profile-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: none; border: 1px solid var(--border);
+    color: rgba(255,255,255,0.5); padding: 0.5rem 1rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.65rem; letter-spacing: 2px;
+    text-transform: uppercase; font-weight: 500; cursor: pointer;
+    opacity: 0; transform: translateY(8px); min-height: 40px;
+    transition: opacity 0.35s ease, transform 0.35s ease, background 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .member-card:hover .view-profile-btn { opacity: 1; transform: translateY(0); }
+  /* FIX: Always show button on touch devices */
+  @media (hover: none) {
+    .view-profile-btn { opacity: 1; transform: translateY(0); }
+  }
+  .view-profile-btn:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .view-profile-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* ── PROFILE MODAL DRAWER ── */
+  .profile-modal { position: fixed; inset: 0; z-index: 9998; display: flex; pointer-events: none; }
+  .modal-backdrop { position: absolute; inset: 0; background: rgba(10,8,5,0); transition: background 0.5s ease; pointer-events: none; }
+  .profile-modal.open .modal-backdrop { background: rgba(10,8,5,0.75); pointer-events: all; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+  .profile-drawer {
+    position: absolute; top: 0; right: 0; bottom: 0; width: min(560px, 100vw);
+    background: var(--deep); border-left: 1px solid var(--border);
+    transform: translateX(100%); transition: transform 0.55s cubic-bezier(0.16,1,0.3,1);
+    display: flex; flex-direction: column; overflow: hidden; pointer-events: all;
+  }
+  .profile-modal.open .profile-drawer { transform: translateX(0); }
+  .drawer-photo { position: relative; height: 340px; flex-shrink: 0; overflow: hidden; }
+  .drawer-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; filter: brightness(0.75); transition: transform 0.8s ease; }
+  .profile-modal.open .drawer-photo img { transform: scale(1.03); }
+  .drawer-photo-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,22,18,1) 0%, rgba(26,22,18,0.2) 60%, transparent 100%); }
+  .drawer-photo-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem 2.5rem; }
+  .drawer-role { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 0.4rem; display: block; }
+  .drawer-name { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 500; color: #fff; line-height: 1.1; }
+  .drawer-close {
+    position: absolute; top: 1.2rem; right: 1.4rem;
+    background: rgba(26,22,18,0.7); border: 1px solid var(--border);
+    color: rgba(255,255,255,0.6); width: 42px; height: 42px; border-radius: 2px;
+    font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.25s; backdrop-filter: blur(4px); z-index: 2;
+    min-width: 42px; min-height: 42px; /* FIX: easier tap target */
+  }
+  .drawer-close:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .drawer-body { flex: 1; overflow-y: auto; padding: 2.5rem; scrollbar-width: thin; scrollbar-color: var(--border) transparent; -webkit-overflow-scrolling: touch; }
+  .drawer-body::-webkit-scrollbar { width: 4px; }
+  .drawer-body::-webkit-scrollbar-track { background: transparent; }
+  .drawer-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .drawer-quote {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; font-weight: 400;
+    color: rgba(255,255,255,0.7); line-height: 1.8; padding: 1.5rem 1.5rem 1.5rem 2rem;
+    border-left: 3px solid var(--gold); background: rgba(184,150,90,0.05); margin-bottom: 2rem;
+  }
+  .drawer-bio-label { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.7rem; }
+  .drawer-bio-label::after { content: ''; flex: 1; height: 1px; background: var(--border-dark); }
+  .drawer-bio { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.85; font-weight: 300; margin-bottom: 2.5rem; }
+  .drawer-contact-label { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.7rem; }
+  .drawer-contact-label::after { content: ''; flex: 1; height: 1px; background: var(--border-dark); }
+  .drawer-contacts { display: flex; flex-direction: column; gap: 0.75rem; }
+  .drawer-contact-item { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1.2rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-dark); text-decoration: none; transition: all 0.3s; }
+  .drawer-contact-item:hover { background: rgba(184,150,90,0.08); border-color: var(--border); }
+  .contact-icon-wrap { width: 36px; height: 36px; flex-shrink: 0; background: rgba(184,150,90,0.1); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .contact-detail { display: flex; flex-direction: column; gap: 2px; }
+  .contact-type { font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+  .contact-value { font-size: 0.82rem; color: rgba(255,255,255,0.6); font-weight: 300; }
+
+  /* ── COLLECTIVE MESSAGE ── */
+  .collective-section { background: var(--deep); padding: 6rem 8%; position: relative; overflow: hidden; }
+  .collective-pattern { position: absolute; inset: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(184,150,90,0.04) 59px, rgba(184,150,90,0.04) 60px); pointer-events: none; }
+  .collective-inner { position: relative; max-width: 760px; margin: 0 auto; text-align: center; }
+  .collective-inner .ornament { font-family: 'Cormorant Garamond', serif; font-size: 5rem; line-height: 1; color: var(--gold); opacity: 0.3; display: block; margin-bottom: -1rem; }
+  .collective-inner blockquote { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 2.5vw, 2rem); font-style: italic; font-weight: 400; color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 2rem; }
+  .collective-inner .attribution { font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+
+  /* ── FOOTER ── */
+  .page-footer { background: #0e0c09; border-top: 1px solid var(--border-dark); padding: 2rem 8%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .page-footer p { font-size: 0.72rem; color: rgba(255,255,255,0.2); }
+  .page-footer a { font-size: 0.72rem; color: var(--gold); text-decoration: none; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; transition: opacity 0.3s; }
+  .page-footer a:hover { opacity: 0.7; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="logo">
+    <span class="logo-top">st theresa catholic hospital</span>
+    <span class="logo-sub">Nkoranza · Ghana</span>
+  </a>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+
+    <li class="nav-dropdown" id="aboutDropdown">
+      <a href="about.html" id="aboutLink">
+        About
+        <span class="dropdown-toggle-arrow" id="aboutArrow">
+          <span class="nav-dropdown-arrow"></span>
+        </span>
+      </a>
+      <div class="dropdown-menu">
+        <a href="board.html" class="dropdown-item"><span class="dropdown-item-icon">🏛️</span>Board of Directors</a>
+        <a href="about.html#Welcomemessage" class="dropdown-item"><span class="dropdown-item-icon">🎤</span>Welcome Message</a>
+        <a href="about.html#ourjourney" class="dropdown-item"><span class="dropdown-item-icon">📜</span>Our History</a>
+        <a href="about.html#ourfacilities" class="dropdown-item"><span class="dropdown-item-icon">🏗</span>Our Facilities</a>
+      </div>
+    </li>
+
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="board.html" class="active">Board</a></li>
+    <li><a href="tel:+233504414929" class="nav-cta">Emergency</a></li>
+  </ul>
+
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-glow"></div>
+  <div class="page-hero-content">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span>Governing Board</span>
+    </div>
+    <h1>Our <em>Governing</em><br>Board</h1>
+    <p class="hero-sub">The people leading St. Theresa Hospital — each responsible for a part of this institution, all committed to the same thing.</p>
+  </div>
+  <div class="hero-rule"></div>
+</div>
+
+<!-- INTRO STRIP -->
+<div class="intro-strip">
+  <p>The leadership of St. Theresa Hospital brings together administration, medicine, nursing, finance, pastoral care and human resources under one shared purpose. These six roles form the backbone of how this hospital runs — day to day, and for the long term.</p>
+  <div class="intro-stats">
+    <div class="intro-stat"><span class="num">6</span><span class="lbl">Board Members</span></div>
+    <div class="intro-stat"><span class="num">50+</span><span class="lbl">Years of Service</span></div>
+    <div class="intro-stat"><span class="num">CHAG</span><span class="lbl">Affiliated</span></div>
+  </div>
+</div>
+
+<!-- BOARD SECTION -->
+<div class="board-section">
+  <p class="section-label">Leadership</p>
+  <h2 class="section-title">Meet the <em>Board</em></h2>
+
+  <!-- HEAD OF ADMINISTRATION — featured card -->
+  <div class="chairman-card">
+    <div class="chairman-photo">
+      <img src="" alt="Head of Administration" onerror="this.src=''">
+      <div class="chairman-photo-overlay"></div>
+      <div class="chairman-badge">Head of Administration</div>
+    </div>
+    <div class="chairman-content">
+      <p class="member-role">Head of Administration · St. Theresa Hospital</p>
+      <h2 class="member-name">Name Placeholder</h2>
+      <p class="member-message">
+        "Running this hospital well is not just about paperwork and processes. It is about making sure that every system we build actually serves the people who need care."
+      </p>
+      <p class="member-bio">
+        The Head of Administration oversees the day-to-day operational management of St. Theresa Hospital — from staffing and logistics to facility management and institutional compliance. With years of experience in health administration, they keep the hospital running so that clinical staff can focus entirely on patients.
+      </p>
+      <div class="member-contact">
+        <a href="tel:+233000000000" class="contact-pill"><span class="icon">📞</span> +233 000 000 000</a>
+        <a href="mailto:admin@sthnkoranza.org" class="contact-pill"><span class="icon">✉</span> admin@sthnkoranza.org</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 MEMBER CARDS -->
+  <div class="members-grid">
+
+    <div class="member-card" onclick="openProfile('m1')">
+      <div class="member-photo">
+        <img src="" alt="Matron" onerror="this.src=''">
+        <div class="member-photo-overlay"></div>
+        <div class="member-info">
+          <span class="role">Matron</span>
+          <span class="name">Name Placeholder</span>
+          <button class="view-profile-btn">View Profile<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="member-card" onclick="openProfile('m2')">
+      <div class="member-photo">
+        <img src="" alt="Medical Director" onerror="this.src=''">
+        <div class="member-photo-overlay"></div>
+        <div class="member-info">
+          <span class="role">Medical Director</span>
+          <span class="name">Name Placeholder</span>
+          <button class="view-profile-btn">View Profile<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="member-card" onclick="openProfile('m3')">
+      <div class="member-photo">
+        <img src="" alt="Chaplain" onerror="this.src=''">
+        <div class="member-photo-overlay"></div>
+        <div class="member-info">
+          <span class="role">Chaplain</span>
+          <span class="name">Name Placeholder</span>
+          <button class="view-profile-btn">View Profile<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="member-card" onclick="openProfile('m4')">
+      <div class="member-photo">
+        <img src="" alt="Head of Accounts" onerror="this.src=''">
+        <div class="member-photo-overlay"></div>
+        <div class="member-info">
+          <span class="role">Head of Accounts</span>
+          <span class="name">Name Placeholder</span>
+          <button class="view-profile-btn">View Profile<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="member-card" onclick="openProfile('m5')">
+      <div class="member-photo">
+        <img src="" alt="Human Resource Manager" onerror="this.src=''">
+        <div class="member-photo-overlay"></div>
+        <div class="member-info">
+          <span class="role">Human Resource Manager</span>
+          <span class="name">Name Placeholder</span>
+          <button class="view-profile-btn">View Profile<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PROFILE MODAL DRAWER -->
+<div class="profile-modal" id="profileModal">
+  <div class="modal-backdrop" onclick="closeProfile()"></div>
+  <div class="profile-drawer">
+    <button class="drawer-close" onclick="closeProfile()">✕</button>
+    <div class="drawer-photo">
+      <img id="drawerImg" src="" alt="">
+      <div class="drawer-photo-overlay"></div>
+      <div class="drawer-photo-info">
+        <span class="drawer-role" id="drawerRole"></span>
+        <span class="drawer-name" id="drawerName"></span>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <p class="drawer-quote" id="drawerQuote"></p>
+      <p class="drawer-bio-label">About</p>
+      <p class="drawer-bio" id="drawerBio"></p>
+      <p class="drawer-contact-label">Contact</p>
+      <div class="drawer-contacts" id="drawerContacts"></div>
+    </div>
+  </div>
+</div>
+
+<!-- COLLECTIVE MESSAGE -->
+<div class="collective-section">
+  <div class="collective-pattern"></div>
+  <div class="collective-inner">
+    <span class="ornament">"</span>
+    <blockquote>Each of us holds a different responsibility, but we answer to the same question every day: are we doing right by the people of Nkoranza? That question keeps us honest.</blockquote>
+    <p class="attribution">The Governing Board · St. Theresa Hospital Nkoranza</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <p>© 2026 St. Theresa Hospital Nkoranza. All rights reserved.</p>
+  <a href="index.html">← Back to Main Site</a>
+</div>
+
+<script>
+
+/* ══════════════════════════════════════════════════
+   FIX: Unified mobile breakpoint — 900px in both CSS and JS
+   Original had 768px in JS but 900px in CSS
+══════════════════════════════════════════════════ */
+const MOBILE_BP = 900;
+
+const hamburger = document.getElementById('hamburger');
+const navLinks  = document.getElementById('navLinks');
+let menuOpen = false;
+
+function isMobile() { return window.innerWidth <= MOBILE_BP; }
+
+function openMobileNav() {
+  menuOpen = true;
+  navLinks.style.cssText = `
+    display: flex !important;
+    position: fixed !important;
+    top: var(--nav-h) !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - var(--nav-h)) !important;
+    background: #1a1612 !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    padding: 1rem 0 !important;
+    gap: 0 !important;
+    overflow-y: auto !important;
+    z-index: 1999 !important;
+    border-top: 1px solid rgba(184,150,90,0.25) !important;
+    list-style: none !important;
+  `;
+  hamburger.classList.add('active');
+  hamburger.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileNav() {
+  menuOpen = false;
+  navLinks.style.cssText = '';
+  hamburger.classList.remove('active');
+  hamburger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+
+hamburger.addEventListener('click', () => {
+  menuOpen ? closeMobileNav() : openMobileNav();
+});
+
+navLinks.querySelectorAll('li:not(.nav-dropdown) a').forEach(link => {
+  link.addEventListener('click', () => { if (isMobile()) closeMobileNav(); });
+});
+
+window.addEventListener('resize', () => {
+  if (!isMobile()) closeMobileNav();
+}, { passive: true });
+
+/* ══════════════════════════════════════════════════
+   ABOUT DROPDOWN
+══════════════════════════════════════════════════ */
+const aboutDropdown = document.getElementById('aboutDropdown');
+const aboutLink     = document.getElementById('aboutLink');
+const aboutArrow    = document.getElementById('aboutArrow');
+
+aboutArrow.addEventListener('click', (e) => {
+  e.preventDefault(); e.stopPropagation();
+  aboutDropdown.classList.toggle('open');
+});
+
+aboutLink.addEventListener('click', (e) => {
+  if (isMobile()) { e.preventDefault(); aboutDropdown.classList.toggle('open'); }
+});
+
+aboutDropdown.querySelectorAll('.dropdown-item').forEach(item => {
+  item.addEventListener('click', () => {
+    aboutDropdown.classList.remove('open');
+    if (isMobile()) closeMobileNav();
+  });
+});
+
+document.addEventListener('click', (e) => {
+  if (!aboutDropdown.contains(e.target)) aboutDropdown.classList.remove('open');
+});
+
+/* ══════════════════════════════════════════════════
+   NAVBAR SCROLL SHRINK
+══════════════════════════════════════════════════ */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* ══════════════════════════════════════════════════
+   PROFILE DRAWER
+══════════════════════════════════════════════════ */
+const profiles = {
+  m1: {
+    img: "board/matron.jpg",
+    fallback: "",
+    role: "Matron", name: "Name Placeholder",
+    quote: "Nursing is the heart of this hospital. Every ward, every shift, every patient — that is what matters.",
+    bio: "The Matron leads nursing services across all wards at St. Theresa Hospital, setting standards of patient care, supervising nursing staff and making sure the quality of care is consistent. With extensive clinical experience, they are the person the wards depend on.",
+    phone: "+233 000 000 000", email: "matron@sthnkoranza.org"
+  },
+  m2: {
+    img: "board/medical-director.jpg",
+    fallback: "",
+    role: "Medical Director", name: "Name Placeholder",
+    quote: "Clinical decisions have to be grounded in evidence and guided by conscience. That is the standard we hold ourselves to.",
+    bio: "The Medical Director is responsible for the clinical governance of St. Theresa Hospital — overseeing all medical departments, maintaining quality standards, and ensuring patient care is safe, effective and continually improving.",
+    phone: "+233 000 000 000", email: "medical@sthnkoranza.org"
+  },
+  m3: {
+    img: "board/chaplain.jpg",
+    fallback: "",
+    role: "Chaplain", name: "Name Placeholder",
+    quote: "People come here at their most vulnerable. Our job is to make sure they never feel alone — whatever they believe.",
+    bio: "The Chaplain provides pastoral care and spiritual support to patients, families and staff across St. Theresa Hospital. Rooted in the hospital's Catholic mission, the Chaplain ensures the spiritual dimension of care is never overlooked — from bedside visits to end-of-life support.",
+    phone: "+233 000 000 000", email: "chaplain@sthnkoranza.org"
+  },
+  m4: {
+    img: "board/head-accounts.jpg",
+    fallback: "",
+    role: "Head of Accounts", name: "Name Placeholder",
+    quote: "A hospital cannot serve anyone if it is not financially sound. My job is to make sure the money is managed so the care can keep happening.",
+    bio: "The Head of Accounts manages all financial operations at St. Theresa Hospital — budgeting, expenditure tracking, audit oversight and financial reporting. Their work ensures the hospital's long-term financial stability and accountability to its stakeholders.",
+    phone: "+233 000 000 000", email: "accounts@sthnkoranza.org"
+  },
+  m5: {
+    img: "board/hr-manager.jpg",
+    fallback: "",
+    role: "Human Resource Manager", name: "Name Placeholder",
+    quote: "The staff of this hospital are its greatest asset. Looking after them is not secondary — it is core to how we deliver good care.",
+    bio: "The Human Resource Manager oversees recruitment, staff welfare, training and employment relations across the hospital. They ensure St. Theresa attracts skilled people, keeps them supported, and maintains a workplace culture that reflects the hospital's values.",
+    phone: "+233 000 000 000", email: "hr@sthnkoranza.org"
+  }
+};
+
+const modal = document.getElementById('profileModal');
+
+function openProfile(id) {
+  const p = profiles[id];
+  if (!p) return;
+  const img = document.getElementById('drawerImg');
+  img.src = p.img;
+  img.onerror = () => { img.src = p.fallback; img.onerror = null; };
+  document.getElementById('drawerRole').textContent = p.role;
+  document.getElementById('drawerName').textContent = p.name;
+  document.getElementById('drawerQuote').textContent = `"${p.quote}"`;
+  document.getElementById('drawerBio').textContent = p.bio;
+  document.getElementById('drawerContacts').innerHTML = `
+    <a href="tel:${p.phone.replace(/\s/g,'')}" class="drawer-contact-item">
+      <div class="contact-icon-wrap">📞</div>
+      <div class="contact-detail">
+        <span class="contact-type">Phone</span>
+        <span class="contact-value">${p.phone}</span>
+      </div>
+    </a>
+    <a href="mailto:${p.email}" class="drawer-contact-item">
+      <div class="contact-icon-wrap">✉</div>
+      <div class="contact-detail">
+        <span class="contact-type">Email</span>
+        <span class="contact-value">${p.email}</span>
+      </div>
+    </a>
+  `;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProfile() {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { aboutDropdown.classList.remove('open'); closeProfile(); }
+});
+
+</script>
+</body>
+</html>
