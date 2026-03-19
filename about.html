@@ -37,8 +37,8 @@
   }
   .navbar.scrolled { height: 62px; }
 
-  .logo { display: flex; flex-direction: column; gap: 1px; text-decoration: none; min-width: 0; }
-  .logo-top { font-family: 'Cormorant Garamond', serif; font-size: clamp(0.85rem, 2.5vw, 1.15rem); font-weight: 600; color: var(--gold-light); letter-spacing: 2px; text-transform: uppercase; }
+  .logo { display: flex; flex-direction: column; gap: 1px; text-decoration: none; min-width: 0; flex-shrink: 1; max-width: calc(100% - 70px); overflow: hidden; }
+    .logo-top { font-family: 'Cormorant Garamond', serif; font-size: clamp(0.7rem, 2vw, 1.1rem); font-weight: 600; color: var(--gold-light); letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .logo-sub { font-size: 0.62rem; color: rgba(255,255,255,0.45); letter-spacing: 3px; text-transform: uppercase; }
 
   .nav-links { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
@@ -160,7 +160,7 @@
   /* FOOTER */
   footer { background: var(--deep); color: rgba(255,255,255,0.6); padding: 5rem 8% 2.5rem; }
   .footer-top { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 2rem; }
-  .footer-brand .logo-top { font-size: 1rem; }
+  .footer-brand   .logo-top { font-family: 'Cormorant Garamond', serif; font-size: clamp(0.7rem, 2vw, 1.1rem); font-weight: 600; color: var(--gold-light); letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .footer-brand p { font-size: 0.83rem; line-height: 1.85; margin-top: 1rem; margin-bottom: 1.5rem; font-weight: 300; max-width: 280px; }
   .footer-social { display: flex; gap: 0.8rem; }
   .social-btn { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.75rem; border-radius: 2px; transition: all 0.3s; font-weight: 600; }
@@ -482,7 +482,7 @@
       <div class="contact-line">
         <span><strong>Address:</strong> BO-0003-5283<br>Nkoranza, Ghana</span>
         <span><strong>Emergency:</strong> <a href="tel:+233504414929">+233 504 414 929</a></span>
-        <span><strong>Email:</strong> <a href="mailto:info@sttheresa.org">info@sttheresa.org</a></span>
+        <span><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#442d2a222b043730302c21362137256a2b3623"><span class="__cf_email__" data-cfemail="5831363e37182b2c2c303d2a3d2b3976372a3f">[email&#160;protected]</span></a></span>
         <span style="margin-top:0.5rem; color:rgba(255,255,255,0.3); font-size:0.75rem; letter-spacing:1px;">HOURS</span>
         <span>Mon–Sat: 8:00am – 6:00pm</span>
         <span>Sunday: 9:00am – 2:00pm</span>
@@ -496,7 +496,7 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const MOBILE_BP = 900;
 const hamburger = document.getElementById('hamburger');
 const navLinks  = document.getElementById('navLinks');
@@ -541,12 +541,4 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     const href = a.getAttribute('href');
     if (href === '#') return;
     e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) target.scrollIntoView({ behavior: 'smooth' });
-  });
-});
-
-document.addEventListener('keydown', e => { if (e.key === 'Escape') aboutDropdown.classList.remove('open'); });
-</script>
-</body>
-</html>
+    const target = document
