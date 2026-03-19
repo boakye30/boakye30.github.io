@@ -45,8 +45,8 @@
   }
   .navbar.scrolled { height: 58px; }
 
-  .logo { display:flex; flex-direction:column; gap:1px; text-decoration:none; flex-shrink:0; }
-  .logo-top { font-family:'Cormorant Garamond',serif; font-size:clamp(0.85rem,2.5vw,1.1rem); font-weight:600; color:var(--gold-light); letter-spacing:2px; text-transform:uppercase; }
+  .logo { display:flex; flex-direction:column; gap:1px; text-decoration:none; flex-shrink:1; min-width:0; overflow:hidden; max-width:calc(100% - 70px); }
+    .logo-top { font-family:'Cormorant Garamond',serif; font-size:clamp(0.7rem,2vw,1.1rem); font-weight:600; color:var(--gold-light); letter-spacing:1.5px; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .logo-sub { font-size:0.58rem; color:rgba(255,255,255,0.4); letter-spacing:3px; text-transform:uppercase; }
 
   .nav-links { list-style:none; display:flex; gap:2.5rem; align-items:center; }
