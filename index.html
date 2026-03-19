@@ -54,12 +54,13 @@
   }
   .navbar.scrolled { height: 58px; }
 
-  .logo { display:flex; flex-direction:column; gap:1px; text-decoration:none; flex-shrink:0; }
-  .logo-top {
+  .logo { display:flex; flex-direction:column; gap:1px; text-decoration:none; flex-shrink:1; min-width:0; overflow:hidden; max-width: calc(100% - 70px); }
+    .logo-top {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(0.85rem, 2.5vw, 1.1rem); /* FIX: fluid logo size */
+    font-size: clamp(0.7rem, 2vw, 1.1rem);
     font-weight: 600;
-    color: var(--gold-light); letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold-light); letter-spacing: 1.5px; text-transform: uppercase;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .logo-sub { font-size: 0.58rem; color: rgba(255,255,255,0.4); letter-spacing: 3px; text-transform: uppercase; }
 
@@ -823,7 +824,13 @@
 
   /* FIX: Very small phones (≤360px) */
   @media (max-width: 360px) {
-    .logo-top { font-size: 0.8rem; letter-spacing: 1px; }
+      .logo-top {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.7rem, 2vw, 1.1rem);
+    font-weight: 600;
+    color: var(--gold-light); letter-spacing: 1.5px; text-transform: uppercase;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
     .hero-content h1 { font-size: clamp(1.8rem, 12vw, 2.4rem); }
     section { padding: 2.4rem 4%; }
     .hero-content { padding: 0 4% 8%; }
@@ -863,7 +870,7 @@
       </div>
     </li>
     <li><a href="#services">Services</a></li>
-    <li><a href="#news">News</a></li>
+    <li><a href="news.html">News</a></li>
     <li><a href="gallery.html">Gallery</a></li>
     <li><a href="tel:+233504414929" class="nav-cta">Emergency</a></li>
   </ul>
@@ -1124,7 +1131,7 @@
         <li><a href="#about">About Us</a></li>
         <li><a href="board.html">Board of Directors</a></li>
         <li><a href="#services">Our Services</a></li>
-        <li><a href="#news">News &amp; Updates</a></li>
+        <li><a href="news.html">News &amp; Updates</a></li>
         <li><a href="gallery.html">Gallery</a></li>
         <li><a href="#">Book Appointment</a></li>
       </ul>
@@ -1147,7 +1154,7 @@
   <div class="contact-line">
     <span><strong>Address:</strong> BO-0003-5283<br>Nkoranza, Ghana</span>
     <span><strong>Emergency:</strong> <a href="tel:+233504414929">+233 504 414 929</a></span>
-    <span><strong>Email:</strong> <a href="mailto:info@sttheresa.org">info@sttheresa.org</a></span>
+    <span><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#6801060e07281b1c1c000d1a0d1b0946071a0f"><span class="__cf_email__" data-cfemail="ec85828a83ac9f989884899e899f8dc2839e8b">[email&#160;protected]</span></a></span>
     <span style="margin-top:0.4rem;color:rgba(255,255,255,0.28);font-size:0.72rem;letter-spacing:1px;">HOURS</span>
     <span>Mon–Sun: 7:00am – 7:00pm</span>
     <span>Emergency: 24 / 7</span>
@@ -1175,7 +1182,7 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
 const MOBILE_BP = 900;
 
@@ -1448,12 +1455,4 @@ function addSwipeToDismiss(modal,closeFn){
     const dy=currentY-startY;
     inner.style.transform='';
     if(dy>80)closeFn();
-  });
-}
-addSwipeToDismiss(eventModal,closeEventModal);
-addSwipeToDismiss(serviceModal,closeServiceModal);
-addSwipeToDismiss(newsModal,()=>{newsModal.classList.remove('open');document.body.style.overflow='';});
-
-</script>
-</body>
-</html>
+  }
