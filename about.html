@@ -542,3 +542,14 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (href === '#') return;
     e.preventDefault();
     const target = document
+      .querySelector(href);
+    if (target) {
+      const offset = target.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
