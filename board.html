@@ -44,11 +44,11 @@
   }
   .navbar.scrolled { height: 62px; }
 
-  .logo { display: flex; flex-direction: column; gap: 1px; text-decoration: none;min-width: 0; }
-  .logo-top {
+  .logo { display: flex; flex-direction: column; gap: 1px; text-decoration: none; min-width: 0; flex-shrink: 1; max-width: calc(100% - 70px); overflow: hidden; }
+    .logo-top {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(0.85rem, 2.5vw, 1.1rem); /* FIX: fluid so it doesn't overflow on mid screens */
-    font-weight: 600; color: var(--gold-light); letter-spacing: 2px; text-transform: uppercase;
+    font-size: clamp(0.7rem, 2vw, 1.1rem);
+    font-weight: 600; color: var(--gold-light); letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .logo-sub { font-size: 0.6rem; color: rgba(255,255,255,0.4); letter-spacing: 3px; text-transform: uppercase; }
 
@@ -474,7 +474,7 @@
     <li><a href="index.html#services">Services</a></li>
     <li><a href="news.html">News</a></li>
     <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="board.html" class="active">Board</a></li>
+    
     <li><a href="tel:+233504414929" class="nav-cta">Emergency</a></li>
   </ul>
 
@@ -532,7 +532,7 @@
       </p>
       <div class="member-contact">
         <a href="tel:+233000000000" class="contact-pill"><span class="icon">📞</span> +233 000 000 000</a>
-        <a href="mailto:admin@sthnkoranza.org" class="contact-pill"><span class="icon">✉</span> admin@sthnkoranza.org</a>
+        <a href="/cdn-cgi/l/email-protection#2647424b4f486655524e484d495447485c4708495441" class="contact-pill"><span class="icon">✉</span> <span class="__cf_email__" data-cfemail="c1a0a5aca8af81b2b5a9afaaaeb3a0afbba0efaeb3a6">[email&#160;protected]</span></a>
       </div>
     </div>
   </div>
@@ -642,7 +642,7 @@
   <a href="index.html">← Back to Main Site</a>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
 /* ══════════════════════════════════════════════════
    FIX: Unified mobile breakpoint — 900px in both CSS and JS
@@ -816,15 +816,4 @@ function openProfile(id) {
   document.body.style.overflow = 'hidden';
 }
 
-function closeProfile() {
-  modal.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { aboutDropdown.classList.remove('open'); closeProfile(); }
-});
-
-</script>
-</body>
-</html>
+function closeProfile()
